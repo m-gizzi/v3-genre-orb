@@ -11,12 +11,6 @@
 Style/Documentation:
   Enabled: false
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/GlobalStdStream:
-  Exclude:
-    - 'config/environments/production.rb'
-
 # Offense count: 2
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: SafeForConstants.
