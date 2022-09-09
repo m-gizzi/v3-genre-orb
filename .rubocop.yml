@@ -7,3 +7,7 @@ require:
 
 AllCops:
   NewCops: enable
+
+Metrics/MethodLength:
+  Exclude:
+    - 'db/migrate/*'
