@@ -30,4 +30,7 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  active_record_validations:
+    spotify_id:
+      presence: "ID can't be blank"
+      uniqueness: 'ID has already been taken'
