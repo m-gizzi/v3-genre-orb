@@ -33,7 +33,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_06_172030) do
     t.string "spotify_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["spotify_id"], name: "index_artists_on_spotify_id"
+    t.index ["spotify_id"], name: "index_artists_on_spotify_id", unique: true
   end
 
   create_table "artists_genres", id: false, force: :cascade do |t|
@@ -54,7 +54,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_06_172030) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_genres_on_name"
+    t.index ["name"], name: "index_genres_on_name", unique: true
   end
 
   create_table "oauth_credentials", force: :cascade do |t|
@@ -74,6 +74,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_06_172030) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_playlists_on_name"
+    t.index ["spotify_id"], name: "index_playlists_on_spotify_id", unique: true
     t.index ["user_id"], name: "index_playlists_on_user_id"
   end
 
@@ -96,7 +97,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_06_172030) do
     t.string "spotify_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["spotify_id"], name: "index_tracks_on_spotify_id"
+    t.index ["spotify_id"], name: "index_tracks_on_spotify_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -105,7 +106,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_06_172030) do
     t.string "spotify_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["spotify_id"], name: "index_users_on_spotify_id"
+    t.index ["spotify_id"], name: "index_users_on_spotify_id", unique: true
   end
 
   add_foreign_key "api_logs", "users"
