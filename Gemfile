@@ -82,5 +82,7 @@ group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
+  gem 'vcr', '~> 6.1.0'
   gem 'webdrivers'
+  gem 'webmock', '~> 3.18.1'
 end
