@@ -1,0 +1,103 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.spotify.com/v1/playlists/3IlD894HSWDF8YlkCP25Sq
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (darwin21 x86_64) ruby/3.1.2p20
+      Authorization:
+      - "<BEARER ACCESS TOKEN>"
+      Host:
+      - api.spotify.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - public, max-age=0
+      Etag:
+      - '"MC-ImVjMjg5NjUzMmQwYjBkMjk1NjQ3NDExMGUxMWE2NDM4Ig=="'
+      X-Robots-Tag:
+      - noindex, nofollow
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - Accept, App-Platform, Authorization, Content-Type, Origin, Retry-After, Spotify-App-Version,
+        X-Cloud-Trace-Context, client-token, content-access-token
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS, PUT, DELETE, PATCH
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Max-Age:
+      - '604800'
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Fri, 16 Sep 2022 03:50:57 GMT
+      Server:
+      - envoy
+      Via:
+      - HTTP/2 edgeproxy, 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "collaborative" : false,
+          "description" : "Developer Test",
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/playlist/3IlD894HSWDF8YlkCP25Sq"
+          },
+          "followers" : {
+            "href" : null,
+            "total" : 0
+          },
+          "href" : "https://api.spotify.com/v1/playlists/3IlD894HSWDF8YlkCP25Sq",
+          "id" : "3IlD894HSWDF8YlkCP25Sq",
+          "images" : [ ],
+          "name" : "Test Playlist",
+          "owner" : {
+            "display_name" : "matthewgizzi",
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/user/matthewgizzi"
+            },
+            "href" : "https://api.spotify.com/v1/users/matthewgizzi",
+            "id" : "matthewgizzi",
+            "type" : "user",
+            "uri" : "spotify:user:matthewgizzi"
+          },
+          "primary_color" : null,
+          "public" : false,
+          "snapshot_id" : "MjEsMmMyOTMxMTgzYjlmMjU0ZjExOTdkNzI5MmRkNjI5MjgwNTQxNjIzMQ==",
+          "tracks" : {
+            "href" : "https://api.spotify.com/v1/playlists/3IlD894HSWDF8YlkCP25Sq/tracks?offset=0&limit=100",
+            "items" : [ ],
+            "limit" : 100,
+            "next" : null,
+            "offset" : 0,
+            "previous" : null,
+            "total" : 0
+          },
+          "type" : "playlist",
+          "uri" : "spotify:playlist:3IlD894HSWDF8YlkCP25Sq"
+        }
+    adapter_metadata:
+      vcr_decompressed: gzip
+  recorded_at: Fri, 16 Sep 2022 03:50:57 GMT
+recorded_with: VCR 6.1.0
