@@ -9,7 +9,7 @@ class UpdatePlaylistTrackDataService < ApplicationService
   end
 
   def call
-    spotify_playlist = RSpotify::Playlist.find_by_id(playlist.spotify_id)
+    spotify_playlist = playlist.to_rspotify_playlist
     response = spotify_playlist.tracks(offset:, raw_response: true)
     track_data = playlist.track_data.create!
     # Maybe make response a class
