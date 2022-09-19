@@ -8,10 +8,6 @@ describe UpdatePlaylistTrackDataService do
   let(:playlist) { create(:playlist) }
 
   describe '#call', :vcr do
-    it 'creates a new TrackData for the Playlist' do
-      expect { service.call }.to change { playlist.track_data.count }.by(1)
-    end
-
     it 'creates new Tracks from the response' do
       playlist.to_rspotify_playlist
       expect { service.call }.to change(Track, :count).by(playlist.song_count)
@@ -26,7 +22,7 @@ describe UpdatePlaylistTrackDataService do
 
     it 'associates all the Tracks from the response to the new TrackData' do
       service.call
-      expect(playlist.track_data.last.tracks).to match_array(Track.all)
+      expect(playlist.current_track_data.tracks).to match_array(Track.all)
     end
 
     it 'creates new Artists from the response' do

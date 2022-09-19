@@ -11,16 +11,35 @@ class UpdatePlaylistTrackDataService < ApplicationService
   def call
     spotify_playlist = playlist.to_rspotify_playlist
     response = spotify_playlist.tracks(offset:, raw_response: true)
-    track_data = playlist.track_data.create!
-    # Maybe make response a class
-    response['items'].each do |track_hash|
-      track = Track.create_with(name: track_hash['track']['name']).find_or_create_by!(spotify_id: track_hash['track']['id'])
-      artists = track_hash['track']['artists'].map do |artist_hash|
-        Artist.create_with(name: artist_hash['name']).find_or_create_by!(spotify_id: artist_hash['id'])
-      end
-      track.artists |= artists
-      track_data.tracks << track
-    end
+    process_response(response)
     # somehow, I'll make another job queue when there's a next_url in the response
+  end
+
+  private
+
+  def process_response(response)
+    tracks = response['items'].map do |track_hash|
+      track_attributes = track_hash['track']
+
+      track = find_or_create_object_from_attributes!(Track, track_attributes)
+
+      track.artists = track_attributes['artists'].map do |artist_attributes|
+        find_or_create_object_from_attributes!(Artist, artist_attributes)
+      end
+
+      track
+    end
+    maybe_create_track_data
+    playlist.current_track_data.tracks |= tracks
+  end
+
+  def find_or_create_object_from_attributes!(klass, attributes)
+    klass.create_with(name: attributes['name']).find_or_create_by!(spotify_id: attributes['id'])
+  end
+
+  # This is a placeholder while I figure out how to intelligently create new track_data as well as the first
+  # track_data for playlists that have never been scraped
+  def maybe_create_track_data
+    playlist.track_data.create! if playlist.track_data.empty?
   end
 end
