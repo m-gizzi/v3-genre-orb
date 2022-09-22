@@ -12,7 +12,8 @@ class Playlist < ApplicationRecord
     # rubocop:disable Rails/DynamicFindBy
     rspotify_playlist = RSpotify::Playlist.find_by_id(spotify_id)
     # rubocop:enable Rails/DynamicFindBy
-    update!(song_count: rspotify_playlist.total, name: rspotify_playlist.name)
+    assign_attributes(song_count: rspotify_playlist.total, name: rspotify_playlist.name)
+    save! if changed?
     rspotify_playlist
   end
 
