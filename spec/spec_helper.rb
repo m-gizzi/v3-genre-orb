@@ -40,6 +40,8 @@ RSpec.configure do |config|
     end
   end
 
+  RSpec::Matchers.define_negated_matcher :avoid_changing, :change
+
   # The settings below are suggested to provide a good initial experience
   # with RSpec, but feel free to customize to your heart's content.
   #   # This allows you to limit a spec run to individual examples or groups
