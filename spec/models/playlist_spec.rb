@@ -15,14 +15,16 @@ describe Playlist, type: :model do
     end
 
     it 'updates the name and song_count of the playlist' do
-      expect { playlist.to_rspotify_playlist }.to change { playlist.reload.name }.and(change { playlist.reload.song_count })
+      expect { playlist.to_rspotify_playlist }.to change { playlist.reload.name }
+        .and(change { playlist.reload.song_count })
     end
 
     context 'when the name and song_count are the same as currently saved in the database' do
       subject(:playlist) { create(:playlist, song_count: 5, name: 'Genre Orb Test Playlist') }
 
       it 'does not save any changes to the Playlist' do
-        expect { playlist.to_rspotify_playlist }.to avoid_changing { playlist.reload.name }.and(avoid_changing { playlist.reload.song_count })
+        expect { playlist.to_rspotify_playlist }.to avoid_changing { playlist.reload.name }
+          .and(avoid_changing { playlist.reload.song_count })
       end
     end
   end
