@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'sidekiq/testing'
 require 'simplecov'
 require 'vcr'
 SimpleCov.start 'rails' do
