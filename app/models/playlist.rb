@@ -20,4 +20,8 @@ class Playlist < ApplicationRecord
   def current_track_data
     track_data.last
   end
+
+  def update_track_data!
+    UpdatePlaylistTrackDataService.call(self)
+  end
 end
