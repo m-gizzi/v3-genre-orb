@@ -8,7 +8,7 @@ class UpdateArtistsGenresJob
     return if artists.empty?
 
     UpdateArtistsGenresService.call(artists)
-  rescue InvalidJobError
-    # This exception is raised when the job is queued with bad arguments, it will never be retried successfully
+  rescue ArgumentError
+    # This exception cannot be retried
   end
 end

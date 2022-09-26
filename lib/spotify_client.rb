@@ -8,6 +8,13 @@ class SpotifyClient
   end
 
   def self.get_artists_by_ids(artist_ids)
+    maximum_artist_ids_per_call = 50
+
+    if artist_ids.count > maximum_artist_ids_per_call
+      raise ArgumentError,
+            "#{self.class} cannot accept more than #{maximum_artist_ids_per_call} ids as arguments, please use a batch job instead"
+    end
+
     RSpotify::Artist.find(artist_ids)
   end
 end
