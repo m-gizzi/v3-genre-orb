@@ -7,10 +7,11 @@ class SpotifyClient
     # rubocop:enable Rails/DynamicFindBy
   end
 
+  MAXIMUM_ARTIST_LOOKUPS_PER_CALL = 50 # RSpotify::Artist.find has a limit of 50 ids
+
   def self.get_artists_by_ids(artist_ids)
-    maximum_artist_ids_per_call = 50
-    if artist_ids.count > maximum_artist_ids_per_call
-      raise ArgumentError, "#{__method__} cannot accept more than #{maximum_artist_ids_per_call} ids as arguments"
+    if artist_ids.count > MAXIMUM_ARTIST_LOOKUPS_PER_CALL
+      raise ArgumentError, "#{__method__} cannot accept more than #{MAXIMUM_ARTIST_LOOKUPS_PER_CALL} ids as arguments"
     end
 
     RSpotify::Artist.find(artist_ids)

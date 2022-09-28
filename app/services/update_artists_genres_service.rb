@@ -12,6 +12,7 @@ class UpdateArtistsGenresService < ApplicationService
   def call
     spotify_ids = artists.pluck(:spotify_id)
     response = SpotifyClient.get_artists_by_ids(spotify_ids)
+
     response.each do |rspotify_artist|
       artist = Artist.find_by(spotify_id: rspotify_artist.id)
       genres = rspotify_artist.genres.map do |genre_name|
