@@ -15,9 +15,7 @@ class Artist < ApplicationRecord
   end
 
   def self.to_rspotify_artists
-    batch_size = SpotifyClient::MAXIMUM_ARTIST_LOOKUPS_PER_CALL
-
-    find_in_batches(batch_size:).with_object([]) do |artists, array|
+    find_in_batches(batch_size: SpotifyClient::MAXIMUM_ARTIST_LOOKUPS_PER_CALL).with_object([]) do |artists, array|
       spotify_ids = artists.pluck(:spotify_id)
       rspotify_artists = SpotifyClient.get_artists_by_ids(spotify_ids)
       array.push(*rspotify_artists)
