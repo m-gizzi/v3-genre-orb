@@ -10,11 +10,14 @@ class UpdateArtistsGenresService < ApplicationService
   end
 
   def call
-    spotify_ids = artists.pluck(:spotify_id)
-    response = SpotifyClient.get_artists_by_ids(spotify_ids)
+    rspotify_artists = artists.to_rspotify_artists
 
-    response.each do |rspotify_artist|
-      artist = Artist.find_by(spotify_id: rspotify_artist.id)
+    rspotify_artists.each do |rspotify_artist|
+      artist = artists.find_by(spotify_id: rspotify_artist.id)
+
+      artist.assign_attributes(name: rspotify_artist.name)
+      artist.save! if artist.changed?
+
       genres = rspotify_artist.genres.map do |genre_name|
         Genre.find_or_create_by!(name: genre_name)
       end
