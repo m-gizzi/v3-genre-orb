@@ -24,4 +24,13 @@ class Artist < ApplicationRecord
       array.push(*rspotify_artists)
     end
   end
+
+  def self.update_genres!
+    UpdateArtistsGenresService.call(self)
+  end
+
+  def sync_with_spotify!(rspotify_artist)
+    assign_attributes(name: rspotify_artist.name)
+    save! if changed?
+  end
 end
