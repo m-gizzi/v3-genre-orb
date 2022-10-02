@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spotify_client'
-
 class UpdateArtistsGenresService < ApplicationService
   attr_reader :artists
 

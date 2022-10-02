@@ -29,6 +29,16 @@ class Artist < ApplicationRecord
     UpdateArtistsGenresService.call(self)
   end
 
+  def fetch_fallback_genres
+    FetchArtistFallbackGenresService.call(self)
+  end
+
+  def update_fallback_genres!
+    return false if genres.present?
+
+    self.genres = fetch_fallback_genres
+  end
+
   def sync_with_spotify!(rspotify_artist)
     assign_attributes(name: rspotify_artist.name)
     save! if changed?
