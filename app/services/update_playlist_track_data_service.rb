@@ -26,6 +26,8 @@ class UpdatePlaylistTrackDataService < ApplicationService
     playlist.track_data.create!
 
     spotify_playlist = playlist.to_rspotify_playlist
+    playlist.sync_with_spotify!(spotify_playlist)
+    
     response = Response.new(spotify_playlist.tracks(raw_response: true))
     process_response(response)
 
