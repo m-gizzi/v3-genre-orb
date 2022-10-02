@@ -4,8 +4,10 @@ require 'spotify_client'
 
 class Artist < ApplicationRecord
   has_and_belongs_to_many :tracks
-  has_many :artists_genres, dependent: destroy
+  has_many :artists_genres, dependent: :destroy
   has_many :genres, through: :artists_genres
+
+  scope :with_no_genres, -> { left_joins(:genres).where(genres: nil) }
 
   validates :name, presence: true
   validates :spotify_id, presence: { message: I18n.t('active_record_validations.spotify_id.presence') },
