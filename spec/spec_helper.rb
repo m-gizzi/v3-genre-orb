@@ -43,6 +43,19 @@ RSpec.configure do |config|
 
   RSpec::Matchers.define_negated_matcher :avoid_changing, :change
 
+  def generate_spotify_id
+    length_of_spotify_id = 22
+    charset = Array('A'..'z') + Array(0..9)
+
+    Array.new(length_of_spotify_id) { charset.sample }.join
+  end
+
+  config.around(:each, type: :job) do |test|
+    Sidekiq::Testing.inline! do
+      test.run
+    end
+  end
+
   # The settings below are suggested to provide a good initial experience
   # with RSpec, but feel free to customize to your heart's content.
   #   # This allows you to limit a spec run to individual examples or groups

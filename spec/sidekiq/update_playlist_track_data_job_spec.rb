@@ -6,12 +6,6 @@ RSpec.describe UpdatePlaylistTrackDataJob, type: :job do
   let(:playlist) { create(:playlist) }
 
   describe '#perform', :vcr do
-    around do |test|
-      Sidekiq::Testing.inline! do
-        test.run
-      end
-    end
-
     it 'creates a new TrackData to log the scraped data' do
       expect { described_class.perform_async(playlist.id) }.to change(TrackData, :count).by(1)
     end

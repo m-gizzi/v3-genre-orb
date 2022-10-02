@@ -10,6 +10,7 @@
 Lint/MissingSuper:
   Exclude:
     - 'app/services/update_playlist_track_data_service.rb'
+    - 'app/services/update_artists_genres_service.rb'
 
 # Offense count: 17
 # Configuration parameters: AllowedConstants.

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'spotify_client'
+
 class Playlist < ApplicationRecord
   belongs_to :user
   has_many :track_data, dependent: :destroy, class_name: 'TrackData'
@@ -9,9 +11,8 @@ class Playlist < ApplicationRecord
                          uniqueness: { message: I18n.t('active_record_validations.spotify_id.uniqueness') }
 
   def to_rspotify_playlist
-    # rubocop:disable Rails/DynamicFindBy
-    rspotify_playlist = RSpotify::Playlist.find_by_id(spotify_id)
-    # rubocop:enable Rails/DynamicFindBy
+    rspotify_playlist = SpotifyClient.get_playlist_by_id(spotify_id)
+
     assign_attributes(song_count: rspotify_playlist.total, name: rspotify_playlist.name)
     save! if changed?
     rspotify_playlist

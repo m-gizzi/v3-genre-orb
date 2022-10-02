@@ -1,0 +1,183 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.spotify.com/v1/artists?ids=3fxdn6mfKvNFJ1Zx37On7W
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (darwin21 x86_64) ruby/3.1.2p20
+      Authorization:
+      - "<BEARER ACCESS TOKEN>"
+      Host:
+      - api.spotify.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - public, max-age=76452
+      X-Robots-Tag:
+      - noindex, nofollow
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - Accept, App-Platform, Authorization, Content-Type, Origin, Retry-After, Spotify-App-Version,
+        X-Cloud-Trace-Context, client-token, content-access-token
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS, PUT, DELETE, PATCH
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Max-Age:
+      - '604800'
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Sat, 01 Oct 2022 22:05:58 GMT
+      Server:
+      - envoy
+      Via:
+      - HTTP/2 edgeproxy, 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "artists" : [ {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/artist/3fxdn6mfKvNFJ1Zx37On7W"
+            },
+            "followers" : {
+              "href" : null,
+              "total" : 53399
+            },
+            "genres" : [ "ethnotronica", "latintronica", "nuevo folklore argentino", "organic electronic", "organic house" ],
+            "href" : "https://api.spotify.com/v1/artists/3fxdn6mfKvNFJ1Zx37On7W",
+            "id" : "3fxdn6mfKvNFJ1Zx37On7W",
+            "images" : [ {
+              "height" : 640,
+              "url" : "https://i.scdn.co/image/ab6761610000e5ebe3cca9abc82b6cf2816ff09f",
+              "width" : 640
+            }, {
+              "height" : 320,
+              "url" : "https://i.scdn.co/image/ab67616100005174e3cca9abc82b6cf2816ff09f",
+              "width" : 320
+            }, {
+              "height" : 160,
+              "url" : "https://i.scdn.co/image/ab6761610000f178e3cca9abc82b6cf2816ff09f",
+              "width" : 160
+            } ],
+            "name" : "Rodrigo Gallardo",
+            "popularity" : 46,
+            "type" : "artist",
+            "uri" : "spotify:artist:3fxdn6mfKvNFJ1Zx37On7W"
+          } ]
+        }
+    adapter_metadata:
+      vcr_decompressed: gzip
+  recorded_at: Sat, 01 Oct 2022 22:05:55 GMT
+- request:
+    method: get
+    uri: https://api.spotify.com/v1/artists?ids=3fxdn6mfKvNFJ1Zx37On7W
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (darwin21 x86_64) ruby/3.1.2p20
+      Authorization:
+      - "<BEARER ACCESS TOKEN>"
+      Host:
+      - api.spotify.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - public, max-age=81451
+      X-Robots-Tag:
+      - noindex, nofollow
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - Accept, App-Platform, Authorization, Content-Type, Origin, Retry-After, Spotify-App-Version,
+        X-Cloud-Trace-Context, client-token, content-access-token
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS, PUT, DELETE, PATCH
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Max-Age:
+      - '604800'
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Sat, 01 Oct 2022 22:05:58 GMT
+      Server:
+      - envoy
+      Via:
+      - HTTP/2 edgeproxy, 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "artists" : [ {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/artist/3fxdn6mfKvNFJ1Zx37On7W"
+            },
+            "followers" : {
+              "href" : null,
+              "total" : 53399
+            },
+            "genres" : [ "ethnotronica", "latintronica", "nuevo folklore argentino", "organic electronic", "organic house" ],
+            "href" : "https://api.spotify.com/v1/artists/3fxdn6mfKvNFJ1Zx37On7W",
+            "id" : "3fxdn6mfKvNFJ1Zx37On7W",
+            "images" : [ {
+              "height" : 640,
+              "url" : "https://i.scdn.co/image/ab6761610000e5ebe3cca9abc82b6cf2816ff09f",
+              "width" : 640
+            }, {
+              "height" : 320,
+              "url" : "https://i.scdn.co/image/ab67616100005174e3cca9abc82b6cf2816ff09f",
+              "width" : 320
+            }, {
+              "height" : 160,
+              "url" : "https://i.scdn.co/image/ab6761610000f178e3cca9abc82b6cf2816ff09f",
+              "width" : 160
+            } ],
+            "name" : "Rodrigo Gallardo",
+            "popularity" : 46,
+            "type" : "artist",
+            "uri" : "spotify:artist:3fxdn6mfKvNFJ1Zx37On7W"
+          } ]
+        }
+    adapter_metadata:
+      vcr_decompressed: gzip
+  recorded_at: Sat, 01 Oct 2022 22:05:55 GMT
+recorded_with: VCR 6.1.0
