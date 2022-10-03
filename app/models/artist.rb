@@ -38,8 +38,8 @@ class Artist < ApplicationRecord
   def sync_fallback_genres!
     return false unless can_update_fallback_genres?
 
-    new_genres = fallback_genres_from_spotify - genres
-    old_genres = genres - fallback_genres_from_spotify
+    new_genres = fallback_genres_from_spotify - fallback_genres
+    old_genres = fallback_genres - fallback_genres_from_spotify
 
     fallback_genres << new_genres
     fallback_genres.destroy(old_genres)
