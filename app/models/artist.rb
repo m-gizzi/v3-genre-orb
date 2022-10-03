@@ -29,14 +29,24 @@ class Artist < ApplicationRecord
     UpdateArtistsGenresService.call(self)
   end
 
-  def fetch_fallback_genres
-    FetchArtistFallbackGenresService.call(self)
+  def fallback_genres
+    @fallback_genres ||= FetchArtistFallbackGenresService.call(self)
   end
 
   def update_fallback_genres!
-    return false if genres.present?
+    return false unless can_update_fallback_genres?
 
-    self.genres = fetch_fallback_genres
+    new_genres = fallback_genres - genres
+    old_genres = genres - fallback_genres
+
+    new_genres.each do |genre|
+      artists_genres.create!(fallback_genre: true, genre:)
+    end
+    genres.destroy(old_genres)
+  end
+
+  def can_update_fallback_genres?
+    artists_genres.where(fallback_genre: false).empty?
   end
 
   def sync_with_spotify!(rspotify_artist)
