@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_06_172030) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_03_170536) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_06_172030) do
     t.boolean "fallback_genre", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["artist_id", "genre_id"], name: "index_by_artist_and_genre", unique: true
     t.index ["artist_id"], name: "index_artists_genres_on_artist_id"
     t.index ["genre_id"], name: "index_artists_genres_on_genre_id"
   end
