@@ -5,6 +5,6 @@ class UpdateArtistFallbackGenresJob
 
   def perform(artist_id)
     artist = Artist.find_by(id: artist_id)
-    artist.update_fallback_genres!
+    artist&.update_fallback_genres!
   end
 end

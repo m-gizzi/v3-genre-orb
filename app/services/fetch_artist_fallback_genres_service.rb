@@ -11,7 +11,7 @@ class FetchArtistFallbackGenresService < ApplicationService
     fallback_genres = determine_fallback_genres
 
     fallback_genres.map do |genre_name|
-      Genre.create_with(fallback_genre: true).find_or_initialize_by(name: genre_name)
+      Genre.find_or_initialize_by(name: genre_name)
     end
   end
 
