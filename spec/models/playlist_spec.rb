@@ -13,9 +13,11 @@ describe Playlist, type: :model do
     it 'finds the correct playlist' do
       expect(playlist.to_rspotify_playlist.id).to eq playlist.spotify_id
     end
+  end
 
+  describe '#sync_with_spotify!', :vcr do
     it 'updates the name and song_count of the playlist' do
-      expect { playlist.to_rspotify_playlist }.to change { playlist.reload.name }
+      expect { playlist.sync_with_spotify!(playlist.to_rspotify_playlist) }.to change { playlist.reload.name }
         .and(change { playlist.reload.song_count })
     end
 
@@ -23,7 +25,7 @@ describe Playlist, type: :model do
       subject(:playlist) { create(:playlist, song_count: 5, name: 'Genre Orb Test Playlist') }
 
       it 'does not save any changes to the Playlist' do
-        expect { playlist.to_rspotify_playlist }.to avoid_changing { playlist.reload.name }
+        expect { playlist.sync_with_spotify!(playlist.to_rspotify_playlist) }.to avoid_changing { playlist.reload.name }
           .and(avoid_changing { playlist.reload.song_count })
       end
     end
