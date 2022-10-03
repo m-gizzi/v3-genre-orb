@@ -9,5 +9,6 @@ class CreateArtistsGenresJoinTable < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+    add_index :artists_genres, %i[artist_id genre_id], unique: true, name: 'index_by_artist_and_genre'
   end
 end
