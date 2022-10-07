@@ -65,4 +65,58 @@ describe Artist, type: :model do
       end
     end
   end
+
+  describe '#sync_fallback_genres!' do
+    subject(:artist) { create(:artist, spotify_id: artist_id) }
+
+    let(:artist_id) { '32wcuqRxZuBY5HbH1bWa8h' }
+    let(:genre_names_array) { ['deep euro house', 'german house', 'minimal techno', 'tech house'] }
+
+    before do
+      stub_request(:get, "https://api.spotify.com/v1/artists?ids=#{artist_id}").to_return(
+        status: 200,
+        body: { 'artists' => [{ 'id' => artist_id }] }.to_json
+      )
+
+      stub_request(:get, "https://api.spotify.com/v1/artists/#{artist_id}/related-artists").to_return(
+        status: 200,
+        body: {
+          'artists' => [
+            {
+              'genres' => genre_names_array,
+              'id' => '6XJeFzmI6vrWyHcdB7EImP',
+              'name' => 'andhim'
+            }
+          ]
+        }.to_json
+      )
+    end
+
+    it 'associates the Artist with all of the Genres returned by Spotify' do
+      artist.sync_fallback_genres!
+      expect(artist.genres.pluck(:name)).to match_array(genre_names_array)
+    end
+
+    it 'marks all Genres associated as being fallback Genres' do
+      artist.sync_fallback_genres!
+      expect(artist.artists_genres.pluck(:fallback_genre)).to all(be true)
+    end
+
+    context 'when the artist already has genres associated with it that are not fallback genres' do
+      let(:genre) { create(:genre) }
+
+      before do
+        artist.genres = [genre]
+      end
+
+      it 'does not make any API calls' do
+        artist.sync_fallback_genres!
+        expect(a_request(:any, %r{/api.spotify.com/v1/})).not_to have_been_made
+      end
+
+      it 'does not change any associations of the Artist' do
+        expect { artist.sync_fallback_genres! }.not_to change(artist, :genres)
+      end
+    end
+  end
 end

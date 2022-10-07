@@ -36,7 +36,7 @@ class Artist < ApplicationRecord
   end
 
   def sync_fallback_genres!
-    return false unless can_update_fallback_genres?
+    return false unless can_sync_fallback_genres?
 
     new_genres = fallback_genres_from_spotify - fallback_genres
     old_genres = fallback_genres - fallback_genres_from_spotify
@@ -45,12 +45,14 @@ class Artist < ApplicationRecord
     fallback_genres.destroy(old_genres)
   end
 
-  def can_update_fallback_genres?
-    artists_genres.where(fallback_genre: false).empty?
-  end
-
   def sync_with_spotify!(rspotify_artist)
     assign_attributes(name: rspotify_artist.name)
     save! if changed?
+  end
+
+  private
+
+  def can_sync_fallback_genres?
+    artists_genres.where(fallback_genre: false).empty?
   end
 end
