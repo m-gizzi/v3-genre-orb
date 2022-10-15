@@ -34,3 +34,5 @@ en:
     spotify_id:
       presence: "ID can't be blank"
       uniqueness: 'ID has already been taken'
+    artists_genres:
+      uniqueness: 'is already associated with this genre'

@@ -3,6 +3,7 @@
 require 'sidekiq/testing'
 require 'simplecov'
 require 'vcr'
+require 'webmock/rspec'
 SimpleCov.start 'rails' do
   enable_coverage :branch
 end

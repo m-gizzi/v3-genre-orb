@@ -11,11 +11,7 @@ class Playlist < ApplicationRecord
                          uniqueness: { message: I18n.t('active_record_validations.spotify_id.uniqueness') }
 
   def to_rspotify_playlist
-    rspotify_playlist = SpotifyClient.get_playlist_by_id(spotify_id)
-
-    assign_attributes(song_count: rspotify_playlist.total, name: rspotify_playlist.name)
-    save! if changed?
-    rspotify_playlist
+    SpotifyClient.get_playlist_by_id(spotify_id)
   end
 
   def current_track_data
@@ -24,5 +20,10 @@ class Playlist < ApplicationRecord
 
   def update_track_data!
     UpdatePlaylistTrackDataService.call(self)
+  end
+
+  def sync_with_spotify!(rspotify_playlist)
+    assign_attributes(song_count: rspotify_playlist.total, name: rspotify_playlist.name)
+    save! if changed?
   end
 end

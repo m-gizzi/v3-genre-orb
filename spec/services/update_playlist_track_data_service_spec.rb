@@ -13,7 +13,7 @@ describe UpdatePlaylistTrackDataService do
     end
 
     it 'creates new Tracks from the response' do
-      playlist.to_rspotify_playlist
+      playlist.sync_with_spotify!(playlist.to_rspotify_playlist)
       expect { service.call }.to change(Track, :count).by(playlist.song_count)
     end
 

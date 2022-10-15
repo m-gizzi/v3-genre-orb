@@ -5,7 +5,7 @@ class UpdateArtistsGenresJob
 
   def perform(artist_ids)
     artists = Artist.where(id: artist_ids)
-    UpdateArtistsGenresService.call(artists)
+    artists.sync_genres!
   rescue ArgumentError
     # This exception cannot be retried
   end
