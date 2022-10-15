@@ -5,7 +5,7 @@ require 'rails_helper'
 describe UpdateArtistFallbackGenresJob, type: :job do
   describe '#perform' do
     let(:artist) { create(:artist, spotify_id: artist_id) }
-    let(:artist_id) { '32wcuqRxZuBY5HbH1bWa8h' }
+    let(:artist_id) { 'test_artist_id' }
     let(:genre_names_array) { ['deep euro house', 'german house', 'minimal techno', 'tech house'] }
 
     before do
@@ -16,15 +16,7 @@ describe UpdateArtistFallbackGenresJob, type: :job do
 
       stub_request(:get, "https://api.spotify.com/v1/artists/#{artist_id}/related-artists").to_return(
         status: 200,
-        body: {
-          'artists' => [
-            {
-              'genres' => genre_names_array,
-              'id' => '6XJeFzmI6vrWyHcdB7EImP',
-              'name' => 'andhim'
-            }
-          ]
-        }.to_json
+        body: { 'artists' => [{ 'genres' => genre_names_array }] }.to_json
       )
     end
 
