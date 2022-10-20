@@ -28,5 +28,13 @@ describe SpotifyClient, :vcr do
         expect { client.get_artists_by_ids(too_many_artist_ids) }.to raise_error(ArgumentError)
       end
     end
+
+  describe '#get_related_artists' do
+    let(:artist) { create(:artist) }
+    let(:rspotify_artist) { artist.to_rspotify_artist }
+
+    it 'returns the artist\'s related artists' do
+      expect(client.get_related_artists(rspotify_artist)).to all(be_a(RSpotify::Artist))
+    end
   end
 end
