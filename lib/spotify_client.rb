@@ -35,11 +35,7 @@ class SpotifyClient
   end
 
   def seconds_to_retry_after(error)
-    if defined? error.http_headers[:retry_after]
-      # Spotify returns a header that tells you the number of seconds to wait before trying again
-      error.http_headers[:retry_after].to_i
-    else
-      1 # Default time to sleep
-    end
+    # Spotify returns a header that tells you the number of seconds to wait before trying again
+    error.http_headers[:retry_after].to_i
   end
 end

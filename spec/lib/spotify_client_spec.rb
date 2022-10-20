@@ -29,12 +29,47 @@ describe SpotifyClient, :vcr do
       end
     end
 
+    context 'when a 429 error is raised' do
+      include_context 'with a stubbed retryable error' do
+        let(:error_class) { RestClient::TooManyRequests }
+        let(:recipient) { RSpotify::Artist }
+        let(:message) { :find }
+      end
+
+      it 'reattempts the call that errored out' do
+        client.get_artists_by_ids(artist_ids)
+        expect(RSpotify::Artist).to have_received(:find).twice
+      end
+
+      it 'returns an array with the correct artists in it' do
+        expect(client.get_artists_by_ids(artist_ids).map(&:id)).to match_array artist_ids
+      end
+    end
+  end
+
   describe '#get_related_artists' do
     let(:artist) { create(:artist) }
     let(:rspotify_artist) { artist.to_rspotify_artist }
 
     it 'returns the artist\'s related artists' do
       expect(client.get_related_artists(rspotify_artist)).to all(be_a(RSpotify::Artist))
+    end
+
+    context 'when a 429 error is raised' do
+      include_context 'with a stubbed retryable error' do
+        let(:error_class) { RestClient::TooManyRequests }
+        let(:recipient) { rspotify_artist }
+        let(:message) { :related_artists }
+      end
+
+      it 'reattempts the call that errored out' do
+        client.get_related_artists(rspotify_artist)
+        expect(rspotify_artist).to have_received(:related_artists).twice
+      end
+
+      it 'returns the artist\'s related artists' do
+        expect(client.get_related_artists(rspotify_artist)).to all(be_a(RSpotify::Artist))
+      end
     end
   end
 end
