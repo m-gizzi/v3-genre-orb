@@ -4,26 +4,71 @@ require 'rails_helper'
 require 'spotify_client'
 
 describe SpotifyClient, :vcr do
-  describe '.get_playlist_by_id' do
+  subject(:client) { described_class.new }
+
+  describe '#get_playlist_by_id' do
     let(:playlist_id) { '3IlD894HSWDF8YlkCP25Sq' }
 
     it 'returns the correct playlist' do
-      expect(described_class.get_playlist_by_id(playlist_id).id).to eq playlist_id
+      expect(client.get_playlist_by_id(playlist_id).id).to eq playlist_id
     end
   end
 
-  describe '.get_artists_by_ids' do
+  describe '#get_artists_by_ids' do
     let(:artist_ids) { %w[1iNbNgr25BaS5e9a8xUZ9J 3ggwAqZD3lyT2sbovlmfQY] }
 
     it 'returns an array with the correct artists in it' do
-      expect(described_class.get_artists_by_ids(artist_ids).map(&:id)).to match_array artist_ids
+      expect(client.get_artists_by_ids(artist_ids).map(&:id)).to match_array artist_ids
     end
 
     context 'when it is called with too many artist_ids' do
       let(:too_many_artist_ids) { Array.new(51) { generate_spotify_id } }
 
       it 'raises an error' do
-        expect { described_class.get_artists_by_ids(too_many_artist_ids) }.to raise_error(ArgumentError)
+        expect { client.get_artists_by_ids(too_many_artist_ids) }.to raise_error(ArgumentError)
+      end
+    end
+
+    context 'when a 429 error is raised' do
+      include_context 'with a stubbed retryable error' do
+        let(:error_class) { RestClient::TooManyRequests }
+        let(:recipient) { RSpotify::Artist }
+        let(:message) { :find }
+      end
+
+      it 'reattempts the call that errored out' do
+        client.get_artists_by_ids(artist_ids)
+        expect(RSpotify::Artist).to have_received(:find).twice
+      end
+
+      it 'returns an array with the correct artists in it' do
+        expect(client.get_artists_by_ids(artist_ids).map(&:id)).to match_array artist_ids
+      end
+    end
+  end
+
+  describe '#get_related_artists' do
+    let(:artist) { create(:artist) }
+    let(:rspotify_artist) { artist.to_rspotify_artist }
+
+    it 'returns the artist\'s related artists' do
+      expect(client.get_related_artists(rspotify_artist)).to all(be_a(RSpotify::Artist))
+    end
+
+    context 'when a 429 error is raised' do
+      include_context 'with a stubbed retryable error' do
+        let(:error_class) { RestClient::TooManyRequests }
+        let(:recipient) { rspotify_artist }
+        let(:message) { :related_artists }
+      end
+
+      it 'reattempts the call that errored out' do
+        client.get_related_artists(rspotify_artist)
+        expect(rspotify_artist).to have_received(:related_artists).twice
+      end
+
+      it 'returns the artist\'s related artists' do
+        expect(client.get_related_artists(rspotify_artist)).to all(be_a(RSpotify::Artist))
       end
     end
   end

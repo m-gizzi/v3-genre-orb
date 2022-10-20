@@ -57,6 +57,30 @@ RSpec.configure do |config|
     end
   end
 
+  RSpec.shared_context 'with a stubbed retryable error' do
+    let(:exception) { Struct.new(:headers).new({ retry_after: '1' }) }
+    let(:error) { error_class.new(exception) }
+    let(:error_class) { raise 'Must set an error_class to use this shared context' }
+    let(:recipient) { raise 'Must set an recipient to use this shared context' }
+    let(:message) { raise 'Must set an message to use thisshared context' }
+
+    before do
+      call_count = 0
+      method = recipient.method(message)
+
+      allow(recipient).to receive(message) do |args|
+        call_count += 1
+        call_count == 1 ? raise(error) : call_original_method(method, args)
+      end
+    end
+
+    def call_original_method(method, args)
+      return method.call if args.blank?
+
+      method.call(args)
+    end
+  end
+
   # The settings below are suggested to provide a good initial experience
   # with RSpec, but feel free to customize to your heart's content.
   #   # This allows you to limit a spec run to individual examples or groups

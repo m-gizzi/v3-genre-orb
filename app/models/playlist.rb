@@ -11,7 +11,7 @@ class Playlist < ApplicationRecord
                          uniqueness: { message: I18n.t('active_record_validations.spotify_id.uniqueness') }
 
   def to_rspotify_playlist
-    SpotifyClient.get_playlist_by_id(spotify_id)
+    SpotifyClient.new.get_playlist_by_id(spotify_id)
   end
 
   def current_track_data

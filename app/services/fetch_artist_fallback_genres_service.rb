@@ -19,6 +19,6 @@ class FetchArtistFallbackGenresService < ApplicationService
 
   def determine_fallback_genres
     rspotify_artist = artist.to_rspotify_artist
-    rspotify_artist.related_artists.flat_map(&:genres).uniq
+    SpotifyClient.new.get_related_artists(rspotify_artist).flat_map(&:genres).uniq
   end
 end
