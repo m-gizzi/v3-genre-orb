@@ -6,7 +6,12 @@ class Artist < ApplicationRecord
   has_and_belongs_to_many :tracks
   has_many :artists_genres, dependent: :destroy
   has_many :genres, through: :artists_genres
-  has_many :artists_fallback_genres, -> { where(fallback_genre: true) }, class_name: 'ArtistsGenre', dependent: :destroy
+  has_many :artists_fallback_genres,
+           -> { where(fallback_genre: true) },
+           class_name: 'ArtistsGenre',
+           dependent: :destroy,
+           inverse_of: :artist
+
   has_many :fallback_genres, through: :artists_fallback_genres, source: :genre
 
   scope :with_no_genres, -> { left_joins(:genres).where(genres: nil) }
