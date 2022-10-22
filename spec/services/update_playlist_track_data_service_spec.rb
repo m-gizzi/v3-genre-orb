@@ -8,8 +8,8 @@ describe UpdatePlaylistTrackDataService do
   let(:playlist) { create(:playlist) }
 
   describe '#call', :vcr do
-    it 'creates a new TrackData to log the scraped data' do
-      expect { service.call }.to change(TrackData, :count).by(1)
+    it 'creates a new TrackData to log the scraped data and marks it as complete' do
+      expect { service.call }.to change { TrackData.completed.count }.by(1)
     end
 
     it 'creates new Tracks from the response' do

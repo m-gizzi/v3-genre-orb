@@ -10,9 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_06_172030) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_21_163859) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "scraping_status", ["incomplete", "completed"]
 
   create_table "api_logs", force: :cascade do |t|
     t.string "request_url", null: false
@@ -86,6 +90,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_06_172030) do
     t.bigint "playlist_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.enum "scraping_status", default: "incomplete", null: false, enum_type: "scraping_status"
     t.index ["playlist_id"], name: "index_track_data_on_playlist_id"
   end
 
