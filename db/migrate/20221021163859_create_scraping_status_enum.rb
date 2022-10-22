@@ -3,10 +3,10 @@
 class CreateScrapingStatusEnum < ActiveRecord::Migration[7.0]
   def up
     execute <<-SQL.squish
-      CREATE TYPE scraping_status AS ENUM ('in_progress', 'completed');
+      CREATE TYPE scraping_status AS ENUM ('incomplete', 'completed');
     SQL
 
-    add_column :track_data, :scraping_status, :scraping_status, null: false, default: :in_progress
+    add_column :track_data, :scraping_status, :scraping_status, null: false, default: :incomplete
   end
 
   def down

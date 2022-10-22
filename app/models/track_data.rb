@@ -5,7 +5,7 @@ class TrackData < ApplicationRecord
   has_and_belongs_to_many :tracks
 
   enum scraping_status: {
-    in_progress: 'in_progress',
+    incomplete: 'incomplete',
     completed: 'completed'
   }
 end
