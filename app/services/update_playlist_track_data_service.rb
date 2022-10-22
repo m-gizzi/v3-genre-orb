@@ -23,8 +23,6 @@ class UpdatePlaylistTrackDataService < ApplicationService
   end
 
   def call
-    playlist.track_data.create!
-
     spotify_playlist = playlist.to_rspotify_playlist
     playlist.sync_with_spotify!(spotify_playlist)
 
@@ -36,9 +34,14 @@ class UpdatePlaylistTrackDataService < ApplicationService
       response = Response.new(spotify_playlist.tracks(offset:, raw_response: true))
       process_response(response)
     end
+    track_data.completed!
   end
 
   private
+
+  def track_data
+    @track_data ||= playlist.track_data.create!
+  end
 
   def process_response(response)
     tracks = response.items.map do |track_hash|
@@ -51,21 +54,17 @@ class UpdatePlaylistTrackDataService < ApplicationService
       track
     end
 
-    playlist.current_track_data.tracks << tracks
+    track_data.tracks << tracks
     log_service_progress(response)
   end
 
-  def find_or_create_object_from_attributes!(klass, attributes)
-    klass.create_with(name: attributes['name']).find_or_create_by!(spotify_id: attributes['id'])
-  end
-
   def find_or_create_track_from_attributes!(track_attributes)
-    find_or_create_object_from_attributes!(Track, track_attributes)
+    Track.create_with(name: track_attributes['name']).find_or_create_by!(spotify_id: track_attributes['id'])
   end
 
   def find_or_create_artists_from_attributes!(artist_attributes)
     artist_attributes.map do |attributes|
-      find_or_create_object_from_attributes!(Artist, attributes)
+      Artist.create_with(name: attributes['name']).find_or_create_by!(spotify_id: attributes['id'])
     end
   end
 
