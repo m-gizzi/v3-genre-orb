@@ -18,20 +18,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_163859) do
   # Note that some types may not work with other database engines. Be careful if changing database.
   create_enum "scraping_status", ["incomplete", "completed"]
 
-  create_table "api_logs", force: :cascade do |t|
-    t.string "request_url", null: false
-    t.json "request_headers"
-    t.json "request_params"
-    t.json "request_body"
-    t.integer "response_status", null: false
-    t.json "response_headers"
-    t.json "response_body"
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_api_logs_on_user_id"
-  end
-
   create_table "artists", force: :cascade do |t|
     t.string "name", null: false
     t.string "spotify_id", null: false
@@ -118,7 +104,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_163859) do
     t.index ["spotify_id"], name: "index_users_on_spotify_id", unique: true
   end
 
-  add_foreign_key "api_logs", "users"
   add_foreign_key "artists_genres", "artists"
   add_foreign_key "artists_genres", "genres"
   add_foreign_key "artists_tracks", "artists"
