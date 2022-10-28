@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'responses/response'
+
 class SpotifyClient
   def get_playlist_by_id(playlist_id)
     # rubocop:disable Rails/DynamicFindBy
@@ -25,7 +27,8 @@ class SpotifyClient
   end
 
   def get_tracks(rspotify_playlist, offset: 0)
-    rspotify_playlist.tracks(raw_response: true, offset:)
+    raw_response = rspotify_playlist.tracks(raw_response: true, offset:)
+    Responses::GetTracks.new(raw_response)
   end
 
   private

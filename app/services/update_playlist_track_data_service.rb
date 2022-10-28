@@ -3,21 +3,6 @@
 require 'has_spotify_client'
 
 class UpdatePlaylistTrackDataService < ApplicationService
-  class Response
-    attr_reader :items, :limit, :offset, :next_url
-
-    def initialize(response)
-      @items = response['items']
-      @limit = response['limit']
-      @offset = response['offset']
-      @next_url = response['next']
-    end
-
-    def calculate_next_offset
-      limit + offset
-    end
-  end
-
   include HasSpotifyClient
 
   attr_reader :playlist, :track_data
@@ -31,12 +16,12 @@ class UpdatePlaylistTrackDataService < ApplicationService
     spotify_playlist = playlist.to_rspotify_playlist
     playlist.sync_with_spotify!(spotify_playlist)
 
-    response = get_tracks(spotify_playlist)
+    response = spotify_client.get_tracks(spotify_playlist)
     process_response(response)
 
     while response.next_url.present?
       offset = response.calculate_next_offset
-      response = get_tracks(spotify_playlist, offset:)
+      response = spotify_client.get_tracks(spotify_playlist, offset:)
       process_response(response)
     end
     track_data.completed!
@@ -77,10 +62,5 @@ class UpdatePlaylistTrackDataService < ApplicationService
         offset: response.offset
       }
     )
-  end
-
-  def get_tracks(spotify_playlist, offset: 0)
-    raw_response = spotify_client.get_tracks(spotify_playlist, offset:)
-    Response.new(raw_response)
   end
 end

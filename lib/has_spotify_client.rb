@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'spotify_client'
+
 module HasSpotifyClient
   extend ActiveSupport::Concern
 
