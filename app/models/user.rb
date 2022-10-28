@@ -2,6 +2,7 @@
 
 class User < ApplicationRecord
   has_one :oauth_credential, dependent: :destroy
+  has_one :liked_songs_playlist, dependent: :destroy
   has_many :playlists, dependent: :destroy
   has_many :api_logs, dependent: :destroy
 
