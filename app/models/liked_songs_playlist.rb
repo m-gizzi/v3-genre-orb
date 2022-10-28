@@ -8,4 +8,8 @@ class LikedSongsPlaylist < ApplicationRecord
           class_name: 'TrackData',
           inverse_of: :playlist,
           as: :playlist
+
+  def update_track_data!
+    UpdateLikedSongsTrackDataService.call(self)
+  end
 end
