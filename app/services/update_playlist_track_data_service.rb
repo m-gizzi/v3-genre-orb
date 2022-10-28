@@ -20,32 +20,29 @@ class UpdatePlaylistTrackDataService < ApplicationService
 
   include HasSpotifyClient
 
-  attr_reader :playlist
+  attr_reader :playlist, :track_data
 
   def initialize(playlist)
     @playlist = playlist
+    @track_data = playlist.track_data.create!
   end
 
   def call
     spotify_playlist = playlist.to_rspotify_playlist
     playlist.sync_with_spotify!(spotify_playlist)
 
-    response = Response.new(spotify_client.get_tracks(spotify_playlist))
+    response = get_tracks(spotify_playlist)
     process_response(response)
 
     while response.next_url.present?
       offset = response.calculate_next_offset
-      response = Response.new(spotify_client.get_tracks(spotify_playlist, offset:))
+      response = get_tracks(spotify_playlist, offset:)
       process_response(response)
     end
     track_data.completed!
   end
 
   private
-
-  def track_data
-    @track_data ||= playlist.track_data.create!
-  end
 
   def process_response(response)
     tracks = response.items.map do |track_hash|
@@ -80,5 +77,10 @@ class UpdatePlaylistTrackDataService < ApplicationService
         offset: response.offset
       }
     )
+  end
+
+  def get_tracks(spotify_playlist, offset: 0)
+    raw_response = spotify_client.get_tracks(spotify_playlist, offset:)
+    Response.new(raw_response)
   end
 end
