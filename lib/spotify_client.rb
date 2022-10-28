@@ -24,6 +24,10 @@ class SpotifyClient
     end
   end
 
+  def get_tracks(rspotify_playlist, offset: 0)
+    rspotify_playlist.tracks(raw_response: true, offset:)
+  end
+
   private
 
   def handle_retryable_error(rescued_exception_classes)
