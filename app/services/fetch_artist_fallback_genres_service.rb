@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
+require 'has_spotify_client'
+
 class FetchArtistFallbackGenresService < ApplicationService
+  include HasSpotifyClient
+
   attr_reader :artist
 
   def initialize(artist)
@@ -19,6 +23,6 @@ class FetchArtistFallbackGenresService < ApplicationService
 
   def determine_fallback_genres
     rspotify_artist = artist.to_rspotify_artist
-    SpotifyClient.new.get_related_artists(rspotify_artist).flat_map(&:genres).uniq
+    spotify_client.get_related_artists(rspotify_artist).flat_map(&:genres).uniq
   end
 end
