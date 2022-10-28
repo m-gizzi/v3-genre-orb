@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_28_030500) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_28_025337) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -81,12 +81,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_28_030500) do
   end
 
   create_table "track_data", force: :cascade do |t|
+    t.string "playlist_type", null: false
     t.bigint "playlist_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.enum "scraping_status", default: "incomplete", null: false, enum_type: "scraping_status"
-    t.string "playlist_type", default: "Playlist", null: false
-    t.index ["playlist_id"], name: "index_track_data_on_playlist_id"
+    t.index ["playlist_type", "playlist_id"], name: "index_track_data_on_playlist"
   end
 
   create_table "track_data_tracks", force: :cascade do |t|
@@ -120,7 +120,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_28_030500) do
   add_foreign_key "liked_songs_playlists", "users"
   add_foreign_key "oauth_credentials", "users"
   add_foreign_key "playlists", "users"
-  add_foreign_key "track_data", "playlists"
   add_foreign_key "track_data_tracks", "track_data", column: "track_data_id"
   add_foreign_key "track_data_tracks", "tracks"
 end
