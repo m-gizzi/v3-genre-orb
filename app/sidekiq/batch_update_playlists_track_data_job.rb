@@ -4,7 +4,7 @@ class BatchUpdatePlaylistsTrackDataJob
   include Sidekiq::Job
 
   def perform
-    args = Playlist.pluck(:id).zip
+    args = Playlist.ids.zip
     UpdatePlaylistTrackDataJob.perform_bulk(args)
   end
 end
