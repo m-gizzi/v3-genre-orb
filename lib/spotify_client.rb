@@ -31,6 +31,12 @@ class SpotifyClient
     Responses::GetTracks.new(raw_response)
   end
 
+  def get_liked_tracks(rspotify_user, offset: 0)
+    # RSpotify::User.saved_tracks has a maximum limit of 50 tracks returned
+    raw_response = rspotify_user.saved_tracks(raw_response: true, limit: 50, offset:)
+    Responses::GetTracks.new(raw_response)
+  end
+
   private
 
   def handle_retryable_error(rescued_exception_classes)
