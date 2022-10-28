@@ -72,4 +72,13 @@ describe SpotifyClient, :vcr do
       end
     end
   end
+
+  describe '#get_tracks' do
+    let(:playlist) { create(:playlist) }
+    let(:rspotify_playlist) { playlist.to_rspotify_playlist }
+
+    it 'returns the playlist\'s raw track data' do
+      expect(client.get_tracks(rspotify_playlist)).to be_a Responses::GetTracks
+    end
+  end
 end
