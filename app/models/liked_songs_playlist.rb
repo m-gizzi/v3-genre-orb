@@ -12,4 +12,9 @@ class LikedSongsPlaylist < ApplicationRecord
   def update_track_data!
     UpdateLikedSongsTrackDataService.call(self)
   end
+
+  def sync_with_spotify!(spotify_response)
+    assign_attributes(song_count: spotify_response.total)
+    save! if changed?
+  end
 end

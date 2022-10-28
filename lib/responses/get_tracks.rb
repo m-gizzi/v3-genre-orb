@@ -2,13 +2,14 @@
 
 module Responses
   class GetTracks
-    attr_reader :items, :limit, :offset, :next_url
+    attr_reader :items, :limit, :offset, :next_url, :total
 
     def initialize(response)
       @items = response['items']
       @limit = response['limit']
       @offset = response['offset']
       @next_url = response['next']
+      @total = response['total']
     end
 
     def calculate_next_offset

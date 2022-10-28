@@ -15,6 +15,7 @@ class UpdateLikedSongsTrackDataService < ApplicationService
   def call
     rspotify_user = liked_songs_playlist.user.to_rspotify_user
     response = spotify_client.get_liked_tracks(rspotify_user)
+    liked_songs_playlist.sync_with_spotify!(response)
 
     process_response(response)
 
