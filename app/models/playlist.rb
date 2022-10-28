@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
-require 'spotify_client'
+require 'has_spotify_client'
 
 class Playlist < ApplicationRecord
+  include HasSpotifyClient
+
   belongs_to :user
   has_many :track_data, dependent: :destroy, class_name: 'TrackData'
   has_one :current_track_data,
@@ -15,7 +17,7 @@ class Playlist < ApplicationRecord
                          uniqueness: { message: I18n.t('active_record_validations.spotify_id.uniqueness') }
 
   def to_rspotify_playlist
-    SpotifyClient.new.get_playlist_by_id(spotify_id)
+    spotify_client.get_playlist_by_id(spotify_id)
   end
 
   def update_track_data!

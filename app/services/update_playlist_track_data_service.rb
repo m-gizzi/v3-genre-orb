@@ -1,47 +1,33 @@
 # frozen_string_literal: true
 
+require 'has_spotify_client'
+
 class UpdatePlaylistTrackDataService < ApplicationService
-  class Response
-    attr_reader :items, :limit, :offset, :next_url
+  include HasSpotifyClient
 
-    def initialize(response)
-      @items = response['items']
-      @limit = response['limit']
-      @offset = response['offset']
-      @next_url = response['next']
-    end
-
-    def calculate_next_offset
-      limit + offset
-    end
-  end
-
-  attr_reader :playlist
+  attr_reader :playlist, :track_data
 
   def initialize(playlist)
     @playlist = playlist
+    @track_data = playlist.track_data.create!
   end
 
   def call
     spotify_playlist = playlist.to_rspotify_playlist
     playlist.sync_with_spotify!(spotify_playlist)
 
-    response = Response.new(spotify_playlist.tracks(raw_response: true))
+    response = spotify_client.get_tracks(spotify_playlist)
     process_response(response)
 
     while response.next_url.present?
       offset = response.calculate_next_offset
-      response = Response.new(spotify_playlist.tracks(offset:, raw_response: true))
+      response = spotify_client.get_tracks(spotify_playlist, offset:)
       process_response(response)
     end
     track_data.completed!
   end
 
   private
-
-  def track_data
-    @track_data ||= playlist.track_data.create!
-  end
 
   def process_response(response)
     tracks = response.items.map do |track_hash|
