@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe BatchUpdatePlaylistsTrackDataJob do
+describe BatchUpdateTrackDataJob do
   let(:playlist_ids) { Array.new(4) { generate_spotify_id } }
   let(:playlist) { create(:playlist) }
 

@@ -1,5 +1,5 @@
 :schedule:
-  BatchUpdatePlaylistsTrackDataJob:
+  BatchUpdateTrackDataJob:
     # Every day at 12:00am CST
     cron: '0 5 * * *'
 

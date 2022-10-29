@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe UpdatePlaylistTrackDataJob, type: :job do
+describe UpdatePlaylistTrackDataJob, type: :job do
   let(:playlist) { create(:playlist) }
 
   describe '#perform', :vcr do
