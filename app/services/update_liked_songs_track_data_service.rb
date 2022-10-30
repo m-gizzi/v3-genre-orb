@@ -3,17 +3,22 @@
 class UpdateLikedSongsTrackDataService < UpdatePlaylistTrackDataService
   def call
     rspotify_user = playlist.user.to_rspotify_user
-    response = spotify_client.get_liked_tracks(rspotify_user)
+    response = spotify_client.get_liked_tracks(rspotify_user, offset:)
     playlist.sync_with_spotify!(response)
 
     process_response(response)
 
-    while response.next_url.present?
+    if response.next_url.present?
       offset = response.calculate_next_offset
-      response = spotify_client.get_liked_tracks(rspotify_user, offset:)
-      process_response(response)
+      case self_queuing
+      when 'asynchronous'
+        UpdateLikedSongsTrackDataJob.perform_async(playlist.id, self_queuing, track_data.id, offset)
+      when 'synchronous'
+        playlist.update_track_data!(track_data:, offset:, self_queuing:)
+      end
+    else
+      track_data.completed!
     end
-    track_data.completed!
   end
 
   private

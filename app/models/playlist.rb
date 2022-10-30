@@ -20,8 +20,8 @@ class Playlist < ApplicationRecord
     spotify_client.get_playlist_by_id(spotify_id)
   end
 
-  def update_track_data!
-    UpdatePlaylistTrackDataService.call(self)
+  def update_track_data!(track_data: nil, offset: 0, self_queuing: nil)
+    UpdatePlaylistTrackDataService.call(self, track_data:, offset:, self_queuing:)
   end
 
   def sync_with_spotify!(rspotify_playlist)
