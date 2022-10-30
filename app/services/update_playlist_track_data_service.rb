@@ -16,7 +16,7 @@ class UpdatePlaylistTrackDataService < ApplicationService
 
   def call
     @response = make_api_call
-    playlist.sync_with_spotify!(object_to_be_synced_with) # Check to see if it's worth only doing this sometimes
+    playlist.sync_with_spotify!(object_to_be_synced_with)
 
     process_response(response)
 
