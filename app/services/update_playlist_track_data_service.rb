@@ -5,7 +5,7 @@ require 'has_spotify_client'
 class UpdatePlaylistTrackDataService < ApplicationService
   include HasSpotifyClient
 
-  attr_reader :playlist, :track_data, :offset, :self_queuing
+  attr_reader :playlist, :track_data, :offset, :self_queuing, :response
 
   def initialize(playlist, track_data: nil, offset: 0, self_queuing: nil)
     @playlist = playlist
@@ -15,26 +15,31 @@ class UpdatePlaylistTrackDataService < ApplicationService
   end
 
   def call
-    spotify_playlist = playlist.to_rspotify_playlist
-    playlist.sync_with_spotify!(spotify_playlist) # Check to see if it's worth only doing this sometimes
+    @response = make_api_call
+    playlist.sync_with_spotify!(object_to_be_synced_with) # Check to see if it's worth only doing this sometimes
 
-    response = spotify_client.get_tracks(spotify_playlist, offset:)
     process_response(response)
 
     if response.next_url.present?
-      offset = response.calculate_next_offset
-      case self_queuing
-      when 'asynchronous'
-        UpdatePlaylistTrackDataJob.perform_async(playlist.id, self_queuing, track_data.id, offset)
-      when 'synchronous'
-        playlist.update_track_data!(track_data:, offset:, self_queuing:)
-      end
+      handle_self_queuing
     else
       track_data.completed!
     end
   end
 
   private
+
+  def rspotify_object
+    playlist.to_rspotify_playlist
+  end
+
+  def object_to_be_synced_with
+    rspotify_object
+  end
+
+  def make_api_call
+    spotify_client.get_tracks(rspotify_object, offset:)
+  end
 
   def process_response(response)
     tracks = response.import_tracks_and_artists!
@@ -51,5 +56,15 @@ class UpdatePlaylistTrackDataService < ApplicationService
         offset: response.offset
       }
     )
+  end
+
+  def handle_self_queuing
+    offset = response.calculate_next_offset
+    case self_queuing
+    when 'asynchronous'
+      UpdatePlaylistTrackDataJob.perform_async(playlist.id, playlist.class.to_s, self_queuing, track_data.id, offset)
+    when 'synchronous'
+      playlist.update_track_data!(track_data:, offset:, self_queuing:)
+    end
   end
 end

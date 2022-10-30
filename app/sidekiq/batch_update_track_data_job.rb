@@ -5,11 +5,11 @@ class BatchUpdateTrackDataJob
 
   def perform
     ids = Playlist.ids
-    args = ids.map { |id| [id, 'asynchronous'] }
+    args = ids.map { |id| [id, Playlist.to_s, 'asynchronous'] }
     UpdatePlaylistTrackDataJob.perform_bulk(args)
 
     ids = LikedSongsPlaylist.ids
-    args = ids.map { |id| [id, 'asynchronous'] }
-    UpdateLikedSongsTrackDataJob.perform_bulk(args)
+    args = ids.map { |id| [id, LikedSongsPlaylist.to_s, 'asynchronous'] }
+    UpdatePlaylistTrackDataJob.perform_bulk(args)
   end
 end
