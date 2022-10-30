@@ -4,9 +4,11 @@ require 'responses/response'
 
 class SpotifyClient
   def get_playlist_by_id(playlist_id)
-    # rubocop:disable Rails/DynamicFindBy
-    RSpotify::Playlist.find_by_id(playlist_id)
-    # rubocop:enable Rails/DynamicFindBy
+    handle_retryable_error(RestClient::TooManyRequests) do
+      # rubocop:disable Rails/DynamicFindBy
+      RSpotify::Playlist.find_by_id(playlist_id)
+      # rubocop:enable Rails/DynamicFindBy
+    end
   end
 
   MAXIMUM_ARTIST_LOOKUPS_PER_CALL = 50 # RSpotify::Artist.find has a limit of 50 ids
@@ -27,14 +29,18 @@ class SpotifyClient
   end
 
   def get_tracks(rspotify_playlist, offset: 0)
-    raw_response = rspotify_playlist.tracks(raw_response: true, offset:)
-    Responses::GetTracks.new(raw_response)
+    handle_retryable_error(RestClient::TooManyRequests) do
+      raw_response = rspotify_playlist.tracks(raw_response: true, offset:)
+      Responses::GetTracks.new(raw_response)
+    end
   end
 
   def get_liked_tracks(rspotify_user, offset: 0)
-    # RSpotify::User.saved_tracks has a maximum limit of 50 tracks returned
-    raw_response = rspotify_user.saved_tracks(raw_response: true, limit: 50, offset:)
-    Responses::GetTracks.new(raw_response)
+    handle_retryable_error(RestClient::TooManyRequests) do
+      # RSpotify::User.saved_tracks has a maximum limit of 50 tracks returned
+      raw_response = rspotify_user.saved_tracks(raw_response: true, limit: 50, offset:)
+      Responses::GetTracks.new(raw_response)
+    end
   end
 
   private
