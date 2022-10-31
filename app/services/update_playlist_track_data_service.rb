@@ -5,7 +5,7 @@ require 'has_spotify_client'
 class UpdatePlaylistTrackDataService < ApplicationService
   include HasSpotifyClient
 
-  attr_reader :playlist, :track_data, :offset, :self_queuing, :response
+  attr_reader :playlist, :track_data, :offset, :self_queuing
 
   def initialize(playlist, track_data: nil, offset: 0, self_queuing: nil)
     @playlist = playlist
@@ -15,13 +15,11 @@ class UpdatePlaylistTrackDataService < ApplicationService
   end
 
   def call
-    @response = make_api_call
-    playlist.sync_with_spotify!(object_to_be_synced_with)
-
+    response = handle_fetching_tracks
     process_response(response)
 
     if response.next_url.present?
-      handle_self_queuing
+      handle_self_queuing(response)
     else
       track_data.completed!
     end
@@ -29,36 +27,56 @@ class UpdatePlaylistTrackDataService < ApplicationService
 
   private
 
-  def rspotify_object
-    playlist.to_rspotify_playlist
+  def handle_fetching_tracks
+    case playlist.class.to_s
+    when 'Playlist'
+      handle_fetching_playlist_tracks
+    when 'LikedSongsPlaylist'
+      handle_fetching_liked_songs_playlist
+    end
   end
 
-  def object_to_be_synced_with
-    rspotify_object
+  def handle_fetching_playlist_tracks
+    rspotify_playlist = playlist.to_rspotify_playlist
+    playlist.sync_with_spotify!(rspotify_playlist)
+
+    spotify_client.get_tracks(rspotify_playlist, offset:)
   end
 
-  def make_api_call
-    spotify_client.get_tracks(rspotify_object, offset:)
+  def handle_fetching_liked_songs_playlist
+    rspotify_user = playlist.user.to_rspotify_user
+    response = spotify_client.get_liked_tracks(rspotify_user, offset:)
+
+    playlist.sync_with_spotify!(response)
+
+    response
   end
 
   def process_response(response)
-    tracks = response.import_tracks_and_artists!
+    tracks = response.items.map do |track_hash|
+      track_attributes = track_hash['track']
+      artist_attributes = track_attributes['artists']
+
+      track = find_or_create_track_from_attributes!(track_attributes)
+      track.artists = find_or_create_artists_from_attributes!(artist_attributes)
+
+      track
+    end
 
     track_data.tracks << tracks
-    log_service_progress(response)
   end
 
-  def log_service_progress(response)
-    Rails.logger.info(
-      {
-        playlist_name: playlist.name,
-        user_name: playlist.user.spotify_id,
-        offset: response.offset
-      }
-    )
+  def find_or_create_track_from_attributes!(track_attributes)
+    Track.create_with(name: track_attributes['name']).find_or_create_by!(spotify_id: track_attributes['id'])
   end
 
-  def handle_self_queuing
+  def find_or_create_artists_from_attributes!(artist_attributes)
+    artist_attributes.map do |attributes|
+      Artist.create_with(name: attributes['name']).find_or_create_by!(spotify_id: attributes['id'])
+    end
+  end
+
+  def handle_self_queuing(response)
     offset = response.calculate_next_offset
     case self_queuing
     when 'asynchronous'
