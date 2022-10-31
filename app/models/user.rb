@@ -10,8 +10,10 @@ class User < ApplicationRecord
   validates :spotify_id, presence: { message: I18n.t('active_record_validations.spotify_id.presence') },
                          uniqueness: { message: I18n.t('active_record_validations.spotify_id.uniqueness') }
 
+  class UnauthorizedError < StandardError; end
+
   def to_rspotify_user
-    raise 'User has not granted this app access to their Spotify account.' unless oauth_credential
+    raise UnauthorizedError, 'User has not granted this app access to their Spotify account.' unless oauth_credential
 
     RSpotify::User.new(
       {
