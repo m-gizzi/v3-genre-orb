@@ -22,7 +22,7 @@ describe Playlist, type: :model do
     end
 
     context 'when the name and song_count are the same as currently saved in the database' do
-      subject(:playlist) { create(:playlist, song_count: 5, name: 'Genre Orb Test Playlist') }
+      subject(:playlist) { create(:playlist, song_count: 20, name: 'Test Playlist') }
 
       it 'does not save any changes to the Playlist' do
         expect { playlist.sync_with_spotify!(playlist.to_rspotify_playlist) }.to avoid_changing { playlist.reload.name }

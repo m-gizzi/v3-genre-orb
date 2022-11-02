@@ -25,7 +25,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Cache-Control:
-      - public, max-age=78424
+      - public, max-age=80056
       X-Robots-Tag:
       - noindex, nofollow
       Access-Control-Allow-Origin:
@@ -44,7 +44,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Date:
-      - Thu, 20 Oct 2022 03:19:38 GMT
+      - Wed, 02 Nov 2022 04:08:15 GMT
       Server:
       - envoy
       Via:
@@ -63,7 +63,7 @@ http_interactions:
             },
             "followers" : {
               "href" : null,
-              "total" : 464
+              "total" : 465
             },
             "genres" : [ ],
             "href" : "https://api.spotify.com/v1/artists/1iNbNgr25BaS5e9a8xUZ9J",
@@ -82,7 +82,7 @@ http_interactions:
               "width" : 64
             } ],
             "name" : "Scientist",
-            "popularity" : 0,
+            "popularity" : 1,
             "type" : "artist",
             "uri" : "spotify:artist:1iNbNgr25BaS5e9a8xUZ9J"
           }, {
@@ -91,7 +91,7 @@ http_interactions:
             },
             "followers" : {
               "href" : null,
-              "total" : 558028
+              "total" : 560844
             },
             "genres" : [ "alternative metal", "death metal", "djent", "nu metal", "progressive groove metal", "swedish metal", "technical groove metal", "technical thrash" ],
             "href" : "https://api.spotify.com/v1/artists/3ggwAqZD3lyT2sbovlmfQY",
@@ -110,12 +110,12 @@ http_interactions:
               "width" : 160
             } ],
             "name" : "Meshuggah",
-            "popularity" : 56,
+            "popularity" : 55,
             "type" : "artist",
             "uri" : "spotify:artist:3ggwAqZD3lyT2sbovlmfQY"
           } ]
         }
     adapter_metadata:
       vcr_decompressed: gzip
-  recorded_at: Thu, 20 Oct 2022 03:19:37 GMT
+  recorded_at: Wed, 02 Nov 2022 04:08:14 GMT
 recorded_with: VCR 6.1.0
