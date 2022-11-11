@@ -25,7 +25,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Cache-Control:
-      - public, max-age=74740
+      - public, max-age=76031
       X-Robots-Tag:
       - noindex, nofollow
       Access-Control-Allow-Origin:
@@ -44,7 +44,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Date:
-      - Mon, 26 Sep 2022 21:09:42 GMT
+      - Wed, 02 Nov 2022 04:08:13 GMT
       Server:
       - envoy
       Via:
@@ -63,7 +63,7 @@ http_interactions:
             },
             "followers" : {
               "href" : null,
-              "total" : 460
+              "total" : 465
             },
             "genres" : [ ],
             "href" : "https://api.spotify.com/v1/artists/1iNbNgr25BaS5e9a8xUZ9J",
@@ -91,7 +91,7 @@ http_interactions:
             },
             "followers" : {
               "href" : null,
-              "total" : 552698
+              "total" : 560844
             },
             "genres" : [ "alternative metal", "death metal", "djent", "nu metal", "progressive groove metal", "swedish metal", "technical groove metal", "technical thrash" ],
             "href" : "https://api.spotify.com/v1/artists/3ggwAqZD3lyT2sbovlmfQY",
@@ -117,5 +117,5 @@ http_interactions:
         }
     adapter_metadata:
       vcr_decompressed: gzip
-  recorded_at: Mon, 26 Sep 2022 21:09:38 GMT
+  recorded_at: Wed, 02 Nov 2022 04:08:11 GMT
 recorded_with: VCR 6.1.0

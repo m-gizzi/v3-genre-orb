@@ -25,7 +25,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Cache-Control:
-      - public, max-age=76353
+      - public, max-age=77685
       X-Robots-Tag:
       - noindex, nofollow
       Access-Control-Allow-Origin:
@@ -44,7 +44,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Date:
-      - Thu, 20 Oct 2022 03:29:43 GMT
+      - Wed, 02 Nov 2022 04:08:17 GMT
       Server:
       - envoy
       Via:
@@ -63,7 +63,7 @@ http_interactions:
             },
             "followers" : {
               "href" : null,
-              "total" : 462726
+              "total" : 463899
             },
             "genres" : [ "acoustic blues", "blues", "blues rock", "chicago blues", "classic rock", "delta blues", "harmonica blues", "memphis blues", "traditional blues" ],
             "href" : "https://api.spotify.com/v1/artists/0Wxy5Qka8BN9crcFkiAxSR",
@@ -86,14 +86,14 @@ http_interactions:
               "width" : 64
             } ],
             "name" : "Howlin' Wolf",
-            "popularity" : 52,
+            "popularity" : 51,
             "type" : "artist",
             "uri" : "spotify:artist:0Wxy5Qka8BN9crcFkiAxSR"
           } ]
         }
     adapter_metadata:
       vcr_decompressed: gzip
-  recorded_at: Thu, 20 Oct 2022 03:29:42 GMT
+  recorded_at: Wed, 02 Nov 2022 04:08:15 GMT
 - request:
     method: get
     uri: https://api.spotify.com/v1/artists/0Wxy5Qka8BN9crcFkiAxSR/related-artists
@@ -119,7 +119,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Cache-Control:
-      - public, max-age=72948
+      - public, max-age=73065
       X-Robots-Tag:
       - noindex, nofollow
       Access-Control-Allow-Origin:
@@ -138,7 +138,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Date:
-      - Thu, 20 Oct 2022 03:29:44 GMT
+      - Wed, 02 Nov 2022 04:08:18 GMT
       Server:
       - envoy
       Via:
@@ -157,7 +157,7 @@ http_interactions:
             },
             "followers" : {
               "href" : null,
-              "total" : 172341
+              "total" : 172871
             },
             "genres" : [ "blues", "blues rock", "chicago blues", "delta blues", "electric blues", "traditional blues" ],
             "href" : "https://api.spotify.com/v1/artists/0q9kpdDkEA3H17gcRMjgVS",
@@ -176,7 +176,7 @@ http_interactions:
               "width" : 64
             } ],
             "name" : "Elmore James",
-            "popularity" : 45,
+            "popularity" : 44,
             "type" : "artist",
             "uri" : "spotify:artist:0q9kpdDkEA3H17gcRMjgVS"
           }, {
@@ -185,9 +185,9 @@ http_interactions:
             },
             "followers" : {
               "href" : null,
-              "total" : 240215
+              "total" : 241114
             },
-            "genres" : [ "acoustic blues", "blues", "country blues", "delta blues", "modern blues", "texas blues", "traditional blues" ],
+            "genres" : [ "acoustic blues", "blues", "country blues", "delta blues", "texas blues", "traditional blues" ],
             "href" : "https://api.spotify.com/v1/artists/6EZzVXM2uDRPmnHWq9yPDE",
             "id" : "6EZzVXM2uDRPmnHWq9yPDE",
             "images" : [ {
@@ -208,7 +208,7 @@ http_interactions:
               "width" : 63
             } ],
             "name" : "Lightnin' Hopkins",
-            "popularity" : 46,
+            "popularity" : 45,
             "type" : "artist",
             "uri" : "spotify:artist:6EZzVXM2uDRPmnHWq9yPDE"
           }, {
@@ -217,7 +217,7 @@ http_interactions:
             },
             "followers" : {
               "href" : null,
-              "total" : 1175744
+              "total" : 1178512
             },
             "genres" : [ "blues", "blues rock", "chicago blues", "classic rock", "electric blues", "soul", "traditional blues" ],
             "href" : "https://api.spotify.com/v1/artists/4y6J8jwRAwO4dssiSmN91R",
@@ -240,7 +240,7 @@ http_interactions:
               "width" : 64
             } ],
             "name" : "Muddy Waters",
-            "popularity" : 56,
+            "popularity" : 55,
             "type" : "artist",
             "uri" : "spotify:artist:4y6J8jwRAwO4dssiSmN91R"
           }, {
@@ -249,7 +249,7 @@ http_interactions:
             },
             "followers" : {
               "href" : null,
-              "total" : 126945
+              "total" : 127382
             },
             "genres" : [ "blues", "blues rock", "chicago blues", "electric blues", "harmonica blues", "traditional blues" ],
             "href" : "https://api.spotify.com/v1/artists/41ZMMuFFLPTVPkUsSI5KlV",
@@ -272,44 +272,16 @@ http_interactions:
               "width" : 64
             } ],
             "name" : "Jimmy Reed",
-            "popularity" : 44,
+            "popularity" : 43,
             "type" : "artist",
             "uri" : "spotify:artist:41ZMMuFFLPTVPkUsSI5KlV"
-          }, {
-            "external_urls" : {
-              "spotify" : "https://open.spotify.com/artist/22JuR9OeENcP54XN5TlNWS"
-            },
-            "followers" : {
-              "href" : null,
-              "total" : 188030
-            },
-            "genres" : [ "acoustic blues", "blues", "blues rock", "chicago blues", "electric blues", "harmonica blues", "louisiana blues", "traditional blues" ],
-            "href" : "https://api.spotify.com/v1/artists/22JuR9OeENcP54XN5TlNWS",
-            "id" : "22JuR9OeENcP54XN5TlNWS",
-            "images" : [ {
-              "height" : 700,
-              "url" : "https://i.scdn.co/image/0ea1941b94aeb6b6366a65c7d719cc76cf537919",
-              "width" : 591
-            }, {
-              "height" : 237,
-              "url" : "https://i.scdn.co/image/f93ddf2db270779389c96d0c67bc08bee9e71271",
-              "width" : 200
-            }, {
-              "height" : 76,
-              "url" : "https://i.scdn.co/image/f2daa2263a6cf3f3c54f6f334a601570acd2b23f",
-              "width" : 64
-            } ],
-            "name" : "Little Walter",
-            "popularity" : 47,
-            "type" : "artist",
-            "uri" : "spotify:artist:22JuR9OeENcP54XN5TlNWS"
           }, {
             "external_urls" : {
               "spotify" : "https://open.spotify.com/artist/69VgCcXFV59QuQWEXSTxfK"
             },
             "followers" : {
               "href" : null,
-              "total" : 158361
+              "total" : 158897
             },
             "genres" : [ "acoustic blues", "blues", "blues rock", "chicago blues", "country blues", "delta blues", "harmonica blues", "traditional blues" ],
             "href" : "https://api.spotify.com/v1/artists/69VgCcXFV59QuQWEXSTxfK",
@@ -328,44 +300,44 @@ http_interactions:
               "width" : 64
             } ],
             "name" : "Sonny Boy Williamson II",
-            "popularity" : 48,
+            "popularity" : 47,
             "type" : "artist",
             "uri" : "spotify:artist:69VgCcXFV59QuQWEXSTxfK"
           }, {
             "external_urls" : {
-              "spotify" : "https://open.spotify.com/artist/36hwOoNPgnsKnhoMBYpJrJ"
+              "spotify" : "https://open.spotify.com/artist/22JuR9OeENcP54XN5TlNWS"
             },
             "followers" : {
               "href" : null,
-              "total" : 48293
+              "total" : 188568
             },
-            "genres" : [ "acoustic blues", "blues", "blues rock", "electric blues", "harmonica blues", "louisiana blues", "rhythm and blues", "rock-and-roll", "swamp blues", "swamp rock", "traditional blues" ],
-            "href" : "https://api.spotify.com/v1/artists/36hwOoNPgnsKnhoMBYpJrJ",
-            "id" : "36hwOoNPgnsKnhoMBYpJrJ",
+            "genres" : [ "acoustic blues", "blues", "blues rock", "chicago blues", "electric blues", "harmonica blues", "louisiana blues", "rock-and-roll", "traditional blues" ],
+            "href" : "https://api.spotify.com/v1/artists/22JuR9OeENcP54XN5TlNWS",
+            "id" : "22JuR9OeENcP54XN5TlNWS",
             "images" : [ {
-              "height" : 640,
-              "url" : "https://i.scdn.co/image/ab67616d0000b273f0cf3871122092785943b264",
-              "width" : 640
+              "height" : 700,
+              "url" : "https://i.scdn.co/image/0ea1941b94aeb6b6366a65c7d719cc76cf537919",
+              "width" : 591
             }, {
-              "height" : 300,
-              "url" : "https://i.scdn.co/image/ab67616d00001e02f0cf3871122092785943b264",
-              "width" : 300
+              "height" : 237,
+              "url" : "https://i.scdn.co/image/f93ddf2db270779389c96d0c67bc08bee9e71271",
+              "width" : 200
             }, {
-              "height" : 64,
-              "url" : "https://i.scdn.co/image/ab67616d00004851f0cf3871122092785943b264",
+              "height" : 76,
+              "url" : "https://i.scdn.co/image/f2daa2263a6cf3f3c54f6f334a601570acd2b23f",
               "width" : 64
             } ],
-            "name" : "Slim Harpo",
-            "popularity" : 45,
+            "name" : "Little Walter",
+            "popularity" : 46,
             "type" : "artist",
-            "uri" : "spotify:artist:36hwOoNPgnsKnhoMBYpJrJ"
+            "uri" : "spotify:artist:22JuR9OeENcP54XN5TlNWS"
           }, {
             "external_urls" : {
               "spotify" : "https://open.spotify.com/artist/5v8WPpMk60cqZbuZLdXjKY"
             },
             "followers" : {
               "href" : null,
-              "total" : 134242
+              "total" : 134697
             },
             "genres" : [ "acoustic blues", "blues", "chicago blues", "electric blues", "jump blues", "traditional blues" ],
             "href" : "https://api.spotify.com/v1/artists/5v8WPpMk60cqZbuZLdXjKY",
@@ -388,16 +360,44 @@ http_interactions:
               "width" : 64
             } ],
             "name" : "Willie Dixon",
-            "popularity" : 43,
+            "popularity" : 42,
             "type" : "artist",
             "uri" : "spotify:artist:5v8WPpMk60cqZbuZLdXjKY"
+          }, {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/artist/36hwOoNPgnsKnhoMBYpJrJ"
+            },
+            "followers" : {
+              "href" : null,
+              "total" : 48532
+            },
+            "genres" : [ "acoustic blues", "blues", "blues rock", "electric blues", "harmonica blues", "louisiana blues", "rhythm and blues", "rock-and-roll", "swamp blues", "swamp rock", "traditional blues" ],
+            "href" : "https://api.spotify.com/v1/artists/36hwOoNPgnsKnhoMBYpJrJ",
+            "id" : "36hwOoNPgnsKnhoMBYpJrJ",
+            "images" : [ {
+              "height" : 640,
+              "url" : "https://i.scdn.co/image/ab67616d0000b273f0cf3871122092785943b264",
+              "width" : 640
+            }, {
+              "height" : 300,
+              "url" : "https://i.scdn.co/image/ab67616d00001e02f0cf3871122092785943b264",
+              "width" : 300
+            }, {
+              "height" : 64,
+              "url" : "https://i.scdn.co/image/ab67616d00004851f0cf3871122092785943b264",
+              "width" : 64
+            } ],
+            "name" : "Slim Harpo",
+            "popularity" : 44,
+            "type" : "artist",
+            "uri" : "spotify:artist:36hwOoNPgnsKnhoMBYpJrJ"
           }, {
             "external_urls" : {
               "spotify" : "https://open.spotify.com/artist/1h0hOL3bVcYlg4xcSjU7fP"
             },
             "followers" : {
               "href" : null,
-              "total" : 159489
+              "total" : 160014
             },
             "genres" : [ "blues", "blues rock", "chicago blues", "electric blues", "modern blues", "traditional blues" ],
             "href" : "https://api.spotify.com/v1/artists/1h0hOL3bVcYlg4xcSjU7fP",
@@ -420,7 +420,7 @@ http_interactions:
               "width" : 64
             } ],
             "name" : "Otis Rush",
-            "popularity" : 42,
+            "popularity" : 41,
             "type" : "artist",
             "uri" : "spotify:artist:1h0hOL3bVcYlg4xcSjU7fP"
           }, {
@@ -429,7 +429,7 @@ http_interactions:
             },
             "followers" : {
               "href" : null,
-              "total" : 176190
+              "total" : 176793
             },
             "genres" : [ "blues", "blues rock", "chicago blues", "electric blues", "jazz blues", "texas blues", "traditional blues" ],
             "href" : "https://api.spotify.com/v1/artists/6nPKmEbQmR8jGZEm7ArOFX",
@@ -452,7 +452,7 @@ http_interactions:
               "width" : 64
             } ],
             "name" : "T-Bone Walker",
-            "popularity" : 45,
+            "popularity" : 44,
             "type" : "artist",
             "uri" : "spotify:artist:6nPKmEbQmR8jGZEm7ArOFX"
           }, {
@@ -461,7 +461,7 @@ http_interactions:
             },
             "followers" : {
               "href" : null,
-              "total" : 64772
+              "total" : 65028
             },
             "genres" : [ "acoustic blues", "blues", "chicago blues", "electric blues", "soul blues", "traditional blues" ],
             "href" : "https://api.spotify.com/v1/artists/0XErJwG6aCEj7NpKsEZrrO",
@@ -480,7 +480,7 @@ http_interactions:
               "width" : 64
             } ],
             "name" : "Magic Sam",
-            "popularity" : 38,
+            "popularity" : 37,
             "type" : "artist",
             "uri" : "spotify:artist:0XErJwG6aCEj7NpKsEZrrO"
           }, {
@@ -489,7 +489,7 @@ http_interactions:
             },
             "followers" : {
               "href" : null,
-              "total" : 769583
+              "total" : 771853
             },
             "genres" : [ "blues", "blues rock", "classic rock", "delta blues", "electric blues", "memphis blues", "soul", "traditional blues" ],
             "href" : "https://api.spotify.com/v1/artists/1yNOfXGQNGjAynk77wv85x",
@@ -521,7 +521,7 @@ http_interactions:
             },
             "followers" : {
               "href" : null,
-              "total" : 141428
+              "total" : 141944
             },
             "genres" : [ "acoustic blues", "blues", "country blues", "delta blues", "traditional blues" ],
             "href" : "https://api.spotify.com/v1/artists/15oeqKO5k5uZ5773tWvpda",
@@ -544,7 +544,7 @@ http_interactions:
               "width" : 64
             } ],
             "name" : "Son House",
-            "popularity" : 36,
+            "popularity" : 35,
             "type" : "artist",
             "uri" : "spotify:artist:15oeqKO5k5uZ5773tWvpda"
           }, {
@@ -553,7 +553,7 @@ http_interactions:
             },
             "followers" : {
               "href" : null,
-              "total" : 111050
+              "total" : 111357
             },
             "genres" : [ "blues", "chicago blues", "electric blues", "harmonica blues", "memphis blues", "modern blues", "traditional blues" ],
             "href" : "https://api.spotify.com/v1/artists/78CBFzwo7wwNaaTYVP5btK",
@@ -572,72 +572,16 @@ http_interactions:
               "width" : 160
             } ],
             "name" : "Junior Wells",
-            "popularity" : 41,
+            "popularity" : 40,
             "type" : "artist",
             "uri" : "spotify:artist:78CBFzwo7wwNaaTYVP5btK"
-          }, {
-            "external_urls" : {
-              "spotify" : "https://open.spotify.com/artist/5dCuFngSPyOOnTAvrC7v2s"
-            },
-            "followers" : {
-              "href" : null,
-              "total" : 348340
-            },
-            "genres" : [ "acoustic blues", "blues", "blues rock", "classic rock", "electric blues", "texas blues", "traditional blues" ],
-            "href" : "https://api.spotify.com/v1/artists/5dCuFngSPyOOnTAvrC7v2s",
-            "id" : "5dCuFngSPyOOnTAvrC7v2s",
-            "images" : [ {
-              "height" : 672,
-              "url" : "https://i.scdn.co/image/6c1f3c786fbc542e29df368b40d6ad888fe010be",
-              "width" : 588
-            }, {
-              "height" : 229,
-              "url" : "https://i.scdn.co/image/f5659df5e8bd559c3cb7deebf8732b04da238083",
-              "width" : 200
-            }, {
-              "height" : 73,
-              "url" : "https://i.scdn.co/image/59853b8df8e0a851e28ed82b176fcd2f4304b3de",
-              "width" : 64
-            } ],
-            "name" : "Freddie King",
-            "popularity" : 52,
-            "type" : "artist",
-            "uri" : "spotify:artist:5dCuFngSPyOOnTAvrC7v2s"
-          }, {
-            "external_urls" : {
-              "spotify" : "https://open.spotify.com/artist/737qPoiQQkeuIzuJy54aK4"
-            },
-            "followers" : {
-              "href" : null,
-              "total" : 46895
-            },
-            "genres" : [ "acoustic blues", "blues", "blues rock", "chicago blues", "electric blues", "traditional blues" ],
-            "href" : "https://api.spotify.com/v1/artists/737qPoiQQkeuIzuJy54aK4",
-            "id" : "737qPoiQQkeuIzuJy54aK4",
-            "images" : [ {
-              "height" : 640,
-              "url" : "https://i.scdn.co/image/ab67616d0000b273a81f04f52ea4066084025c51",
-              "width" : 640
-            }, {
-              "height" : 300,
-              "url" : "https://i.scdn.co/image/ab67616d00001e02a81f04f52ea4066084025c51",
-              "width" : 300
-            }, {
-              "height" : 64,
-              "url" : "https://i.scdn.co/image/ab67616d00004851a81f04f52ea4066084025c51",
-              "width" : 64
-            } ],
-            "name" : "Hound Dog Taylor",
-            "popularity" : 38,
-            "type" : "artist",
-            "uri" : "spotify:artist:737qPoiQQkeuIzuJy54aK4"
           }, {
             "external_urls" : {
               "spotify" : "https://open.spotify.com/artist/3enRG6NEAfCkJI2muGcnT1"
             },
             "followers" : {
               "href" : null,
-              "total" : 28208
+              "total" : 28354
             },
             "genres" : [ "acoustic blues", "blues", "chicago blues", "traditional blues" ],
             "href" : "https://api.spotify.com/v1/artists/3enRG6NEAfCkJI2muGcnT1",
@@ -661,39 +605,67 @@ http_interactions:
             "uri" : "spotify:artist:3enRG6NEAfCkJI2muGcnT1"
           }, {
             "external_urls" : {
-              "spotify" : "https://open.spotify.com/artist/6bR0cgMtkCVpm0I5yrDNzO"
+              "spotify" : "https://open.spotify.com/artist/5dCuFngSPyOOnTAvrC7v2s"
             },
             "followers" : {
               "href" : null,
-              "total" : 152013
+              "total" : 350078
             },
-            "genres" : [ "acoustic blues", "blues", "harmonica blues", "rhythm and blues", "texas blues", "traditional blues" ],
-            "href" : "https://api.spotify.com/v1/artists/6bR0cgMtkCVpm0I5yrDNzO",
-            "id" : "6bR0cgMtkCVpm0I5yrDNzO",
+            "genres" : [ "acoustic blues", "blues", "blues rock", "classic rock", "electric blues", "texas blues", "traditional blues" ],
+            "href" : "https://api.spotify.com/v1/artists/5dCuFngSPyOOnTAvrC7v2s",
+            "id" : "5dCuFngSPyOOnTAvrC7v2s",
+            "images" : [ {
+              "height" : 672,
+              "url" : "https://i.scdn.co/image/6c1f3c786fbc542e29df368b40d6ad888fe010be",
+              "width" : 588
+            }, {
+              "height" : 229,
+              "url" : "https://i.scdn.co/image/f5659df5e8bd559c3cb7deebf8732b04da238083",
+              "width" : 200
+            }, {
+              "height" : 73,
+              "url" : "https://i.scdn.co/image/59853b8df8e0a851e28ed82b176fcd2f4304b3de",
+              "width" : 64
+            } ],
+            "name" : "Freddie King",
+            "popularity" : 51,
+            "type" : "artist",
+            "uri" : "spotify:artist:5dCuFngSPyOOnTAvrC7v2s"
+          }, {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/artist/737qPoiQQkeuIzuJy54aK4"
+            },
+            "followers" : {
+              "href" : null,
+              "total" : 47109
+            },
+            "genres" : [ "acoustic blues", "blues", "blues rock", "chicago blues", "electric blues", "traditional blues" ],
+            "href" : "https://api.spotify.com/v1/artists/737qPoiQQkeuIzuJy54aK4",
+            "id" : "737qPoiQQkeuIzuJy54aK4",
             "images" : [ {
               "height" : 640,
-              "url" : "https://i.scdn.co/image/ab67616d0000b273f25345e400eb77c2d49f8558",
+              "url" : "https://i.scdn.co/image/ab67616d0000b273a81f04f52ea4066084025c51",
               "width" : 640
             }, {
               "height" : 300,
-              "url" : "https://i.scdn.co/image/ab67616d00001e02f25345e400eb77c2d49f8558",
+              "url" : "https://i.scdn.co/image/ab67616d00001e02a81f04f52ea4066084025c51",
               "width" : 300
             }, {
               "height" : 64,
-              "url" : "https://i.scdn.co/image/ab67616d00004851f25345e400eb77c2d49f8558",
+              "url" : "https://i.scdn.co/image/ab67616d00004851a81f04f52ea4066084025c51",
               "width" : 64
             } ],
-            "name" : "Big Mama Thornton",
-            "popularity" : 44,
+            "name" : "Hound Dog Taylor",
+            "popularity" : 37,
             "type" : "artist",
-            "uri" : "spotify:artist:6bR0cgMtkCVpm0I5yrDNzO"
+            "uri" : "spotify:artist:737qPoiQQkeuIzuJy54aK4"
           }, {
             "external_urls" : {
               "spotify" : "https://open.spotify.com/artist/20k4RFKXyboeDSz9bjumx0"
             },
             "followers" : {
               "href" : null,
-              "total" : 56460
+              "total" : 56688
             },
             "genres" : [ "acoustic blues", "blues", "boogie-woogie", "chicago blues", "traditional blues" ],
             "href" : "https://api.spotify.com/v1/artists/20k4RFKXyboeDSz9bjumx0",
@@ -716,16 +688,44 @@ http_interactions:
               "width" : 64
             } ],
             "name" : "Jimmy Rogers",
-            "popularity" : 40,
+            "popularity" : 39,
             "type" : "artist",
             "uri" : "spotify:artist:20k4RFKXyboeDSz9bjumx0"
+          }, {
+            "external_urls" : {
+              "spotify" : "https://open.spotify.com/artist/6bR0cgMtkCVpm0I5yrDNzO"
+            },
+            "followers" : {
+              "href" : null,
+              "total" : 152841
+            },
+            "genres" : [ "acoustic blues", "blues", "harmonica blues", "rhythm and blues", "texas blues", "traditional blues" ],
+            "href" : "https://api.spotify.com/v1/artists/6bR0cgMtkCVpm0I5yrDNzO",
+            "id" : "6bR0cgMtkCVpm0I5yrDNzO",
+            "images" : [ {
+              "height" : 640,
+              "url" : "https://i.scdn.co/image/ab67616d0000b273f25345e400eb77c2d49f8558",
+              "width" : 640
+            }, {
+              "height" : 300,
+              "url" : "https://i.scdn.co/image/ab67616d00001e02f25345e400eb77c2d49f8558",
+              "width" : 300
+            }, {
+              "height" : 64,
+              "url" : "https://i.scdn.co/image/ab67616d00004851f25345e400eb77c2d49f8558",
+              "width" : 64
+            } ],
+            "name" : "Big Mama Thornton",
+            "popularity" : 43,
+            "type" : "artist",
+            "uri" : "spotify:artist:6bR0cgMtkCVpm0I5yrDNzO"
           }, {
             "external_urls" : {
               "spotify" : "https://open.spotify.com/artist/5JuPv0rJXe5aWNTgu8YVqZ"
             },
             "followers" : {
               "href" : null,
-              "total" : 80546
+              "total" : 80862
             },
             "genres" : [ "blues", "electric blues", "piano blues", "traditional blues" ],
             "href" : "https://api.spotify.com/v1/artists/5JuPv0rJXe5aWNTgu8YVqZ",
@@ -748,12 +748,12 @@ http_interactions:
               "width" : 64
             } ],
             "name" : "Memphis Slim",
-            "popularity" : 32,
+            "popularity" : 30,
             "type" : "artist",
             "uri" : "spotify:artist:5JuPv0rJXe5aWNTgu8YVqZ"
           } ]
         }
     adapter_metadata:
       vcr_decompressed: gzip
-  recorded_at: Thu, 20 Oct 2022 03:29:43 GMT
+  recorded_at: Wed, 02 Nov 2022 04:08:16 GMT
 recorded_with: VCR 6.1.0

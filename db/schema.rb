@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_21_163859) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_28_025337) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,6 +51,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_163859) do
     t.index ["name"], name: "index_genres_on_name", unique: true
   end
 
+  create_table "liked_songs_playlists", force: :cascade do |t|
+    t.integer "song_count"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_liked_songs_playlists_on_user_id"
+  end
+
   create_table "oauth_credentials", force: :cascade do |t|
     t.string "access_token", null: false
     t.string "refresh_token", null: false
@@ -73,11 +81,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_163859) do
   end
 
   create_table "track_data", force: :cascade do |t|
+    t.string "playlist_type", null: false
     t.bigint "playlist_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.enum "scraping_status", default: "incomplete", null: false, enum_type: "scraping_status"
-    t.index ["playlist_id"], name: "index_track_data_on_playlist_id"
+    t.index ["playlist_type", "playlist_id"], name: "index_track_data_on_playlist"
   end
 
   create_table "track_data_tracks", force: :cascade do |t|
@@ -108,9 +117,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_163859) do
   add_foreign_key "artists_genres", "genres"
   add_foreign_key "artists_tracks", "artists"
   add_foreign_key "artists_tracks", "tracks"
+  add_foreign_key "liked_songs_playlists", "users"
   add_foreign_key "oauth_credentials", "users"
   add_foreign_key "playlists", "users"
-  add_foreign_key "track_data", "playlists"
   add_foreign_key "track_data_tracks", "track_data", column: "track_data_id"
   add_foreign_key "track_data_tracks", "tracks"
 end

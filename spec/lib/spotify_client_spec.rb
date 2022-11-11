@@ -12,6 +12,23 @@ describe SpotifyClient, :vcr do
     it 'returns the correct playlist' do
       expect(client.get_playlist_by_id(playlist_id).id).to eq playlist_id
     end
+
+    context 'when a 429 error is raised' do
+      include_context 'with a stubbed retryable error' do
+        let(:error_class) { RestClient::TooManyRequests }
+        let(:recipient) { RSpotify::Playlist }
+        let(:message) { :find_by_id }
+      end
+
+      it 'reattempts the call that errored out' do
+        client.get_playlist_by_id(playlist_id)
+        expect(RSpotify::Playlist).to have_received(:find_by_id).twice
+      end
+
+      it 'returns the correct playlist' do
+        expect(client.get_playlist_by_id(playlist_id).id).to eq playlist_id
+      end
+    end
   end
 
   describe '#get_artists_by_ids' do
@@ -79,6 +96,49 @@ describe SpotifyClient, :vcr do
 
     it 'returns the playlist\'s raw track data' do
       expect(client.get_tracks(rspotify_playlist)).to be_a Responses::GetTracks
+    end
+
+    context 'when a 429 error is raised' do
+      include_context 'with a stubbed retryable error' do
+        let(:error_class) { RestClient::TooManyRequests }
+        let(:recipient) { rspotify_playlist }
+        let(:message) { :tracks }
+      end
+
+      it 'reattempts the call that errored out' do
+        client.get_tracks(rspotify_playlist)
+        expect(rspotify_playlist).to have_received(:tracks).twice
+      end
+
+      it 'returns the playlist\'s raw track data' do
+        expect(client.get_tracks(rspotify_playlist)).to be_a Responses::GetTracks
+      end
+    end
+  end
+
+  describe '#get_liked_tracks' do
+    let(:playlist) { create(:liked_songs_playlist) }
+    let(:rspotify_user) { playlist.user.to_rspotify_user }
+
+    it 'returns the playlist\'s raw track data' do
+      expect(client.get_liked_tracks(rspotify_user)).to be_a Responses::GetTracks
+    end
+
+    context 'when a 429 error is raised' do
+      include_context 'with a stubbed retryable error' do
+        let(:error_class) { RestClient::TooManyRequests }
+        let(:recipient) { rspotify_user }
+        let(:message) { :saved_tracks }
+      end
+
+      it 'reattempts the call that errored out' do
+        client.get_liked_tracks(rspotify_user)
+        expect(rspotify_user).to have_received(:saved_tracks).twice
+      end
+
+      it 'returns the playlist\'s raw track data' do
+        expect(client.get_liked_tracks(rspotify_user)).to be_a Responses::GetTracks
+      end
     end
   end
 end

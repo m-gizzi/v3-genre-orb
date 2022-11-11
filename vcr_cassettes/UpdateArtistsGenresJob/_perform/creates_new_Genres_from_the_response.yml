@@ -25,7 +25,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Cache-Control:
-      - public, max-age=77779
+      - public, max-age=78549
       X-Robots-Tag:
       - noindex, nofollow
       Access-Control-Allow-Origin:
@@ -44,7 +44,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Date:
-      - Sun, 02 Oct 2022 20:58:58 GMT
+      - Wed, 02 Nov 2022 04:08:29 GMT
       Server:
       - envoy
       Via:
@@ -63,7 +63,7 @@ http_interactions:
             },
             "followers" : {
               "href" : null,
-              "total" : 461057
+              "total" : 463899
             },
             "genres" : [ "acoustic blues", "blues", "blues rock", "chicago blues", "classic rock", "delta blues", "harmonica blues", "memphis blues", "traditional blues" ],
             "href" : "https://api.spotify.com/v1/artists/0Wxy5Qka8BN9crcFkiAxSR",
@@ -86,12 +86,12 @@ http_interactions:
               "width" : 64
             } ],
             "name" : "Howlin' Wolf",
-            "popularity" : 52,
+            "popularity" : 51,
             "type" : "artist",
             "uri" : "spotify:artist:0Wxy5Qka8BN9crcFkiAxSR"
           } ]
         }
     adapter_metadata:
       vcr_decompressed: gzip
-  recorded_at: Sun, 02 Oct 2022 20:58:54 GMT
+  recorded_at: Wed, 02 Nov 2022 04:08:28 GMT
 recorded_with: VCR 6.1.0
