@@ -77,7 +77,11 @@ RSpec.configure do |config|
     def call_original_method(method, args)
       return method.call if args.blank?
 
-      method.call(args)
+      if args.is_a?(Hash)
+        method.call(**args)
+      else
+        method.call(args)
+      end
     end
   end
 
