@@ -27,7 +27,7 @@ http_interactions:
       Cache-Control:
       - public, max-age=0
       Etag:
-      - '"MC-ImFkODM5ZTJmY2U1MDBjYzgxNTU4NGQzMDIyYTRhMDgxIg=="'
+      - '"MC-ImY5Yzk2NDJmNmUxNDRhNmM5OWMzZTJlOWJlOTljODNiIg=="'
       X-Robots-Tag:
       - noindex, nofollow
       Access-Control-Allow-Origin:
@@ -46,7 +46,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Date:
-      - Sun, 06 Nov 2022 23:13:29 GMT
+      - Fri, 11 Nov 2022 03:37:33 GMT
       Server:
       - envoy
       Via:
@@ -176,7 +176,7 @@ http_interactions:
                 "id" : "66bTfGTxxYE6Pz17hbb8PT",
                 "is_local" : false,
                 "name" : "Dissuade",
-                "popularity" : 18,
+                "popularity" : 19,
                 "preview_url" : "https://p.scdn.co/mp3-preview/ef63a7ae9a93b0969f5c63e5c612bdfcef3187cf?cid=58d0e51708cc436087d56d2c33b05a42",
                 "track" : true,
                 "track_number" : 1,
@@ -263,7 +263,7 @@ http_interactions:
                 "id" : "5YbXpN5YZcmqu0gNN7YHCV",
                 "is_local" : false,
                 "name" : "THE FIFTH DAY PART 1",
-                "popularity" : 30,
+                "popularity" : 29,
                 "preview_url" : "https://p.scdn.co/mp3-preview/bd1a2f084f765a609f55e27684c45b1cf7a1c89a?cid=58d0e51708cc436087d56d2c33b05a42",
                 "track" : true,
                 "track_number" : 1,
@@ -944,7 +944,7 @@ http_interactions:
                 "id" : "1JcwHjETNNbUH0yfrc9w9n",
                 "is_local" : false,
                 "name" : "Power Core",
-                "popularity" : 49,
+                "popularity" : 50,
                 "preview_url" : "https://p.scdn.co/mp3-preview/bfb3f3220b47ea9d0d3b2c39a796d4ea0d096b92?cid=58d0e51708cc436087d56d2c33b05a42",
                 "track" : true,
                 "track_number" : 7,
@@ -1727,7 +1727,7 @@ http_interactions:
                 "id" : "4hXVpZOcZUTRnWoa8z4OI0",
                 "is_local" : false,
                 "name" : "Lock And Load",
-                "popularity" : 8,
+                "popularity" : 7,
                 "preview_url" : "https://p.scdn.co/mp3-preview/f6cfecad1e0e2e751da169cba6f91ba30417e2f0?cid=58d0e51708cc436087d56d2c33b05a42",
                 "track" : true,
                 "track_number" : 7,
@@ -1923,7 +1923,7 @@ http_interactions:
         }
     adapter_metadata:
       vcr_decompressed: gzip
-  recorded_at: Sun, 06 Nov 2022 23:13:29 GMT
+  recorded_at: Fri, 11 Nov 2022 03:37:32 GMT
 - request:
     method: get
     uri: https://api.spotify.com/v1/playlists/3nwz2mVTVbWSGMSFMzN7pu/tracks?limit=100&offset=0
@@ -1939,8 +1939,6 @@ http_interactions:
       - rest-client/2.0.2 (darwin21 x86_64) ruby/3.1.2p20
       Authorization:
       - "<BEARER ACCESS TOKEN>"
-      Content-Type:
-      - application/json
       Host:
       - api.spotify.com
   response:
@@ -1953,7 +1951,7 @@ http_interactions:
       Cache-Control:
       - public, max-age=0
       Etag:
-      - '"MC-IjYwZjVjZjlmNGU3ZDlmODQ4MmRiODIwY2FmZTdmZTFlIg=="'
+      - '"MC-ImQ5MWMyOTNjNDg2YjA4MzJmYTBlMmU2NmM3OWZiNzk4Ig=="'
       X-Robots-Tag:
       - noindex, nofollow
       Access-Control-Allow-Origin:
@@ -1972,7 +1970,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Date:
-      - Sun, 06 Nov 2022 23:13:29 GMT
+      - Fri, 11 Nov 2022 03:37:33 GMT
       Server:
       - envoy
       Via:
@@ -2063,7 +2061,7 @@ http_interactions:
               "id" : "66bTfGTxxYE6Pz17hbb8PT",
               "is_local" : false,
               "name" : "Dissuade",
-              "popularity" : 18,
+              "popularity" : 19,
               "preview_url" : "https://p.scdn.co/mp3-preview/ef63a7ae9a93b0969f5c63e5c612bdfcef3187cf?cid=58d0e51708cc436087d56d2c33b05a42",
               "track" : true,
               "track_number" : 1,
@@ -2150,7 +2148,7 @@ http_interactions:
               "id" : "5YbXpN5YZcmqu0gNN7YHCV",
               "is_local" : false,
               "name" : "THE FIFTH DAY PART 1",
-              "popularity" : 30,
+              "popularity" : 29,
               "preview_url" : "https://p.scdn.co/mp3-preview/bd1a2f084f765a609f55e27684c45b1cf7a1c89a?cid=58d0e51708cc436087d56d2c33b05a42",
               "track" : true,
               "track_number" : 1,
@@ -2831,7 +2829,7 @@ http_interactions:
               "id" : "1JcwHjETNNbUH0yfrc9w9n",
               "is_local" : false,
               "name" : "Power Core",
-              "popularity" : 49,
+              "popularity" : 50,
               "preview_url" : "https://p.scdn.co/mp3-preview/bfb3f3220b47ea9d0d3b2c39a796d4ea0d096b92?cid=58d0e51708cc436087d56d2c33b05a42",
               "track" : true,
               "track_number" : 7,
@@ -3614,7 +3612,7 @@ http_interactions:
               "id" : "4hXVpZOcZUTRnWoa8z4OI0",
               "is_local" : false,
               "name" : "Lock And Load",
-              "popularity" : 8,
+              "popularity" : 7,
               "preview_url" : "https://p.scdn.co/mp3-preview/f6cfecad1e0e2e751da169cba6f91ba30417e2f0?cid=58d0e51708cc436087d56d2c33b05a42",
               "track" : true,
               "track_number" : 7,
@@ -3807,5 +3805,5 @@ http_interactions:
         }
     adapter_metadata:
       vcr_decompressed: gzip
-  recorded_at: Sun, 06 Nov 2022 23:13:29 GMT
+  recorded_at: Fri, 11 Nov 2022 03:37:33 GMT
 recorded_with: VCR 6.1.0
