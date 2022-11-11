@@ -16,7 +16,7 @@ class UpdatePlaylistTrackDataService < ApplicationService
 
   def call
     response = handle_fetching_tracks
-    process_response(response)
+    create_records_from_response(response)
 
     if response.next_url.present?
       handle_self_queuing(response)
@@ -52,7 +52,7 @@ class UpdatePlaylistTrackDataService < ApplicationService
     response
   end
 
-  def process_response(response)
+  def create_records_from_response(response)
     tracks = response.items.map do |track_hash|
       track_attributes = track_hash['track']
       artist_attributes = track_attributes['artists']
