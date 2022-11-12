@@ -1,0 +1,23 @@
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+
+Metrics/MethodLength:
+  Exclude:
+    - 'db/migrate/*'
+
+Rails/CreateTableWithTimestamps:
+  Exclude:
+    - 'db/migrate/20220906172030_create_track_data_tracks_join_table.rb'
+
+Rails/HasAndBelongsToMany:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 4
