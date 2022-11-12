@@ -23,7 +23,7 @@ processes = []
 [[services]]
   http_checks = []
   internal_port = 8080
-  processes = ["app"]
+  processes = ["web"]
   protocol = "tcp"
   script_checks = []
   [services.concurrency]
@@ -49,3 +49,7 @@ processes = []
 [[statics]]
   guest_path = "/app/public"
   url_prefix = "/"
+
+[processes]
+  web = "bin/rails fly:server"
+  worker = "bundle exec sidekiq"
