@@ -1,3 +1,5 @@
+:concurrency: 1
+
 :schedule:
   BatchUpdateTrackDataJob:
     # Every day at 12:00am CST
