@@ -105,6 +105,11 @@ ENV SECRET_KEY_BASE 1
 # ENV AWS_ACCESS_KEY_ID=1
 # ENV AWS_SECRET_ACCESS_KEY=1
 
+RUN --mount=type=secret,id=SPOTIFY_CLIENT_ID \
+    SPOTIFY_CLIENT_ID="$(cat /run/secrets/SPOTIFY_CLIENT_ID)" \
+    --mount=type=secret,id=SPOTIFY_CLIENT_SECRET \
+    SPOTIFY_CLIENT_SECRET="$(cat /run/secrets/SPOTIFY_CLIENT_SECRET)"
+    
 # Run build task defined in lib/tasks/fly.rake
 ARG BUILD_COMMAND="bin/rails fly:build"
 RUN ${BUILD_COMMAND}
