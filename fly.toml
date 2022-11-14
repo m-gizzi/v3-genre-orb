@@ -1,9 +1,8 @@
-# fly.toml file generated for genre-orb on 2022-11-11T21:36:42-06:00
+# fly.toml file generated for genre-orb on 2022-11-13T21:21:24-06:00
 
 app = "genre-orb"
 kill_signal = "SIGINT"
 kill_timeout = 5
-processes = []
 
 [build]
   [build.args]
@@ -19,6 +18,13 @@ processes = []
 [experimental]
   allowed_public_ports = []
   auto_rollback = true
+  cmd = []
+  entrypoint = []
+  exec = []
+
+[processes]
+  web = "bin/rails fly:server"
+  worker = "bundle exec sidekiq -c 2"
 
 [[services]]
   http_checks = []
@@ -47,9 +53,7 @@ processes = []
     timeout = "2s"
 
 [[statics]]
+  cache_key = "___app_public"
   guest_path = "/app/public"
+  processes = []
   url_prefix = "/"
-
-[processes]
-  web = "bin/rails fly:server"
-  worker = "bundle exec sidekiq"
