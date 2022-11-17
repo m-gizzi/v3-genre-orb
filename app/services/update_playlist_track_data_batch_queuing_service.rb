@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PlaylistTrackDataBatchQueuingService < ApplicationService
+class UpdatePlaylistTrackDataBatchQueuingService < ApplicationService
   MAXIMUM_PLAYLIST_TRACKS_PER_JOB = 100
 
   attr_reader :playlist, :track_data
