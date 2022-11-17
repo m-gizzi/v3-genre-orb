@@ -5,7 +5,7 @@ class BatchUpdateTrackDataJob
 
   def perform
     args = Playlist.ids.map { |id| [id, 'Playlist'] }
-    # args += LikedSongsPlaylist.ids.map { |id| [id, 'LikedSongsPlaylist'] }
+    args += LikedSongsPlaylist.ids.map { |id| [id, 'LikedSongsPlaylist'] }
 
     UpdatePlaylistTrackDataBatchQueuingJob.perform_bulk(args)
   end
