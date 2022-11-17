@@ -11,9 +11,5 @@ module Responses
       @next_url = response['next']
       @total = response['total']
     end
-
-    def calculate_next_offset
-      limit + offset
-    end
   end
 end

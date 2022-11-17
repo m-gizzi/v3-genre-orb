@@ -16,7 +16,7 @@ class UpdatePlaylistTrackDataBatchQueuingService < ApplicationService
 
     offsets = 0.step(rspotify_playlist.total, MAXIMUM_PLAYLIST_TRACKS_PER_JOB)
 
-    args = offsets.map { |offset| [playlist.id, playlist.class.to_s, nil, track_data.id, offset] }
+    args = offsets.map { |offset| [playlist.id, playlist.class.to_s, track_data.id, offset] }
     UpdatePlaylistTrackDataJob.perform_bulk(args)
   end
 end

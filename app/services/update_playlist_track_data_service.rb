@@ -5,24 +5,19 @@ require 'has_spotify_client'
 class UpdatePlaylistTrackDataService < ApplicationService
   include HasSpotifyClient
 
-  attr_reader :playlist, :track_data, :offset, :self_queuing
+  attr_reader :playlist, :track_data, :offset
 
-  def initialize(playlist, track_data: nil, offset: 0, self_queuing: nil)
+  def initialize(playlist, track_data, offset: 0)
     @playlist = playlist
-    @track_data = track_data || playlist.track_data.create!
+    @track_data = track_data
     @offset = offset
-    @self_queuing = self_queuing
   end
 
   def call
     response = handle_fetching_tracks
     create_records_from_response(response)
 
-    if response.next_url.present?
-      handle_self_queuing(response)
-    else
-      track_data.completed!
-    end
+    track_data.completed! if track_data.tracks.reload.count == response.total
   end
 
   private
@@ -73,16 +68,6 @@ class UpdatePlaylistTrackDataService < ApplicationService
   def find_or_create_artists_from_attributes!(artist_attributes)
     artist_attributes.map do |attributes|
       Artist.create_with(name: attributes['name']).find_or_create_by!(spotify_id: attributes['id'])
-    end
-  end
-
-  def handle_self_queuing(response)
-    offset = response.calculate_next_offset
-    case self_queuing
-    when 'asynchronous'
-      UpdatePlaylistTrackDataJob.perform_async(playlist.id, playlist.class.to_s, self_queuing, track_data.id, offset)
-    when 'synchronous'
-      playlist.update_track_data!(track_data:, offset:, self_queuing:)
     end
   end
 end
