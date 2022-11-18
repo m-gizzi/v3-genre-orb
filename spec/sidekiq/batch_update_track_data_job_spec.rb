@@ -18,7 +18,7 @@ describe BatchUpdateTrackDataJob do
       expect do
         described_class.perform_async
         described_class.drain
-      end.to change(UpdatePlaylistTrackDataJob.jobs, :size).by(5)
+      end.to change(UpdatePlaylistTrackDataBatchQueuingJob.jobs, :size).by(5)
     end
   end
 end
