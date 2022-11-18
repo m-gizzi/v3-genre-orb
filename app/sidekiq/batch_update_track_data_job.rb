@@ -4,9 +4,9 @@ class BatchUpdateTrackDataJob
   include Sidekiq::Job
 
   def perform
-    args = Playlist.ids.map { |id| [id, 'Playlist', 'asynchronous'] }
-    args += LikedSongsPlaylist.ids.map { |id| [id, 'LikedSongsPlaylist', 'asynchronous'] }
+    args = Playlist.ids.map { |id| [id, 'Playlist'] }
+    args += LikedSongsPlaylist.ids.map { |id| [id, 'LikedSongsPlaylist'] }
 
-    UpdatePlaylistTrackDataJob.perform_bulk(args)
+    UpdatePlaylistTrackDataBatchQueuingJob.perform_bulk(args)
   end
 end

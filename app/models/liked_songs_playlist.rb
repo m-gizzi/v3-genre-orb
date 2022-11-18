@@ -9,8 +9,12 @@ class LikedSongsPlaylist < ApplicationRecord
           inverse_of: :playlist,
           as: :playlist
 
-  def update_track_data!(track_data: nil, offset: 0, self_queuing: nil)
-    UpdatePlaylistTrackDataService.call(self, track_data:, offset:, self_queuing:)
+  def batch_queue_track_data_update!
+    UpdatePlaylistTrackDataBatchQueuingService.call(self)
+  end
+
+  def update_track_data!(track_data, offset: 0)
+    UpdatePlaylistTrackDataService.call(self, track_data, offset:)
   end
 
   def sync_with_spotify!(spotify_response)

@@ -21,72 +21,6 @@ http_interactions:
       - api.spotify.com
   response:
     status:
-      code: 401
-      message: Unauthorized
-    headers:
-      Www-Authenticate:
-      - Bearer realm="spotify", error="invalid_token", error_description="The access
-        token expired"
-      Access-Control-Allow-Origin:
-      - "*"
-      Access-Control-Allow-Headers:
-      - Accept, App-Platform, Authorization, Content-Type, Origin, Retry-After, Spotify-App-Version,
-        X-Cloud-Trace-Context, client-token, content-access-token
-      Access-Control-Allow-Methods:
-      - GET, POST, OPTIONS, PUT, DELETE, PATCH
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Access-Control-Max-Age:
-      - '604800'
-      Content-Type:
-      - application/json
-      Strict-Transport-Security:
-      - max-age=31536000
-      X-Content-Type-Options:
-      - nosniff
-      Date:
-      - Fri, 11 Nov 2022 03:37:34 GMT
-      Server:
-      - envoy
-      Via:
-      - HTTP/2 edgeproxy, 1.1 google
-      Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "error": {
-            "status": 401,
-            "message": "The access token expired"
-          }
-        }
-    adapter_metadata:
-      vcr_decompressed: gzip
-  recorded_at: Fri, 11 Nov 2022 03:37:33 GMT
-- request:
-    method: get
-    uri: https://api.spotify.com/v1/me/tracks?limit=50&offset=0
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - "*/*"
-      Accept-Encoding:
-      - gzip, deflate
-      User-Agent:
-      - rest-client/2.0.2 (darwin21 x86_64) ruby/3.1.2p20
-      Authorization:
-      - "<BEARER ACCESS TOKEN>"
-      Content-Type:
-      - application/json
-      Host:
-      - api.spotify.com
-  response:
-    status:
       code: 200
       message: OK
     headers:
@@ -95,7 +29,7 @@ http_interactions:
       Cache-Control:
       - private, max-age=0
       Etag:
-      - '"MC-ImQ5NTk3N2M2MDBkOTI0M2YzZjc5NTMxODcxMzhlMDkxIg=="'
+      - '"MC-IjAzNjhlNDcwZjk2ZjFiNjVmNmZmZTYxN2MzMzFiOTE5Ig=="'
       Vary:
       - Authorization
       X-Robots-Tag:
@@ -116,7 +50,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Date:
-      - Fri, 11 Nov 2022 03:37:34 GMT
+      - Fri, 18 Nov 2022 01:07:54 GMT
       Server:
       - envoy
       Via:
@@ -417,7 +351,7 @@ http_interactions:
               "id" : "1pxCxYD077qOUxe4WksV0k",
               "is_local" : false,
               "name" : "Your Maker - Daddy G Remix",
-              "popularity" : 27,
+              "popularity" : 26,
               "preview_url" : "https://p.scdn.co/mp3-preview/fecad4180b7cb34dcbb01d26a58ba0952a23f459?cid=58d0e51708cc436087d56d2c33b05a42",
               "track_number" : 3,
               "type" : "track",
@@ -488,7 +422,7 @@ http_interactions:
               "id" : "5pJyWA2f6lAHilnvKflskz",
               "is_local" : false,
               "name" : "Stopping and Starting",
-              "popularity" : 2,
+              "popularity" : 1,
               "preview_url" : "https://p.scdn.co/mp3-preview/3ae873963262a61ebf873cafb27f45818b9ab74c?cid=58d0e51708cc436087d56d2c33b05a42",
               "track_number" : 5,
               "type" : "track",
@@ -1039,7 +973,7 @@ http_interactions:
               "id" : "60fvKyFT1qU5yyVA1xXJv2",
               "is_local" : false,
               "name" : "Hercules - North Street West 'holyvoodou' Vocal Remix Radio Edit",
-              "popularity" : 32,
+              "popularity" : 34,
               "preview_url" : "https://p.scdn.co/mp3-preview/d10fcb92b377010e1474f7dbc1084e3bec85f161?cid=58d0e51708cc436087d56d2c33b05a42",
               "track_number" : 4,
               "type" : "track",
@@ -1252,7 +1186,7 @@ http_interactions:
               "id" : "1FPDFMMLhdtngpXuuhzf4z",
               "is_local" : false,
               "name" : "Jamaican Proverb",
-              "popularity" : 30,
+              "popularity" : 29,
               "preview_url" : "https://p.scdn.co/mp3-preview/9b19ce3beb2c47da74a103fe6113ff109df85e38?cid=58d0e51708cc436087d56d2c33b05a42",
               "track_number" : 3,
               "type" : "track",
@@ -1338,5 +1272,5 @@ http_interactions:
         }
     adapter_metadata:
       vcr_decompressed: gzip
-  recorded_at: Fri, 11 Nov 2022 03:37:33 GMT
+  recorded_at: Fri, 18 Nov 2022 01:07:52 GMT
 recorded_with: VCR 6.1.0
