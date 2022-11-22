@@ -305,6 +305,9 @@ GEM
       connection_pool (>= 2.2.5)
       rack (~> 2.0)
       redis (>= 4.5.0, < 5)
+    sidekiq-limit_fetch (4.3.2)
+      redis (>= 4.6.0)
+      sidekiq (>= 4)
     sidekiq-scheduler (4.0.3)
       redis (>= 4.2.0)
       rufus-scheduler (~> 3.2)
@@ -390,6 +393,7 @@ DEPENDENCIES
   rubocop-rspec (~> 2.12.1)
   selenium-webdriver
   sidekiq (~> 6.5.7)
+  sidekiq-limit_fetch (~> 4.3.2)
   sidekiq-scheduler (~> 4.0.3)
   simplecov
   sprockets-rails
