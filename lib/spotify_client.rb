@@ -50,11 +50,20 @@ class SpotifyClient
   rescue *rescued_exception_classes => e
     Bugsnag.notify(e)
     sleep(seconds_to_retry_after(e))
+    @error = e
     retry
   end
 
-  def seconds_to_retry_after(error)
+  def seconds_to_retry_after
+    error_retry_after_header.to_i
+  end
+
+  def error_retry_after_header
     # Spotify returns a header that tells you the number of seconds to wait before trying again
-    error.http_headers[:retry_after].to_i
+    @error.http_headers[:retry_after]
+  end
+
+  def spotify_api_queue
+    Sidekiq::Queue['low_rate_spotify_api_calls']
   end
 end
