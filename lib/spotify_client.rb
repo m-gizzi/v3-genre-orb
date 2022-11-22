@@ -62,7 +62,7 @@ class SpotifyClient
 
   def error_retry_after_header
     # Spotify returns a header that tells you the number of seconds to wait before trying again
-    error.http_headers[:retry_after]
+    @error.http_headers[:retry_after]
   end
 
   def spotify_api_queue
