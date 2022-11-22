@@ -48,8 +48,10 @@ class SpotifyClient
   def handle_retryable_error(rescued_exception_classes)
     yield
   rescue *rescued_exception_classes => e
-    Bugsnag.notify(e)
     @error = e
+    Bugsnag.notify(@error) do |event|
+      event.add_metadata(:diagnostics, { headers: @error.http_headers })
+    end
     sleep(seconds_to_retry_after)
     retry
   end
