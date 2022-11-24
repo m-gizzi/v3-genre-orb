@@ -11,6 +11,7 @@ class Playlist < ApplicationRecord
           -> { where(scraping_status: 'completed').order(created_at: :desc) },
           class_name: 'TrackData',
           inverse_of: :playlist
+  has_one :smart_playlist, dependent: :destroy
 
   validates :name, presence: true
   validates :spotify_id, presence: { message: I18n.t('active_record_validations.spotify_id.presence') },
