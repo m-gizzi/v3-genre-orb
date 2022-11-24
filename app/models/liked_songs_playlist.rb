@@ -9,6 +9,8 @@ class LikedSongsPlaylist < ApplicationRecord
           inverse_of: :playlist,
           as: :playlist
 
+  validates :user_id, uniqueness: true
+
   def batch_queue_track_data_update!
     UpdatePlaylistTrackDataBatchQueuingService.call(self)
   end

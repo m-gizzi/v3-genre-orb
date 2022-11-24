@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_24_024608) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_24_040113) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "rule_group_criterion", ["any_pass"]
   create_enum "scraping_status", ["incomplete", "completed"]
 
   create_table "artists", force: :cascade do |t|
@@ -56,7 +57,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_24_024608) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_liked_songs_playlists_on_user_id"
+    t.index ["user_id"], name: "index_liked_songs_playlists_on_user_id", unique: true
   end
 
   create_table "oauth_credentials", force: :cascade do |t|
@@ -65,7 +66,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_24_024608) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_oauth_credentials_on_user_id"
+    t.index ["user_id"], name: "index_oauth_credentials_on_user_id", unique: true
   end
 
   create_table "playlists", force: :cascade do |t|
@@ -80,12 +81,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_24_024608) do
     t.index ["user_id"], name: "index_playlists_on_user_id"
   end
 
+  create_table "rule_groups", force: :cascade do |t|
+    t.bigint "smart_playlist_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.enum "criterion", default: "any_pass", null: false, enum_type: "rule_group_criterion"
+    t.index ["smart_playlist_id"], name: "index_rule_groups_on_smart_playlist_id", unique: true
+  end
+
   create_table "smart_playlists", force: :cascade do |t|
     t.bigint "playlist_id", null: false
     t.integer "track_limit", default: 10000, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["playlist_id"], name: "index_smart_playlists_on_playlist_id"
+    t.index ["playlist_id"], name: "index_smart_playlists_on_playlist_id", unique: true
   end
 
   create_table "track_data", force: :cascade do |t|
@@ -128,6 +137,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_24_024608) do
   add_foreign_key "liked_songs_playlists", "users"
   add_foreign_key "oauth_credentials", "users"
   add_foreign_key "playlists", "users"
+  add_foreign_key "rule_groups", "smart_playlists"
   add_foreign_key "smart_playlists", "playlists"
   add_foreign_key "track_data_tracks", "track_data", column: "track_data_id"
   add_foreign_key "track_data_tracks", "tracks"
