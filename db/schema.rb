@@ -43,6 +43,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_24_042534) do
     t.bigint "track_id", null: false
     t.bigint "artist_id", null: false
     t.index ["artist_id"], name: "index_artists_tracks_on_artist_id"
+    t.index ["track_id", "artist_id"], name: "index_artists_tracks_on_track_id_and_artist_id", unique: true
     t.index ["track_id"], name: "index_artists_tracks_on_track_id"
   end
 
@@ -119,6 +120,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_24_042534) do
   create_table "track_data_tracks", force: :cascade do |t|
     t.bigint "track_data_id", null: false
     t.bigint "track_id", null: false
+    t.index ["track_data_id", "track_id"], name: "index_track_data_tracks_on_track_data_id_and_track_id", unique: true
     t.index ["track_data_id"], name: "index_track_data_tracks_on_track_data_id"
     t.index ["track_id"], name: "index_track_data_tracks_on_track_id"
   end
