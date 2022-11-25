@@ -13,7 +13,7 @@ class AddRuleConditionsEnum < ActiveRecord::Migration[7.0]
     remove_column :rules, :condition
 
     execute <<-SQL.squish
-      DROP TYPE rule_group_criterion
+      DROP TYPE rule_condition
     SQL
   end
 end
