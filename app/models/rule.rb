@@ -2,6 +2,9 @@
 
 class Rule < ApplicationRecord
   belongs_to :rule_group
+  has_one :smart_playlist, through: :rule_group
+  has_one :playlist, through: :smart_playlist
+  has_one :user, through: :playlist
 
   enum condition: {
     any_artists_genre: 'any_artists_genre',
