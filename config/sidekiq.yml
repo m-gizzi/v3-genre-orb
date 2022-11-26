@@ -13,6 +13,7 @@
 
 :queues:
   - [default, 1]
+  - [spotify_api_calls, 1]
   - [low_rate_spotify_api_calls, 1]
 
 :process_limits:
