@@ -3,10 +3,10 @@
 class AddRuleConditionsEnum < ActiveRecord::Migration[7.0]
   def up
     execute <<-SQL.squish
-      CREATE TYPE rule_condition AS ENUM ('genre');
+      CREATE TYPE rule_condition AS ENUM ('any_artists_genre', 'all_artists_genre');
     SQL
 
-    add_column :rules, :condition, :rule_condition, null: false, default: :genre
+    add_column :rules, :condition, :rule_condition, null: false, default: :any_artists_genre
   end
 
   def down

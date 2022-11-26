@@ -16,7 +16,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_24_042534) do
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
-  create_enum "rule_condition", ["genre"]
+  create_enum "rule_condition", ["any_artists_genre", "all_artists_genre"]
   create_enum "rule_group_criterion", ["any_pass"]
   create_enum "scraping_status", ["incomplete", "completed"]
 
@@ -96,7 +96,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_24_042534) do
     t.string "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.enum "condition", default: "genre", null: false, enum_type: "rule_condition"
+    t.enum "condition", default: "any_artists_genre", null: false, enum_type: "rule_condition"
     t.index ["rule_group_id"], name: "index_rules_on_rule_group_id"
   end
 
