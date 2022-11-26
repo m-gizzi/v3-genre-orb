@@ -7,4 +7,8 @@ class Track < ApplicationRecord
   validates :name, presence: true
   validates :spotify_id, presence: { message: I18n.t('active_record_validations.spotify_id.presence') },
                          uniqueness: { message: I18n.t('active_record_validations.spotify_id.uniqueness') }
+
+  scope :with_at_least_one_artist_in_genre, lambda { |genre|
+    joins(:artists).where(artists: Artist.in_genre(genre)).distinct
+  }
 end
