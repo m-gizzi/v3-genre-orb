@@ -24,4 +24,14 @@ class User < ApplicationRecord
       }.with_indifferent_access
     )
   end
+
+  def current_tracks
+    playlist_track_ids = playlists.includes(current_track_data: :tracks).flat_map do |playlist|
+      playlist.current_track_data.tracks.ids
+    end
+
+    liked_songs_ids = liked_songs_playlist.current_track_data.tracks.ids
+
+    Track.where(id: (playlist_track_ids + liked_songs_ids).uniq)
+  end
 end
