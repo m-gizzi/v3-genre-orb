@@ -3,6 +3,11 @@
 require 'responses/response'
 
 class SpotifyClient
+  SPOTIFY_SIDEKIQ_QUEUES = [
+    Sidekiq::Queue['spotify_api_calls'],
+    Sidekiq::Queue['low_rate_spotify_api_calls']
+  ].freeze
+
   def get_playlist_by_id(playlist_id)
     handle_retryable_error(RestClient::TooManyRequests) do
       # rubocop:disable Rails/DynamicFindBy
@@ -49,9 +54,8 @@ class SpotifyClient
     yield
   rescue *rescued_exception_classes => e
     @error = e
-    Bugsnag.notify(@error) do |event|
-      event.add_metadata(:diagnostics, { headers: @error.http_headers })
-    end
+    pause_queues
+    log_error
     sleep(seconds_to_retry_after)
     retry
   end
@@ -65,7 +69,11 @@ class SpotifyClient
     @error.http_headers[:retry_after]
   end
 
-  def spotify_api_queue
-    Sidekiq::Queue['low_rate_spotify_api_calls']
+  def pause_queues
+    SPOTIFY_SIDEKIQ_QUEUES.each { |queue| queue.pause_for_ms(seconds_to_retry_after * 1000) }
+  end
+
+  def log_error
+    Bugsnag.notify(@error) { |event| event.add_metadata(:diagnostics, { headers: @error.http_headers }) }
   end
 end
