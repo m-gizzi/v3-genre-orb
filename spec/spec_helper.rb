@@ -43,6 +43,7 @@ RSpec.configure do |config|
   end
 
   RSpec::Matchers.define_negated_matcher :avoid_changing, :change
+  RSpec::Matchers.define_negated_matcher :exclude, :include
 
   def generate_spotify_id
     length_of_spotify_id = 22
