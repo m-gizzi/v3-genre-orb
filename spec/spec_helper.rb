@@ -46,7 +46,7 @@ RSpec.configure do |config|
 
   def generate_spotify_id
     length_of_spotify_id = 22
-    charset = Array('A'..'z') + Array(0..9)
+    charset = Array('A'..'Z') + Array('a'..'z') + Array(0..9)
 
     Array.new(length_of_spotify_id) { charset.sample }.join
   end
