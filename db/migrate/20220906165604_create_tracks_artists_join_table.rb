@@ -8,5 +8,6 @@ class CreateTracksArtistsJoinTable < ActiveRecord::Migration[7.0]
     end
     add_foreign_key :artists_tracks, :artists
     add_foreign_key :artists_tracks, :tracks
+    add_index :artists_tracks, %i[track_id artist_id], unique: true
   end
 end

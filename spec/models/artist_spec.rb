@@ -3,9 +3,97 @@
 require 'rails_helper'
 
 describe Artist, type: :model do
-  describe '#to_rspotify_artist', :vcr do
-    subject(:artist) { create(:artist) }
+  subject(:artist) { create(:artist) }
 
+  describe '.in_genre' do
+    context 'when the Artist has genres present' do
+      let(:genre) { create(:genre, name: 'test') }
+
+      before do
+        artist.genres = [genre]
+      end
+
+      context "when one of the Artist's genres matches the passed argument" do
+        it 'includes the Artist' do
+          expect(described_class.in_genre('test')).to include artist
+        end
+      end
+
+      context "when none of the Artist's genres match the passed argument" do
+        let(:genre) { create(:genre, name: 'test2') }
+
+        it 'does not include the Artist' do
+          expect(described_class.in_genre('test')).not_to include artist
+        end
+      end
+
+      context 'when nil is passed as an argument' do
+        it 'does not include the Artist' do
+          expect(described_class.in_genre(nil)).not_to include artist
+        end
+      end
+    end
+
+    context 'when the Artist has no genres saved' do
+      context 'when a genre name is passed as an argument' do
+        it 'does not include the Artist' do
+          expect(described_class.in_genre('test')).not_to include artist
+        end
+      end
+
+      context 'when nil is passed as an argument' do
+        it 'includes the Artist' do
+          expect(described_class.in_genre(nil)).to include artist
+        end
+      end
+    end
+  end
+
+  describe '.not_in_genre' do
+    context 'when the Artist has genres present' do
+      let(:genre) { create(:genre, name: 'test') }
+
+      before do
+        artist.genres = [genre]
+      end
+
+      context "when one of the Artist's genres matches the passed argument" do
+        it 'does not include the Artist' do
+          expect(described_class.not_in_genre('test')).not_to include artist
+        end
+      end
+
+      context "when none of the Artist's genres match the passed argument" do
+        let(:genre) { create(:genre, name: 'test2') }
+
+        it 'includes the Artist' do
+          expect(described_class.not_in_genre('test')).to include artist
+        end
+      end
+
+      context 'when nil is passed as an argument' do
+        it 'includes the Artist' do
+          expect(described_class.not_in_genre(nil)).to include artist
+        end
+      end
+    end
+
+    context 'when the Artist has no genres saved' do
+      context 'when a genre name is passed as an argument' do
+        it 'includes the Artist' do
+          expect(described_class.not_in_genre('test')).to include artist
+        end
+      end
+
+      context 'when nil is passed as an argument' do
+        it 'does not include the Artist' do
+          expect(described_class.not_in_genre(nil)).not_to include artist
+        end
+      end
+    end
+  end
+
+  describe '#to_rspotify_artist', :vcr do
     it 'returns the right artist from Spotify' do
       expect(artist.to_rspotify_artist.id).to eq artist.spotify_id
     end

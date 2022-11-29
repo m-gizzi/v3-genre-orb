@@ -8,7 +8,7 @@ class Playlist < ApplicationRecord
   belongs_to :user
   has_many :track_data, dependent: :destroy, class_name: 'TrackData', as: :playlist
   has_one :current_track_data,
-          -> { where(scraping_status: 'completed').order(created_at: :desc) },
+          -> { where(scraping_status: 'completed', playlist_type: 'Playlist').order(created_at: :desc) },
           class_name: 'TrackData',
           inverse_of: :playlist
   has_one :smart_playlist, dependent: :destroy

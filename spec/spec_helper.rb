@@ -43,10 +43,11 @@ RSpec.configure do |config|
   end
 
   RSpec::Matchers.define_negated_matcher :avoid_changing, :change
+  RSpec::Matchers.define_negated_matcher :exclude, :include
 
   def generate_spotify_id
     length_of_spotify_id = 22
-    charset = Array('A'..'z') + Array(0..9)
+    charset = Array('A'..'Z') + Array('a'..'z') + Array(0..9)
 
     Array.new(length_of_spotify_id) { charset.sample }.join
   end
@@ -83,6 +84,33 @@ RSpec.configure do |config|
         method.call(args)
       end
     end
+  end
+
+  RSpec.shared_context 'with Tracks with Artists and Genres' do
+    let(:track_with_genres) do
+      create(
+        :track,
+        name: 'Track with Genres',
+        spotify_id: generate_spotify_id,
+        artists: [
+          create(:artist, spotify_id: generate_spotify_id, genres: [genre_a, genre_b]),
+          create(:artist, spotify_id: generate_spotify_id, genres: [genre_a])
+        ]
+      )
+    end
+    let(:nil_genre_track) do
+      create(
+        :track,
+        name: 'Track with no Genres',
+        spotify_id: generate_spotify_id,
+        artists: [create(:artist, spotify_id: generate_spotify_id)]
+      )
+    end
+    let(:genre_a) { create(:genre, name: genre_name_matches_all_artists) }
+    let(:genre_b) { create(:genre, name: genre_name_matches_some_artists) }
+    let(:genre_name_matches_all_artists) { 'A' }
+    let(:genre_name_matches_some_artists) { 'B' }
+    let(:genre_name_matches_no_artists) { 'C' }
   end
 
   # The settings below are suggested to provide a good initial experience

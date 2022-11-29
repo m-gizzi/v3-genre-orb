@@ -16,7 +16,8 @@ class Artist < ApplicationRecord
 
   has_many :fallback_genres, through: :artists_fallback_genres, source: :genre
 
-  scope :with_no_genres, -> { left_joins(:genres).where(genres: nil) }
+  scope :in_genre, ->(genre) { left_joins(:genres).where(genres: { name: genre }) }
+  scope :not_in_genre, ->(genre) { where.not(id: in_genre(genre)) }
 
   validates :name, presence: true
   validates :spotify_id, presence: { message: I18n.t('active_record_validations.spotify_id.presence') },

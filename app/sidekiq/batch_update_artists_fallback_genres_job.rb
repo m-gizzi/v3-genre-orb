@@ -4,7 +4,7 @@ class BatchUpdateArtistsFallbackGenresJob
   include Sidekiq::Job
 
   def perform
-    args = Artist.with_no_genres.ids.zip
+    args = Artist.in_genre(nil).ids.zip
     UpdateArtistFallbackGenresJob.perform_bulk(args)
   end
 end
