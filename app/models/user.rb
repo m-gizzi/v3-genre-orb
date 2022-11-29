@@ -26,21 +26,14 @@ class User < ApplicationRecord
   end
 
   def current_tracks
-    playlist_track_ids = current_playlist_track_ids
-    liked_songs_ids = current_liked_track_ids
-
-    Track.where(id: (playlist_track_ids + liked_songs_ids).uniq)
+    Track.where(id: current_playlist_track_ids)
   end
 
   private
 
   def current_playlist_track_ids
-    playlists.includes(current_track_data: :tracks).flat_map do |playlist|
-      playlist.current_track_data&.tracks&.ids
-    end
-  end
+    all_playlists = playlists.includes(current_track_data: :tracks).to_a << liked_songs_playlist
 
-  def current_liked_track_ids
-    liked_songs_playlist&.current_track_data&.tracks&.ids || []
+    all_playlists.flat_map { |playlist| playlist&.current_track_data&.tracks&.ids }.compact.uniq
   end
 end
