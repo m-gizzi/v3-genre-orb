@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 describe Artist, type: :model do
-  describe '.in_genre' do
-    subject(:artist) { create(:artist) }
+  subject(:artist) { create(:artist) }
 
+  describe '.in_genre' do
     context 'when the Artist has genres present' do
       let(:genre) { create(:genre, name: 'test') }
 
@@ -50,8 +50,6 @@ describe Artist, type: :model do
   end
 
   describe '.not_in_genre' do
-    subject(:artist) { create(:artist) }
-
     context 'when the Artist has genres present' do
       let(:genre) { create(:genre, name: 'test') }
 
@@ -96,8 +94,6 @@ describe Artist, type: :model do
   end
 
   describe '#to_rspotify_artist', :vcr do
-    subject(:artist) { create(:artist) }
-
     it 'returns the right artist from Spotify' do
       expect(artist.to_rspotify_artist.id).to eq artist.spotify_id
     end
