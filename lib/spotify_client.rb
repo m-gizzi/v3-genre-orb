@@ -54,7 +54,7 @@ class SpotifyClient
     yield
   rescue *rescued_exception_classes => e
     @error = e
-    # pause_queues
+    pause_queues
     log_error
     sleep(seconds_to_retry_after)
     retry
@@ -69,9 +69,9 @@ class SpotifyClient
     @error.http_headers[:retry_after]
   end
 
-  # def pause_queues
-  #   SPOTIFY_SIDEKIQ_QUEUES.each { |queue| queue.pause_for_ms(seconds_to_retry_after * 1000) }
-  # end
+  def pause_queues
+    SPOTIFY_SIDEKIQ_QUEUES.each { |queue| queue.pause_for_ms(seconds_to_retry_after * 1000) }
+  end
 
   def log_error
     Bugsnag.notify(@error) { |event| event.add_metadata(:diagnostics, { headers: @error.http_headers }) }
