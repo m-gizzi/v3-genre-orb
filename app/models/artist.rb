@@ -16,8 +16,14 @@ class Artist < ApplicationRecord
 
   has_many :fallback_genres, through: :artists_fallback_genres, source: :genre
 
-  scope :in_genre, ->(genre) { left_joins(:genres).where(genres: { name: genre }) }
-  scope :not_in_genre, ->(genre) { where.not(id: in_genre(genre)) }
+  scope :matching_any_genres, ->(genres) { left_joins(:genres).where(genres: { name: genres }).distinct }
+  scope :not_matching_any_genres, ->(genres) { where.not(id: in_any_genres(genres)) }
+  scope :matching_all_genres, lambda { |genres|
+    first_query = in_any_genres(genres.shift).ids
+    ids = genres.reduce(first_query) { |queries, genre| queries & in_any_genres(genre).ids }
+    where(id: ids)
+  }
+  scope :not_matching_all_genres, ->(genres) { where.not(id: in_all_genres(genres)) }
 
   validates :name, presence: true
   validates :spotify_id, presence: { message: I18n.t('active_record_validations.spotify_id.presence') },
