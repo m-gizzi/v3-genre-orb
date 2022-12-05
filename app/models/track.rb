@@ -13,7 +13,7 @@ class Track < ApplicationRecord
     left_joins(:genres).where(genres: { name: genre }).distinct
   }
   scope :with_at_least_one_artist_not_in_genre, lambda { |genre|
-    joins(:artists).where(artists: Artist.not_in_genre(genre)).distinct
+    joins(:artists).where(artists: Artist.not_matching_any_genres(genre)).distinct
   }
   scope :with_all_artists_in_genre, ->(genre) { where.not(id: Track.with_at_least_one_artist_not_in_genre(genre)) }
 end
