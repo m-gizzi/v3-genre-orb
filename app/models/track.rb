@@ -12,8 +12,10 @@ class Track < ApplicationRecord
   scope :with_at_least_one_artist_in_any_genres, lambda { |genres|
     left_joins(:genres).where(genres: { name: genres }).distinct
   }
-  scope :with_at_least_one_artist_not_in_genre, lambda { |genre|
-    joins(:artists).where(artists: Artist.not_matching_any_genres(genre)).distinct
+  scope :with_at_least_one_artist_not_in_any_genres, lambda { |genres|
+    joins(:artists).where(artists: Artist.not_matching_any_genres(genres)).distinct
   }
-  scope :with_all_artists_in_genre, ->(genre) { where.not(id: Track.with_at_least_one_artist_not_in_genre(genre)) }
+  scope :with_all_artists_in_any_genres, lambda { |genres|
+    where.not(id: Track.with_at_least_one_artist_not_in_any_genres(genres)).distinct
+  }
 end
