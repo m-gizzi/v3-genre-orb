@@ -23,6 +23,11 @@ class Artist < ApplicationRecord
   validates :spotify_id, presence: { message: I18n.t('active_record_validations.spotify_id.presence') },
                          uniqueness: { message: I18n.t('active_record_validations.spotify_id.uniqueness') }
 
+  class << self
+    alias in_genre matching_any_genres
+    alias not_in_genre not_matching_any_genres
+  end
+
   def self.matching_all_genres(genres)
     unless genres.is_a?(Array)
       raise 'Use logically equivalent .matching_any_genres if only passing a single string as an argument.'
