@@ -24,3 +24,7 @@ RSpec/NestedGroups:
 
 RSpec/MultipleMemoizedHelpers:
   Max: 7
+
+RSpec/LetSetup:
+  Exclude:
+    - 'spec/models/artist_spec.rb'

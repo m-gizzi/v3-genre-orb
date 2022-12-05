@@ -5,91 +5,76 @@ require 'rails_helper'
 describe Artist, type: :model do
   subject(:artist) { create(:artist) }
 
-  describe '.in_genre' do
-    context 'when the Artist has genres present' do
-      let(:genre) { create(:genre, name: 'test') }
+  shared_context 'with Artists with Genres' do
+    let!(:artist1) { create(:artist, spotify_id: generate_spotify_id) }
+    let!(:artist2) { create(:artist, spotify_id: generate_spotify_id, genres: [genre_a, genre_b]) }
+    let!(:artist3) { create(:artist, spotify_id: generate_spotify_id, genres: [genre_b, genre_c]) }
+    let(:genre_a) { create(:genre, name: 'A') }
+    let(:genre_b) { create(:genre, name: 'B') }
+    let(:genre_c) { create(:genre, name: 'C') }
+  end
 
-      before do
-        artist.genres = [genre]
-      end
+  describe '.matching_any_genres' do
+    include_context 'with Artists with Genres'
 
-      context "when one of the Artist's genres matches the passed argument" do
-        it 'includes the Artist' do
-          expect(described_class.in_genre('test')).to include artist
-        end
-      end
-
-      context "when none of the Artist's genres match the passed argument" do
-        let(:genre) { create(:genre, name: 'test2') }
-
-        it 'does not include the Artist' do
-          expect(described_class.in_genre('test')).not_to include artist
-        end
-      end
-
-      context 'when nil is passed as an argument' do
-        it 'does not include the Artist' do
-          expect(described_class.in_genre(nil)).not_to include artist
-        end
-      end
+    it 'can accept a single string as an argument and return any Artists matching that Genre' do
+      expect(described_class.matching_any_genres('A')).to include artist2
     end
 
-    context 'when the Artist has no genres saved' do
-      context 'when a genre name is passed as an argument' do
-        it 'does not include the Artist' do
-          expect(described_class.in_genre('test')).not_to include artist
-        end
-      end
+    it 'can accept a single string in an array and return any Artists matching that Genre' do
+      expect(described_class.matching_any_genres(['A'])).to include artist2
+    end
 
-      context 'when nil is passed as an argument' do
-        it 'includes the Artist' do
-          expect(described_class.in_genre(nil)).to include artist
-        end
-      end
+    it 'can accept an array of genres and return any Artists matching any of the Genres' do
+      expect(described_class.matching_any_genres([nil, 'B'])).to match_array([artist1, artist2, artist3])
+    end
+
+    it 'can accept nil as a single argument and return any Artists with no Genres' do
+      expect(described_class.matching_any_genres(nil)).to include artist1
+    end
+
+    it 'can accept nil as part of an array and return any Artists with no Genres' do
+      expect(described_class.matching_any_genres([nil])).to include artist1
     end
   end
 
-  describe '.not_in_genre' do
-    context 'when the Artist has genres present' do
-      let(:genre) { create(:genre, name: 'test') }
+  describe '.not_matching_any_genres' do
+    include_context 'with Artists with Genres'
 
-      before do
-        artist.genres = [genre]
-      end
-
-      context "when one of the Artist's genres matches the passed argument" do
-        it 'does not include the Artist' do
-          expect(described_class.not_in_genre('test')).not_to include artist
-        end
-      end
-
-      context "when none of the Artist's genres match the passed argument" do
-        let(:genre) { create(:genre, name: 'test2') }
-
-        it 'includes the Artist' do
-          expect(described_class.not_in_genre('test')).to include artist
-        end
-      end
-
-      context 'when nil is passed as an argument' do
-        it 'includes the Artist' do
-          expect(described_class.not_in_genre(nil)).to include artist
-        end
-      end
+    it "can accept a single string as an argument and return any Artists that don't match that Genre" do
+      expect(described_class.not_matching_any_genres('A')).to match_array([artist1, artist3])
     end
 
-    context 'when the Artist has no genres saved' do
-      context 'when a genre name is passed as an argument' do
-        it 'includes the Artist' do
-          expect(described_class.not_in_genre('test')).to include artist
-        end
-      end
+    it "can accept a single string in an array and return any Artists that don't match that Genre" do
+      expect(described_class.not_matching_any_genres(['A'])).to match_array([artist1, artist3])
+    end
 
-      context 'when nil is passed as an argument' do
-        it 'does not include the Artist' do
-          expect(described_class.not_in_genre(nil)).not_to include artist
-        end
-      end
+    it "can accept an array of genres and return any Artists that don't match any of the Genres" do
+      expect(described_class.not_matching_any_genres([nil, 'A'])).to match_array([artist3])
+    end
+
+    it 'can accept nil as a single argument and return any Artists with genres' do
+      expect(described_class.not_matching_any_genres(nil)).to match_array([artist2, artist3])
+    end
+
+    it 'can accept nil as part of an array and return any Artists with genres' do
+      expect(described_class.not_matching_any_genres([nil])).to match_array([artist2, artist3])
+    end
+  end
+
+  describe '.matching_all_genres' do
+    include_context 'with Artists with Genres'
+
+    it 'can accept an array of strings and return Artists that match all of the Genres' do
+      expect(described_class.matching_all_genres(%w[A B])).to match_array([artist2])
+    end
+  end
+
+  describe '.not_matching_all_genres' do
+    include_context 'with Artists with Genres'
+
+    it 'can accept an array of strings and returns the negation of .matching_all_genres' do
+      expect(described_class.not_matching_all_genres(%w[A B])).to match_array([artist1, artist3])
     end
   end
 
