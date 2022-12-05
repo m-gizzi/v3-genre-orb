@@ -19,14 +19,14 @@ class Artist < ApplicationRecord
   scope :matching_any_genres, ->(genres) { left_joins(:genres).where(genres: { name: genres }).distinct }
   scope :not_matching_any_genres, ->(genres) { where.not(id: matching_any_genres(genres)) }
 
-  validates :name, presence: true
-  validates :spotify_id, presence: { message: I18n.t('active_record_validations.spotify_id.presence') },
-                         uniqueness: { message: I18n.t('active_record_validations.spotify_id.uniqueness') }
-
   class << self
     alias in_genre matching_any_genres
     alias not_in_genre not_matching_any_genres
   end
+
+  validates :name, presence: true
+  validates :spotify_id, presence: { message: I18n.t('active_record_validations.spotify_id.presence') },
+                         uniqueness: { message: I18n.t('active_record_validations.spotify_id.uniqueness') }
 
   def self.matching_all_genres(genres)
     unless genres.is_a?(Array)
