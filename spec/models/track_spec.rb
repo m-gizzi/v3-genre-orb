@@ -3,27 +3,32 @@
 require 'rails_helper'
 
 describe Track, type: :model do
-  describe '.with_at_least_one_artist_in_genre' do
+  describe '.with_at_least_one_artist_in_any_genres' do
     include_context 'with Tracks with Artists and Genres'
 
-    it 'includes tracks when all their Artists match the passed arg' do
-      expect(described_class.with_at_least_one_artist_in_genre(genre_name_matches_all_artists))
+    it 'can accept a single string as an argument and return any Tracks with at least one Artist in that Genre' do
+      expect(described_class.with_at_least_one_artist_in_any_genres(genre_name_matches_some_artists))
         .to(include(track_with_genres).and(exclude(nil_genre_track)))
     end
 
-    it 'includes tracks when some of their Artists match the passed arg' do
-      expect(described_class.with_at_least_one_artist_in_genre(genre_name_matches_some_artists))
+    it 'can accept a single string in an array as an argument and return any Tracks with at least one Artist in that Genre' do
+      expect(described_class.with_at_least_one_artist_in_any_genres([genre_name_matches_some_artists]))
         .to(include(track_with_genres).and(exclude(nil_genre_track)))
     end
 
-    it 'does not include tracks when none of their Artists match the passed arg' do
-      expect(described_class.with_at_least_one_artist_in_genre(genre_name_matches_no_artists))
-        .to(exclude(track_with_genres).and(exclude(nil_genre_track)))
-    end
-
-    it 'includes tracks with any artist with no genre if nil is passed' do
-      expect(described_class.with_at_least_one_artist_in_genre(nil))
+    it 'can accept nil as a single argument and return any Tracks with at least one Artist with no Genres' do
+      expect(described_class.with_at_least_one_artist_in_any_genres(nil))
         .to(exclude(track_with_genres).and(include(nil_genre_track)))
+    end
+
+    it 'can accept nil as part of an array and return any Tracks with at least one Artist with no Genres' do
+      expect(described_class.with_at_least_one_artist_in_any_genres([nil]))
+        .to(exclude(track_with_genres).and(include(nil_genre_track)))
+    end
+
+    it 'can accept an array of strings and return and Tracks with at least one Artist matching any of those genres' do
+      expect(described_class.with_at_least_one_artist_in_any_genres([genre_name_matches_some_artists, nil]))
+        .to(include(track_with_genres).and(include(nil_genre_track)))
     end
   end
 

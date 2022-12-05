@@ -9,8 +9,8 @@ class Track < ApplicationRecord
   validates :spotify_id, presence: { message: I18n.t('active_record_validations.spotify_id.presence') },
                          uniqueness: { message: I18n.t('active_record_validations.spotify_id.uniqueness') }
 
-  scope :with_at_least_one_artist_in_genre, lambda { |genre|
-    left_joins(:genres).where(genres: { name: genre }).distinct
+  scope :with_at_least_one_artist_in_any_genres, lambda { |genres|
+    left_joins(:genres).where(genres: { name: genres }).distinct
   }
   scope :with_at_least_one_artist_not_in_genre, lambda { |genre|
     joins(:artists).where(artists: Artist.not_matching_any_genres(genre)).distinct
