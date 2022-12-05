@@ -11,7 +11,7 @@ describe Track, type: :model do
         .to(include(track_with_genres).and(exclude(nil_genre_track)))
     end
 
-    it 'can accept a single string in an array as an argument and return any Tracks with at least one Artist in that Genre' do
+    it 'can accept a single string in an array and return Tracks with at least one Artist in that Genre' do
       expect(described_class.with_at_least_one_artist_in_any_genres([genre_name_matches_some_artists]))
         .to(include(track_with_genres).and(exclude(nil_genre_track)))
     end

@@ -16,7 +16,7 @@ class Rule < ApplicationRecord
     when 'any_artists_genre'
       user.current_tracks.with_at_least_one_artist_in_any_genres(value)
     when 'all_artists_genre'
-      user.current_tracks.with_all_artists_in_genre(value)
+      user.current_tracks.with_all_artists_in_any_genres(value)
     end
   end
 end
