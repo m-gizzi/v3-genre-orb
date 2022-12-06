@@ -16,6 +16,6 @@ class Track < ApplicationRecord
     joins(:artists).where(artists: Artist.not_matching_any_genres(genres)).distinct
   }
   scope :with_all_artists_in_any_genres, lambda { |genres|
-    where.not(id: Track.with_at_least_one_artist_not_in_any_genres(genres)).distinct
+    where.not(id: with_at_least_one_artist_not_in_any_genres(genres)).distinct
   }
 end
