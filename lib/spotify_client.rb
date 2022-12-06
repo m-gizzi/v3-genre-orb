@@ -61,7 +61,7 @@ class SpotifyClient
   end
 
   def seconds_to_retry_after
-    error_retry_after_header.to_i
+    error_retry_after_header.to_i + 1
   end
 
   def error_retry_after_header
