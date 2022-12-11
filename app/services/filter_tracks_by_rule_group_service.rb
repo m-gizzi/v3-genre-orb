@@ -24,6 +24,8 @@ class FilterTracksByRuleGroupService < ApplicationService
 
   def tracks_matching_all_artists_genre_rules
     all_artists_genres = rule_group.rules.all_artists_genre.pluck(:value)
-    tracks.with_all_artists_in_any_genres(all_artists_genres)
+
+    first_query = tracks.with_all_artists_in_any_genres(all_artists_genres.shift).ids
+    all_artists_genres.reduce(first_query) { |queries, genre| queries | tracks.with_all_artists_in_any_genres(genre) }
   end
 end
