@@ -65,7 +65,7 @@ describe SpotifyClient, :vcr do
   end
 
   describe '#get_related_artists' do
-    let(:artist) { create(:artist) }
+    let(:artist) { create(:artist, spotify_id: '0Wxy5Qka8BN9crcFkiAxSR') }
     let(:rspotify_artist) { artist.to_rspotify_artist }
 
     it 'returns the artist\'s related artists' do

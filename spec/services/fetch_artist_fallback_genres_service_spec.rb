@@ -5,7 +5,7 @@ require 'rails_helper'
 describe FetchArtistFallbackGenresService do
   subject(:service) { described_class.new(artist) }
 
-  let(:artist) { create(:artist) }
+  let(:artist) { create(:artist, spotify_id: '0Wxy5Qka8BN9crcFkiAxSR') }
 
   describe '#call', :vcr do
     it 'returns an array of Genres' do
