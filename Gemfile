@@ -40,6 +40,7 @@ gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 gem 'rspotify', git: 'https://github.com/m-gizzi/rspotify.git'
 gem 'sidekiq', '~> 6.5.7'
+gem 'sidekiq-limit_fetch', '~> 4.3.2'
 gem 'sidekiq-scheduler', '~> 4.0.3'
 
 group :development, :test do

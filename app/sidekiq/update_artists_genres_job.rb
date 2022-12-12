@@ -2,6 +2,7 @@
 
 class UpdateArtistsGenresJob
   include Sidekiq::Job
+  sidekiq_options queue: :spotify_api_calls
 
   def perform(artist_ids)
     artists = Artist.where(id: artist_ids)
