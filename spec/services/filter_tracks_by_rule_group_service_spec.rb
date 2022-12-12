@@ -40,5 +40,9 @@ describe FilterTracksByRuleGroupService do
     it 'returns any tracks that pass at least one rule, regardless of whether they fail any others' do
       expect(service.call).to include track_that_only_passes_one_rule1, track_that_only_passes_one_rule2
     end
+
+    it 'returns an ActiveRecord::Collection' do
+      expect(service.call).to be_a ActiveRecord::Relation
+    end
   end
 end
