@@ -16,11 +16,35 @@ class Artist < ApplicationRecord
 
   has_many :fallback_genres, through: :artists_fallback_genres, source: :genre
 
-  scope :with_no_genres, -> { left_joins(:genres).where(genres: nil) }
+  scope :matching_any_genres, ->(genres) { left_joins(:genres).where(genres: { name: genres }).distinct }
+  scope :not_matching_any_genres, ->(genres) { where.not(id: matching_any_genres(genres)) }
+
+  class << self
+    alias in_genre matching_any_genres
+    alias not_in_genre not_matching_any_genres
+  end
 
   validates :name, presence: true
   validates :spotify_id, presence: { message: I18n.t('active_record_validations.spotify_id.presence') },
                          uniqueness: { message: I18n.t('active_record_validations.spotify_id.uniqueness') }
+
+  def self.matching_all_genres(genres)
+    unless genres.is_a?(Array)
+      raise 'Use logically equivalent .matching_any_genres if only passing a single string as an argument.'
+    end
+
+    first_query = matching_any_genres(genres.shift).ids
+    ids = genres.reduce(first_query) { |queries, genre| queries & matching_any_genres(genre).ids }
+    where(id: ids)
+  end
+
+  def self.not_matching_all_genres(genres)
+    unless genres.is_a?(Array)
+      raise 'Use logically equivalent .not_matching_any_genres if only passing a single string as an argument.'
+    end
+
+    where.not(id: matching_all_genres(genres))
+  end
 
   def to_rspotify_artist
     spotify_client.get_artists_by_ids([spotify_id]).first

@@ -4,6 +4,7 @@ class OauthCredential < ApplicationRecord
   belongs_to :user
 
   validates :access_token, :refresh_token, presence: true
+  validates :user_id, uniqueness: true
 
   def update_tokens!(access_token:, refresh_token:)
     update!(

@@ -22,4 +22,35 @@ describe User, type: :model do
       end
     end
   end
+
+  describe '#current_tracks' do
+    subject(:method_call) { user.current_tracks }
+
+    let(:playlist) { create(:playlist, user:) }
+    let(:liked_songs_playlist) { create(:liked_songs_playlist, user:) }
+
+    before do
+      [playlist, liked_songs_playlist].each do |playlist|
+        2.times { playlist.track_data.create!(scraping_status: 'completed') }
+        playlist.track_data.create!(scraping_status: 'incomplete')
+      end
+
+      TrackData.all.each do |track_data|
+        track_data.tracks << create(:track, spotify_id: generate_spotify_id)
+      end
+    end
+
+    it 'returns an ActiveRecord::Relation for chaining additional queries' do
+      expect(method_call).to be_a(ActiveRecord::Relation)
+    end
+
+    it "returns Tracks from the correct version of the User's TrackData" do
+      playlist_track_data = playlist.track_data.where(scraping_status: 'completed').order(created_at: :desc).first
+      liked_songs_track_data = liked_songs_playlist.track_data
+                                                   .where(scraping_status: 'completed')
+                                                   .order(created_at: :desc).first
+
+      expect(method_call.flat_map(&:track_data).uniq).to contain_exactly(playlist_track_data, liked_songs_track_data)
+    end
+  end
 end
