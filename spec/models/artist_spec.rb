@@ -6,9 +6,9 @@ describe Artist, type: :model do
   subject(:artist) { create(:artist) }
 
   shared_context 'with Artists with Genres' do
-    let!(:artist1) { create(:artist, spotify_id: generate_spotify_id) }
-    let!(:artist2) { create(:artist, spotify_id: generate_spotify_id, genres: [genre_a, genre_b]) }
-    let!(:artist3) { create(:artist, spotify_id: generate_spotify_id, genres: [genre_b, genre_c]) }
+    let!(:artist1) { create(:artist) }
+    let!(:artist2) { create(:artist, genres: [genre_a, genre_b]) }
+    let!(:artist3) { create(:artist, genres: [genre_b, genre_c]) }
     let(:genre_a) { create(:genre, name: 'A') }
     let(:genre_b) { create(:genre, name: 'B') }
     let(:genre_c) { create(:genre, name: 'C') }
@@ -79,6 +79,8 @@ describe Artist, type: :model do
   end
 
   describe '#to_rspotify_artist', :vcr do
+    subject(:artist) { create(:artist, spotify_id: '0Wxy5Qka8BN9crcFkiAxSR') }
+
     it 'returns the right artist from Spotify' do
       expect(artist.to_rspotify_artist.id).to eq artist.spotify_id
     end
