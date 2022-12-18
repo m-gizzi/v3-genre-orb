@@ -3,7 +3,7 @@
 class LikedSongsPlaylist < ApplicationRecord
   belongs_to :user
   has_many :track_data_imports, dependent: :destroy, as: :playlist
-  has_one :playlists_current_track_data_import, as: :playlist
+  has_one :playlists_current_track_data_import, dependent: :destroy, as: :playlist
   has_one :current_track_data,
           through: :playlists_current_track_data_import,
           inverse_of: :playlist,
