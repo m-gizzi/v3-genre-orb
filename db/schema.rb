@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_18_015218) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_18_215223) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -83,6 +83,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_18_015218) do
     t.index ["user_id"], name: "index_playlists_on_user_id"
   end
 
+  create_table "playlists_current_track_data_imports", force: :cascade do |t|
+    t.bigint "playlist_id", null: false
+    t.bigint "track_data_import_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["playlist_id"], name: "index_playlists_current_track_data_imports_on_playlist_id", unique: true
+    t.index ["track_data_import_id"], name: "index_playlists_current_track_data_on_track_data_import_id"
+  end
+
   create_table "rule_groups", force: :cascade do |t|
     t.bigint "smart_playlist_id", null: false
     t.datetime "created_at", null: false
@@ -148,6 +157,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_18_015218) do
   add_foreign_key "liked_songs_playlists", "users"
   add_foreign_key "oauth_credentials", "users"
   add_foreign_key "playlists", "users"
+  add_foreign_key "playlists_current_track_data_imports", "playlists"
+  add_foreign_key "playlists_current_track_data_imports", "track_data_imports"
   add_foreign_key "rule_groups", "smart_playlists"
   add_foreign_key "rules", "rule_groups"
   add_foreign_key "smart_playlists", "playlists"
