@@ -2,10 +2,10 @@
 
 class LikedSongsPlaylist < ApplicationRecord
   belongs_to :user
-  has_many :track_data, dependent: :destroy, class_name: 'TrackData', as: :playlist
+  has_many :track_data_imports, dependent: :destroy, as: :playlist
   has_one :current_track_data,
           -> { where(scraping_status: 'completed', playlist_type: 'LikedSongsPlaylist').order(created_at: :desc) },
-          class_name: 'TrackData',
+          class_name: 'TrackDataImport',
           inverse_of: :playlist,
           as: :playlist
 
@@ -15,8 +15,8 @@ class LikedSongsPlaylist < ApplicationRecord
     UpdatePlaylistTrackDataBatchQueuingService.call(self)
   end
 
-  def update_track_data!(track_data, offset: 0)
-    UpdatePlaylistTrackDataService.call(self, track_data, offset:)
+  def update_track_data!(track_data_import, offset: 0)
+    UpdatePlaylistTrackDataService.call(self, track_data_import, offset:)
   end
 
   def sync_with_spotify!(spotify_response)

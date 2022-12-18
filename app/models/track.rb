@@ -2,7 +2,7 @@
 
 class Track < ApplicationRecord
   has_and_belongs_to_many :artists
-  has_and_belongs_to_many :track_data, class_name: 'TrackData'
+  has_and_belongs_to_many :track_data_imports
   has_many :genres, -> { distinct }, through: :artists
 
   validates :name, presence: true
