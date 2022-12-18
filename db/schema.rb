@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_24_042534) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_18_015218) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -108,7 +108,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_24_042534) do
     t.index ["playlist_id"], name: "index_smart_playlists_on_playlist_id", unique: true
   end
 
-  create_table "track_data", force: :cascade do |t|
+  create_table "track_data_imports", force: :cascade do |t|
     t.string "playlist_type", null: false
     t.bigint "playlist_id", null: false
     t.datetime "created_at", null: false
@@ -117,11 +117,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_24_042534) do
     t.index ["playlist_type", "playlist_id"], name: "index_track_data_on_playlist"
   end
 
-  create_table "track_data_tracks", force: :cascade do |t|
-    t.bigint "track_data_id", null: false
+  create_table "track_data_imports_tracks", force: :cascade do |t|
+    t.bigint "track_data_import_id", null: false
     t.bigint "track_id", null: false
-    t.index ["track_data_id"], name: "index_track_data_tracks_on_track_data_id"
-    t.index ["track_id"], name: "index_track_data_tracks_on_track_id"
+    t.index ["track_data_import_id"], name: "index_track_data_imports_tracks_on_track_data_import_id"
+    t.index ["track_id"], name: "index_track_data_imports_tracks_on_track_id"
   end
 
   create_table "tracks", force: :cascade do |t|
@@ -151,6 +151,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_24_042534) do
   add_foreign_key "rule_groups", "smart_playlists"
   add_foreign_key "rules", "rule_groups"
   add_foreign_key "smart_playlists", "playlists"
-  add_foreign_key "track_data_tracks", "track_data", column: "track_data_id"
-  add_foreign_key "track_data_tracks", "tracks"
+  add_foreign_key "track_data_imports_tracks", "track_data_imports"
+  add_foreign_key "track_data_imports_tracks", "tracks"
 end
