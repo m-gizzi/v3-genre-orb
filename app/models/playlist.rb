@@ -7,10 +7,12 @@ class Playlist < ApplicationRecord
 
   belongs_to :user
   has_many :track_data_imports, dependent: :destroy, as: :playlist
+  has_one :playlists_current_track_data_import
   has_one :current_track_data,
-          -> { where(scraping_status: 'completed', playlist_type: 'Playlist').order(created_at: :desc) },
-          class_name: 'TrackDataImport',
-          inverse_of: :playlist
+          through: :playlists_current_track_data_import,
+          inverse_of: :playlist,
+          source: :track_data_import
+
   has_one :smart_playlist, dependent: :destroy
 
   validates :name, presence: true
