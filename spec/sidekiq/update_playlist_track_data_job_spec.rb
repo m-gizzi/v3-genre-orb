@@ -4,11 +4,11 @@ require 'rails_helper'
 
 describe UpdatePlaylistTrackDataJob, type: :job do
   describe '#perform', :vcr do
-    let(:track_data) { TrackData.create!(playlist:) }
+    let(:track_data_import) { TrackDataImport.create!(playlist:) }
 
     shared_examples 'UpdatePlaylistTrackDataJob examples' do
-      it 'associates all the Tracks from the response to the new TrackData' do
-        described_class.perform_async(playlist.id, playlist.class.to_s, track_data.id)
+      it 'associates all the Tracks from the response to the new TrackDataImport' do
+        described_class.perform_async(playlist.id, playlist.class.to_s, track_data_import.id)
         expect(playlist.reload.current_track_data.tracks.count).to eq playlist.song_count
       end
     end

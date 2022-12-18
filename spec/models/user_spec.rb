@@ -31,11 +31,11 @@ describe User, type: :model do
 
     before do
       [playlist, liked_songs_playlist].each do |playlist|
-        2.times { playlist.track_data.create!(scraping_status: 'completed') }
-        playlist.track_data.create!(scraping_status: 'incomplete')
+        2.times { playlist.track_data_imports.create!(scraping_status: 'completed') }
+        playlist.track_data_imports.create!(scraping_status: 'incomplete')
       end
 
-      TrackData.all.each do |track_data|
+      TrackDataImport.all.each do |track_data|
         track_data.tracks << create(:track, spotify_id: generate_spotify_id)
       end
     end
@@ -45,12 +45,18 @@ describe User, type: :model do
     end
 
     it "returns Tracks from the correct version of the User's TrackData" do
-      playlist_track_data = playlist.track_data.where(scraping_status: 'completed').order(created_at: :desc).first
-      liked_songs_track_data = liked_songs_playlist.track_data
-                                                   .where(scraping_status: 'completed')
-                                                   .order(created_at: :desc).first
+      playlist_track_data = playlist.track_data_imports
+                                    .where(scraping_status: 'completed')
+                                    .order(created_at: :desc)
+                                    .first
 
-      expect(method_call.flat_map(&:track_data).uniq).to contain_exactly(playlist_track_data, liked_songs_track_data)
+      liked_songs_track_data = liked_songs_playlist.track_data_imports
+                                                   .where(scraping_status: 'completed')
+                                                   .order(created_at: :desc)
+                                                   .first
+
+      expect(method_call.flat_map(&:track_data_imports).uniq)
+        .to contain_exactly(playlist_track_data, liked_songs_track_data)
     end
   end
 end
