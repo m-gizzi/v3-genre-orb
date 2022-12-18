@@ -45,12 +45,18 @@ describe User, type: :model do
     end
 
     it "returns Tracks from the correct version of the User's TrackData" do
-      playlist_track_data = playlist.track_data_imports.where(scraping_status: 'completed').order(created_at: :desc).first
+      playlist_track_data = playlist.track_data_imports
+                                    .where(scraping_status: 'completed')
+                                    .order(created_at: :desc)
+                                    .first
+
       liked_songs_track_data = liked_songs_playlist.track_data_imports
                                                    .where(scraping_status: 'completed')
-                                                   .order(created_at: :desc).first
+                                                   .order(created_at: :desc)
+                                                   .first
 
-      expect(method_call.flat_map(&:track_data_imports).uniq).to contain_exactly(playlist_track_data, liked_songs_track_data)
+      expect(method_call.flat_map(&:track_data_imports).uniq)
+        .to contain_exactly(playlist_track_data, liked_songs_track_data)
     end
   end
 end
