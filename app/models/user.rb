@@ -3,7 +3,16 @@
 class User < ApplicationRecord
   has_one :oauth_credential, dependent: :destroy
   has_one :liked_songs_playlist, dependent: :destroy
+
   has_many :playlists, dependent: :destroy
+  has_many :playlists_current_track_data_imports, through: :playlists, as: :playlist
+  has_many :current_track_data, through: :playlists_current_track_data_imports, source: :track_data_import
+
+  has_one :liked_songs_current_track_data_imports,
+          through: :liked_songs_playlist,
+          as: :playlist,
+          source: :playlists_current_track_data_import
+  has_one :current_liked_songs_track_data, through: :liked_songs_current_track_data_imports, source: :track_data_import
 
   validates :full_name, presence: true
   validates :spotify_id, presence: { message: I18n.t('active_record_validations.spotify_id.presence') },
@@ -26,14 +35,10 @@ class User < ApplicationRecord
   end
 
   def current_tracks
-    Track.where(id: current_playlist_track_ids)
-  end
+    current_playlist_track_ids = current_track_data.includes(:tracks).flat_map(&:track_ids)
+    liked_songs_track_ids = current_liked_songs_track_data.track_ids
+    ids = current_playlist_track_ids | liked_songs_track_ids
 
-  private
-
-  def current_playlist_track_ids
-    all_playlists = playlists.includes(current_track_data: :tracks).to_a << liked_songs_playlist
-
-    all_playlists.flat_map { |playlist| playlist&.current_track_data&.tracks&.ids }.compact.uniq
+    Track.where(id: ids)
   end
 end
