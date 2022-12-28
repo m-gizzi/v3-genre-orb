@@ -17,7 +17,10 @@ class UpdatePlaylistTrackDataService < ApplicationService
     response = handle_fetching_tracks
     create_records_from_response(response)
 
-    track_data_import.completed! if track_data_import.tracks.reload.count == response.total
+    return unless track_data_import.tracks.reload.count == response.total
+
+    track_data_import.completed!
+    playlist.current_track_data = track_data_import
   end
 
   private
