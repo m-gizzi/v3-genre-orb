@@ -3,12 +3,12 @@
 class DeleteOldTrackDataImportsJob
   include Sidekiq::Job
 
-  # Finds all TrackDataImports that are older than 7 days
+  # Finds all TrackDataImports that are older than 180 days
   # and are not a current_track_data for anything and destroys them
   def perform
     TrackDataImport.left_outer_joins(:playlists_current_track_data_import)
                    .where(
-                     created_at: ..7.days.ago,
+                     created_at: ..180.days.ago,
                      playlists_current_track_data_imports: { playlist_id: nil }
                    ).destroy_all
   end

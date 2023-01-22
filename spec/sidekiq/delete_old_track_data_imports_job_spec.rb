@@ -3,16 +3,16 @@
 require 'rails_helper'
 
 describe DeleteOldTrackDataImportsJob, type: :job do
-  let!(:old_track_data_import) { create(:track_data_import, created_at: 8.days.ago, playlist:) }
-  let!(:new_track_data_import) { create(:track_data_import, created_at: 6.days.ago, playlist:) }
+  let!(:old_track_data_import) { create(:track_data_import, created_at: 181.days.ago, playlist:) }
+  let!(:new_track_data_import) { create(:track_data_import, created_at: 179.days.ago, playlist:) }
   let(:playlist) { create(:playlist) }
 
   describe '#perform' do
-    it 'deletes TrackDataImports older than 7 days' do
+    it 'deletes TrackDataImports older than 180 days' do
       expect { described_class.perform_async }.to change { TrackDataImport.exists?(old_track_data_import.id) }.to(false)
     end
 
-    it 'does not delete TrackDataImports that are newer than 7 days' do
+    it 'does not delete TrackDataImports that are newer than 180 days' do
       expect { described_class.perform_async }.not_to(change { TrackDataImport.exists?(new_track_data_import.id) })
     end
 
