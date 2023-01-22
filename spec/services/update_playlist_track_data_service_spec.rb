@@ -12,6 +12,11 @@ describe UpdatePlaylistTrackDataService do
       expect { service.call }.to change { TrackDataImport.completed.count }.by(1)
     end
 
+    it 'sets the TrackDataImport as the current_track_data for the playlist' do
+      service.call
+      expect(playlist.current_track_data).to be track_data
+    end
+
     context 'when a track is returned that already exists in the database' do
       before do
         service.call

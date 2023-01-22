@@ -3,11 +3,12 @@
 class LikedSongsPlaylist < ApplicationRecord
   belongs_to :user
   has_many :track_data_imports, dependent: :destroy, as: :playlist
+  has_one :playlists_current_track_data_import, dependent: :destroy, as: :playlist
   has_one :current_track_data,
-          -> { where(scraping_status: 'completed', playlist_type: 'LikedSongsPlaylist').order(created_at: :desc) },
-          class_name: 'TrackDataImport',
+          through: :playlists_current_track_data_import,
           inverse_of: :playlist,
-          as: :playlist
+          as: :playlist,
+          source: :track_data_import
 
   validates :user_id, uniqueness: true
 

@@ -24,39 +24,42 @@ describe User, type: :model do
   end
 
   describe '#current_tracks' do
-    subject(:method_call) { user.current_tracks }
+    let(:playlist) { create(:playlist, user:, track_data_imports: create_list(:track_data_import, 2)) }
+    let(:liked_songs_playlist) do
+      create(:liked_songs_playlist, user:, track_data_imports: create_list(:track_data_import, 2))
+    end
 
-    let(:playlist) { create(:playlist, user:) }
-    let(:liked_songs_playlist) { create(:liked_songs_playlist, user:) }
+    let(:current_playlist_track_data) { playlist.track_data_imports.last }
+    let(:old_playlist_track_data) { playlist.track_data_imports.first }
+    let(:current_liked_songs_track_data) { liked_songs_playlist.track_data_imports.last }
+    let(:old_liked_songs_track_data) { liked_songs_playlist.track_data_imports.first }
+
+    let(:track1) { create(:track) }
+    let(:track2) { create(:track) }
+    let(:track3) { create(:track) }
+    let(:track4) { create(:track) }
 
     before do
-      [playlist, liked_songs_playlist].each do |playlist|
-        2.times { playlist.track_data_imports.create!(scraping_status: 'completed') }
-        playlist.track_data_imports.create!(scraping_status: 'incomplete')
-      end
+      playlist.current_track_data = current_playlist_track_data
+      liked_songs_playlist.current_track_data = current_liked_songs_track_data
 
-      TrackDataImport.all.each do |track_data|
-        track_data.tracks << create(:track, spotify_id: generate_spotify_id)
-      end
+      track1.track_data_imports = [current_playlist_track_data, current_liked_songs_track_data]
+      track2.track_data_imports = [current_playlist_track_data]
+      track3.track_data_imports = [current_liked_songs_track_data]
+      track4.track_data_imports = [old_playlist_track_data, old_liked_songs_track_data]
     end
 
     it 'returns an ActiveRecord::Relation for chaining additional queries' do
-      expect(method_call).to be_a(ActiveRecord::Relation)
+      expect(user.current_tracks).to be_a(ActiveRecord::Relation)
     end
 
-    it "returns Tracks from the correct version of the User's TrackData" do
-      playlist_track_data = playlist.track_data_imports
-                                    .where(scraping_status: 'completed')
-                                    .order(created_at: :desc)
-                                    .first
+    it "only returns the Tracks associated with the User's current_track_data" do
+      expect(user.current_tracks).to match_array([track1, track2, track3])
+    end
 
-      liked_songs_track_data = liked_songs_playlist.track_data_imports
-                                                   .where(scraping_status: 'completed')
-                                                   .order(created_at: :desc)
-                                                   .first
-
-      expect(method_call.flat_map(&:track_data_imports).uniq)
-        .to contain_exactly(playlist_track_data, liked_songs_track_data)
+    it "returns Tracks from all of the User's current_track_data" do
+      expect(user.current_tracks.flat_map(&:track_data_imports).uniq)
+        .to contain_exactly(current_playlist_track_data, current_liked_songs_track_data)
     end
   end
 end
