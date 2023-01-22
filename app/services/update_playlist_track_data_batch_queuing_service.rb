@@ -5,18 +5,18 @@ require 'has_spotify_client'
 class UpdatePlaylistTrackDataBatchQueuingService < ApplicationService
   include HasSpotifyClient
 
-  attr_reader :playlist, :track_data
+  attr_reader :playlist, :track_data_import
 
   def initialize(playlist)
     @playlist = playlist
-    @track_data = playlist.track_data.create!
+    @track_data_import = playlist.track_data_imports.create!
   end
 
   def call
     playlist.sync_with_spotify!(rspotify_sync_object)
     offsets = 0.step(playlist.song_count, maximum_playlist_tracks_per_job)
 
-    args = offsets.map { |offset| [playlist.id, playlist.class.to_s, track_data.id, offset] }
+    args = offsets.map { |offset| [playlist.id, playlist.class.to_s, track_data_import.id, offset] }
     UpdatePlaylistTrackDataJob.perform_bulk(args)
   end
 

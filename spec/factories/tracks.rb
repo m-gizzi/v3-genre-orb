@@ -3,6 +3,6 @@
 FactoryBot.define do
   factory :track do
     name { 'Captain Marvel' }
-    spotify_id { '0fOgRMf0vERcQ5XZsCGbPT' }
+    spotify_id { generate_spotify_id }
   end
 end

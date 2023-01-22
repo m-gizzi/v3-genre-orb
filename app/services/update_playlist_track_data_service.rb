@@ -5,11 +5,11 @@ require 'has_spotify_client'
 class UpdatePlaylistTrackDataService < ApplicationService
   include HasSpotifyClient
 
-  attr_reader :playlist, :track_data, :offset
+  attr_reader :playlist, :track_data_import, :offset
 
-  def initialize(playlist, track_data, offset: 0)
+  def initialize(playlist, track_data_import, offset: 0)
     @playlist = playlist
-    @track_data = track_data
+    @track_data_import = track_data_import
     @offset = offset
   end
 
@@ -17,7 +17,10 @@ class UpdatePlaylistTrackDataService < ApplicationService
     response = handle_fetching_tracks
     create_records_from_response(response)
 
-    track_data.completed! if track_data.tracks.reload.count == response.total
+    return unless track_data_import.tracks.reload.count == response.total
+
+    track_data_import.completed!
+    playlist.current_track_data = track_data_import
   end
 
   private
@@ -58,7 +61,7 @@ class UpdatePlaylistTrackDataService < ApplicationService
       track
     end
 
-    track_data.tracks << tracks
+    track_data_import.tracks << tracks
   end
 
   def find_or_create_track_from_attributes!(track_attributes)

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe UpdateArtistsGenresJob, type: :job do
-  let(:artist_id) { create(:artist).id }
+  let(:artist_id) { create(:artist, spotify_id: '0Wxy5Qka8BN9crcFkiAxSR').id }
 
   describe '#perform', :vcr do
     it 'creates new Genres from the response' do

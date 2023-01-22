@@ -3,6 +3,6 @@
 FactoryBot.define do
   factory :artist do
     name { "Howlin' Wolf" }
-    spotify_id { '0Wxy5Qka8BN9crcFkiAxSR' }
+    spotify_id { generate_spotify_id }
   end
 end
