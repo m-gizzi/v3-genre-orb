@@ -10,5 +10,11 @@ FactoryBot.define do
       spotify_id { '58OHAm8Z4eIHez0Pi3ZFsU' }
       name { 'Long Test Playlist' }
     end
+
+    trait :with_authorized_user do
+      association :user, :with_spotify_tokens,
+                  decrypted_access_token: ENV.fetch('DEVELOPER_SPOTIFY_ACCESS_TOKEN'),
+                  decrypted_refresh_token: ENV.fetch('DEVELOPER_SPOTIFY_REFRESH_TOKEN')
+    end
   end
 end

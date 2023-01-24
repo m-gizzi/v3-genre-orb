@@ -141,4 +141,47 @@ describe SpotifyClient, :vcr do
       end
     end
   end
+
+  describe '#add_tracks_to_playlist!' do
+    let(:playlist) { create(:playlist, :with_authorized_user) }
+    let(:rspotify_playlist) { playlist.to_rspotify_playlist }
+    let(:track_uris) { %w[spotify:track:1JcwHjETNNbUH0yfrc9w9n spotify:track:3iXq36mZaO2QpWO2vOUDYz] }
+
+    before do
+      # This needs to be called in order to authorize this API call
+      playlist.user.to_rspotify_user
+    end
+
+    it 'adds the tracks to the playlist' do
+      expect { client.add_tracks_to_playlist!(rspotify_playlist, track_uris) }
+        .to change { playlist.to_rspotify_playlist.total }.by(track_uris.count)
+    end
+
+    context 'when a 429 error is raised' do
+      include_context 'with a stubbed retryable error' do
+        let(:error_class) { RestClient::TooManyRequests }
+        let(:recipient) { rspotify_playlist }
+        let(:message) { :add_tracks! }
+      end
+
+      it 'reattempts the call that errored out' do
+        client.add_tracks_to_playlist!(rspotify_playlist, track_uris)
+        expect(rspotify_playlist).to have_received(:add_tracks!).twice
+      end
+
+      it 'adds the tracks to the playlist' do
+        expect { client.add_tracks_to_playlist!(rspotify_playlist, track_uris) }
+          .to change { playlist.to_rspotify_playlist.total }.by(track_uris.count)
+      end
+    end
+  end
+
+  # describe '#remove_tracks_from_playlist!' do
+  #   let(:playlist) { create(:playlist) }
+  #   let(:rspotify_playlist) { playlist.to_rspotify_playlist }
+
+  #   it 'removes the tracks from the playlist' do
+  #     client.remove_tracks_from_playlist!(rspotify_playlist, track_uris)
+  #   end
+  # end
 end
