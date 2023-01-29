@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :artist do
-    name { "Howlin' Wolf" }
+    sequence(:name) { |n| "Test Artist #{n}" }
     spotify_id { generate_spotify_id }
   end
 end

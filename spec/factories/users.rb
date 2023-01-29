@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :user do
     full_name { 'Genre Orb Developer' }
-    sequence(:spotify_id) { |n| "3#{n}upmxyqdkt5utuji6r5wsrkgn4e" }
+    spotify_id { generate_spotify_id }
 
     trait :with_spotify_tokens do
       transient do
