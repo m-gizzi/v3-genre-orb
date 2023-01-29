@@ -7,7 +7,7 @@ describe UpdatePlaylistTrackDataBatchQueuingService do
 
   describe '#call', :vcr do
     context 'when a Playlist is passed as to the service when initializing it' do
-      let(:playlist) { create(:playlist, :many_tracks, song_count:) }
+      let(:playlist) { create(:playlist, song_count:) }
       let(:song_count) { 116 }
       let(:target_number_of_jobs) { (song_count.to_f / 100).ceil }
 

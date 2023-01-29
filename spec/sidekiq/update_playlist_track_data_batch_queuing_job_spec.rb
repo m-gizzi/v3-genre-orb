@@ -5,7 +5,7 @@ require 'rails_helper'
 describe UpdatePlaylistTrackDataBatchQueuingJob do
   describe '#perform', :vcr do
     context 'when a Playlist is passed as an argument' do
-      let(:playlist) { create(:playlist, :many_tracks) }
+      let(:playlist) { create(:playlist) }
 
       it 'queues UpdatePlaylistTrackDataJob for the playlist' do
         expect do
