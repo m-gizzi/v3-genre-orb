@@ -78,11 +78,20 @@ describe Artist, type: :model do
     end
   end
 
-  describe '#to_rspotify_artist', :vcr do
-    subject(:artist) { create(:artist, spotify_id: '0Wxy5Qka8BN9crcFkiAxSR') }
+  describe '#to_rspotify_artist' do
+    subject(:artist) { create(:artist) }
 
-    it 'returns the right artist from Spotify' do
-      expect(artist.to_rspotify_artist.id).to eq artist.spotify_id
+    let(:get_artist_body) { File.open('./spec/fixtures/successful_get_single_artist.json') }
+
+    before do
+      stub_request(:get, "https://api.spotify.com/v1/artists?ids=#{artist.spotify_id}").to_return(
+        status: 200,
+        body: get_artist_body
+      )
+    end
+
+    it 'returns a single RSpotify::Artist' do
+      expect(artist.to_rspotify_artist).to be_a RSpotify::Artist
     end
   end
 
