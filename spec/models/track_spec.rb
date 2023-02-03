@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'support/shared_contexts/with_tracks_with_artists_and_genres'
 
 describe Track, type: :model do
   describe '.with_at_least_one_artist_in_any_genres' do

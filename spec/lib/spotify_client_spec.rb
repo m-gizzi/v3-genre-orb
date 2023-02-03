@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 require 'spotify_client'
+require 'support/shared_contexts/with_a_stubbed_retryable_error'
 
 describe SpotifyClient, :vcr do
   subject(:client) { described_class.new }
