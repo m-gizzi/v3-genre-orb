@@ -1,0 +1,204 @@
+{
+  "artists":[
+    {
+      "external_urls":{
+        "spotify":"https://open.spotify.com/artist/6GI52t8N5F02MxU0g5U69P"
+      },
+      "followers":{
+        "href":null,
+        "total":2778022
+      },
+      "genres":[
+        "blues rock",
+        "classic rock",
+        "mexican classic rock"
+      ],
+      "href":"https://api.spotify.com/v1/artists/6GI52t8N5F02MxU0g5U69P",
+      "id":"6GI52t8N5F02MxU0g5U69P",
+      "images":[
+        {
+          "height":640,
+          "url":"https://i.scdn.co/image/ab6761610000e5eb09882b1b7b33732abd60fc38",
+          "width":640
+        },
+        {
+          "height":320,
+          "url":"https://i.scdn.co/image/ab6761610000517409882b1b7b33732abd60fc38",
+          "width":320
+        },
+        {
+          "height":160,
+          "url":"https://i.scdn.co/image/ab6761610000f17809882b1b7b33732abd60fc38",
+          "width":160
+        }
+      ],
+      "name":"Santana",
+      "popularity":70,
+      "type":"artist",
+      "uri":"spotify:artist:6GI52t8N5F02MxU0g5U69P"
+    },
+    {
+      "external_urls":{
+        "spotify":"https://open.spotify.com/artist/36hwOoNPgnsKnhoMBYpJrJ"
+      },
+      "followers":{
+        "href":null,
+        "total":48532
+      },
+      "genres":[
+        "acoustic blues",
+        "blues",
+        "blues rock",
+        "electric blues",
+        "harmonica blues",
+        "louisiana blues",
+        "rhythm and blues",
+        "rock-and-roll",
+        "swamp blues",
+        "swamp rock",
+        "traditional blues"
+      ],
+      "href":"https://api.spotify.com/v1/artists/36hwOoNPgnsKnhoMBYpJrJ",
+      "id":"36hwOoNPgnsKnhoMBYpJrJ",
+      "images":[
+        {
+          "height":640,
+          "url":"https://i.scdn.co/image/ab67616d0000b273f0cf3871122092785943b264",
+          "width":640
+        },
+        {
+          "height":300,
+          "url":"https://i.scdn.co/image/ab67616d00001e02f0cf3871122092785943b264",
+          "width":300
+        },
+        {
+          "height":64,
+          "url":"https://i.scdn.co/image/ab67616d00004851f0cf3871122092785943b264",
+          "width":64
+        }
+      ],
+      "name":"Slim Harpo",
+      "popularity":44,
+      "type":"artist",
+      "uri":"spotify:artist:36hwOoNPgnsKnhoMBYpJrJ"
+    },
+    {
+      "external_urls":{
+        "spotify":"https://open.spotify.com/artist/69VgCcXFV59QuQWEXSTxfK"
+      },
+      "followers":{
+        "href":null,
+        "total":158897
+      },
+      "genres":[
+        "acoustic blues",
+        "blues",
+        "blues rock",
+        "chicago blues",
+        "country blues",
+        "delta blues",
+        "harmonica blues",
+        "traditional blues"
+      ],
+      "href":"https://api.spotify.com/v1/artists/69VgCcXFV59QuQWEXSTxfK",
+      "id":"69VgCcXFV59QuQWEXSTxfK",
+      "images":[
+        {
+          "height":698,
+          "url":"https://i.scdn.co/image/55acc5ed6aabd475e3b237a873d1d53fd91df658",
+          "width":607
+        },
+        {
+          "height":230,
+          "url":"https://i.scdn.co/image/5a4ec92c3ad464668a56aa40b6974d0721fe792b",
+          "width":200
+        },
+        {
+          "height":74,
+          "url":"https://i.scdn.co/image/5e120ca5b81f579a3ed6d8ec8cfbf840ddb6d811",
+          "width":64
+        }
+      ],
+      "name":"Sonny Boy Williamson II",
+      "popularity":47,
+      "type":"artist",
+      "uri":"spotify:artist:69VgCcXFV59QuQWEXSTxfK"
+    },
+    {
+      "external_urls":{
+        "spotify":"https://open.spotify.com/artist/12LgviUQ9DbfYJJ9niDWRq"
+      },
+      "followers":{
+        "href":null,
+        "total":107361
+      },
+      "genres":[
+        "blues rock",
+        "electric blues",
+        "modern blues",
+        "modern blues rock"
+      ],
+      "href":"https://api.spotify.com/v1/artists/12LgviUQ9DbfYJJ9niDWRq",
+      "id":"12LgviUQ9DbfYJJ9niDWRq",
+      "images":[
+        {
+          "height":640,
+          "url":"https://i.scdn.co/image/ab6761610000e5eb4c4a5e1edece474dbf397bfb",
+          "width":640
+        },
+        {
+          "height":320,
+          "url":"https://i.scdn.co/image/ab676161000051744c4a5e1edece474dbf397bfb",
+          "width":320
+        },
+        {
+          "height":160,
+          "url":"https://i.scdn.co/image/ab6761610000f1784c4a5e1edece474dbf397bfb",
+          "width":160
+        }
+      ],
+      "name":"Walter Trout",
+      "popularity":39,
+      "type":"artist",
+      "uri":"spotify:artist:12LgviUQ9DbfYJJ9niDWRq"
+    },
+    {
+      "external_urls":{
+        "spotify":"https://open.spotify.com/artist/3nXMZsj1H0F7h9SDUeYNjg"
+      },
+      "followers":{
+        "href":null,
+        "total":39720
+      },
+      "genres":[
+        "brill building pop",
+        "classic soul",
+        "motown",
+        "northern soul"
+      ],
+      "href":"https://api.spotify.com/v1/artists/3nXMZsj1H0F7h9SDUeYNjg",
+      "id":"3nXMZsj1H0F7h9SDUeYNjg",
+      "images":[
+        {
+          "height":640,
+          "url":"https://i.scdn.co/image/ab67616d0000b273e1b457da33ad6c1aa91f79e3",
+          "width":640
+        },
+        {
+          "height":300,
+          "url":"https://i.scdn.co/image/ab67616d00001e02e1b457da33ad6c1aa91f79e3",
+          "width":300
+        },
+        {
+          "height":64,
+          "url":"https://i.scdn.co/image/ab67616d00004851e1b457da33ad6c1aa91f79e3",
+          "width":64
+        }
+      ],
+      "name":"Brenda Holloway",
+      "popularity":30,
+      "type":"artist",
+      "uri":"spotify:artist:3nXMZsj1H0F7h9SDUeYNjg"
+    }
+  ]
+}
