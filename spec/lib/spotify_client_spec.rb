@@ -4,14 +4,19 @@ require 'rails_helper'
 require 'spotify_client'
 require 'support/shared_contexts/with_a_stubbed_retryable_error'
 
-describe SpotifyClient, :vcr do
+describe SpotifyClient do
   subject(:client) { described_class.new }
 
   describe '#get_playlist_by_id' do
-    let(:playlist_id) { '3IlD894HSWDF8YlkCP25Sq' }
+    let(:playlist_id) { generate_spotify_id }
 
-    it 'returns the correct playlist' do
-      expect(client.get_playlist_by_id(playlist_id).id).to eq playlist_id
+    before do
+      stub_request(:get, "https://api.spotify.com/v1/playlists/#{playlist_id}")
+        .to_return(status: 200, body: File.read('spec/fixtures/successful_get_playlist.json'))
+    end
+
+    it 'returns an RSpotify::Playlist' do
+      expect(client.get_playlist_by_id(playlist_id)).to be_a(RSpotify::Playlist)
     end
 
     context 'when a 429 error is raised' do
@@ -26,8 +31,8 @@ describe SpotifyClient, :vcr do
         expect(RSpotify::Playlist).to have_received(:find_by_id).twice
       end
 
-      it 'returns the correct playlist' do
-        expect(client.get_playlist_by_id(playlist_id).id).to eq playlist_id
+      it 'returns an RSpotify::Playlist' do
+        expect(client.get_playlist_by_id(playlist_id)).to be_a(RSpotify::Playlist)
       end
     end
   end
