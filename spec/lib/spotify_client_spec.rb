@@ -38,10 +38,19 @@ describe SpotifyClient do
   end
 
   describe '#get_artists_by_ids' do
-    let(:artist_ids) { %w[1iNbNgr25BaS5e9a8xUZ9J 3ggwAqZD3lyT2sbovlmfQY] }
+    let(:artist_ids) { Array.new(5) { generate_spotify_id } }
 
-    it 'returns an array with the correct artists in it' do
-      expect(client.get_artists_by_ids(artist_ids).map(&:id)).to match_array artist_ids
+    before do
+      stub_request(:get, %r{https://api.spotify.com/v1/artists}).with do |request|
+        request.uri.query_values['ids'].split(',').count == 5
+      end.to_return(
+        status: 200,
+        body: File.read('spec/fixtures/successful_get_five_artists.json')
+      )
+    end
+
+    it 'returns an array of RSpotify::Artists' do
+      expect(client.get_artists_by_ids(artist_ids)).to all(be_a(RSpotify::Artist))
     end
 
     context 'when it is called with too many artist_ids' do
@@ -64,8 +73,8 @@ describe SpotifyClient do
         expect(RSpotify::Artist).to have_received(:find).twice
       end
 
-      it 'returns an array with the correct artists in it' do
-        expect(client.get_artists_by_ids(artist_ids).map(&:id)).to match_array artist_ids
+      it 'returns an array of RSpotify::Artists' do
+        expect(client.get_artists_by_ids(artist_ids)).to all(be_a(RSpotify::Artist))
       end
     end
   end
