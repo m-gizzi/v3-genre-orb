@@ -120,6 +120,13 @@ describe SpotifyClient do
     let(:playlist) { create(:playlist) }
     let(:rspotify_playlist) { playlist.to_rspotify_playlist }
 
+    before do
+      stub_request(:get, "https://api.spotify.com/v1/playlists/#{playlist.spotify_id}")
+        .to_return(status: 200, body: File.read('spec/fixtures/successful_get_playlist.json'))
+      stub_request(:get, %r{https://api.spotify.com/v1/playlists/\S{22}/tracks})
+        .to_return(status: 200, body: File.read('spec/fixtures/successful_get_twenty_tracks.json'))
+    end
+
     it 'returns the playlist\'s raw track data' do
       expect(client.get_tracks(rspotify_playlist)).to be_a Responses::GetTracks
     end
