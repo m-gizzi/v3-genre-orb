@@ -80,8 +80,19 @@ describe SpotifyClient do
   end
 
   describe '#get_related_artists' do
-    let(:artist) { create(:artist, spotify_id: '0Wxy5Qka8BN9crcFkiAxSR') }
+    let(:artist) { create(:artist) }
     let(:rspotify_artist) { artist.to_rspotify_artist }
+
+    before do
+      stub_request(:get, "https://api.spotify.com/v1/artists?ids=#{artist.spotify_id}").to_return(
+        status: 200,
+        body: File.read('spec/fixtures/successful_get_single_artist.json')
+      )
+      stub_request(:get, %r{https://api.spotify.com/v1/artists/\S{22}/related-artists}).to_return(
+        status: 200,
+        body: File.read('spec/fixtures/successful_get_related_artists.json')
+      )
+    end
 
     it 'returns the artist\'s related artists' do
       expect(client.get_related_artists(rspotify_artist)).to all(be_a(RSpotify::Artist))
