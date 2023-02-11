@@ -153,6 +153,11 @@ describe SpotifyClient do
     let(:playlist) { create(:liked_songs_playlist) }
     let(:rspotify_user) { playlist.user.to_rspotify_user }
 
+    before do
+      stub_request(:get, %r{https://api.spotify.com/v1/me/tracks})
+        .to_return(status: 200, body: File.read('spec/fixtures/successful_get_liked_tracks.json'))
+    end
+
     it 'returns the playlist\'s raw track data' do
       expect(client.get_liked_tracks(rspotify_user)).to be_a Responses::GetTracks
     end
