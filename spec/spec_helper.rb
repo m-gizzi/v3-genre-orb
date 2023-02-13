@@ -2,7 +2,6 @@
 
 require 'sidekiq/testing'
 require 'simplecov'
-require 'vcr'
 require 'webmock/rspec'
 SimpleCov.start 'rails' do
   enable_coverage :branch
@@ -25,22 +24,6 @@ RSpec.configure do |config|
   end
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
-
-  VCR.configure do |c|
-    c.cassette_library_dir = 'vcr_cassettes'
-    c.hook_into :webmock
-    c.allow_http_connections_when_no_cassette = false
-    c.configure_rspec_metadata!
-    c.default_cassette_options = { decode_compressed_response: true }
-
-    c.ignore_request do |request|
-      request.uri == 'https://accounts.spotify.com/api/token'
-    end
-
-    c.filter_sensitive_data('<BEARER ACCESS TOKEN>') do |interaction|
-      interaction.request.headers['Authorization'].first
-    end
-  end
 
   RSpec::Matchers.define_negated_matcher :avoid_changing, :change
   RSpec::Matchers.define_negated_matcher :exclude, :include
