@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe UpdatePlaylistTrackDataJob, type: :job do
-  describe '#perform', :vcr do
+  describe '#perform' do
     let(:track_data_import) { TrackDataImport.create!(playlist:) }
 
     shared_examples 'UpdatePlaylistTrackDataJob examples' do
@@ -16,11 +16,23 @@ describe UpdatePlaylistTrackDataJob, type: :job do
     context 'when the playlist passed to the job is a Playlist' do
       let(:playlist) { create(:playlist) }
 
+      before do
+        stub_request(:get, "https://api.spotify.com/v1/playlists/#{playlist.spotify_id}")
+          .to_return(status: 200, body: File.read('spec/fixtures/successful_get_playlist.json'))
+        stub_request(:get, %r{https://api.spotify.com/v1/playlists/\S{22}/tracks})
+          .to_return(status: 200, body: File.read('spec/fixtures/successful_get_twenty_tracks.json'))
+      end
+
       include_examples 'UpdatePlaylistTrackDataJob examples'
     end
 
     context 'when the playlist passed to the job is a LikedSongsPlaylist' do
       let(:playlist) { create(:liked_songs_playlist) }
+
+      before do
+        stub_request(:get, 'https://api.spotify.com/v1/me/tracks?limit=50&offset=0')
+          .to_return(status: 200, body: File.read('spec/fixtures/successful_get_liked_tracks.json'))
+      end
 
       include_examples 'UpdatePlaylistTrackDataJob examples'
     end
