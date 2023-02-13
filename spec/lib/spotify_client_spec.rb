@@ -154,7 +154,7 @@ describe SpotifyClient do
     let(:rspotify_user) { playlist.user.to_rspotify_user }
 
     before do
-      stub_request(:get, %r{https://api.spotify.com/v1/me/tracks})
+      stub_request(:get, 'https://api.spotify.com/v1/me/tracks?limit=50&offset=0')
         .to_return(status: 200, body: File.read('spec/fixtures/successful_get_liked_tracks.json'))
     end
 
