@@ -84,14 +84,11 @@ describe SpotifyClient do
     let(:rspotify_artist) { artist.to_rspotify_artist }
 
     before do
-      stub_request(:get, "https://api.spotify.com/v1/artists?ids=#{artist.spotify_id}").to_return(
-        status: 200,
-        body: File.read('spec/fixtures/successful_get_single_artist.json')
-      )
-      stub_request(:get, %r{https://api.spotify.com/v1/artists/\S{22}/related-artists}).to_return(
-        status: 200,
-        body: File.read('spec/fixtures/successful_get_related_artists.json')
-      )
+      stub_request(:get, "https://api.spotify.com/v1/artists?ids=#{artist.spotify_id}")
+        .to_return(status: 200, body: File.read('spec/fixtures/successful_get_single_artist.json'))
+
+      stub_request(:get, %r{https://api.spotify.com/v1/artists/\S{22}/related-artists})
+        .to_return(status: 200, body: File.read('spec/fixtures/successful_get_related_artists.json'))
     end
 
     it 'returns the artist\'s related artists' do
@@ -123,6 +120,7 @@ describe SpotifyClient do
     before do
       stub_request(:get, "https://api.spotify.com/v1/playlists/#{playlist.spotify_id}")
         .to_return(status: 200, body: File.read('spec/fixtures/successful_get_playlist.json'))
+
       stub_request(:get, %r{https://api.spotify.com/v1/playlists/\S{22}/tracks})
         .to_return(status: 200, body: File.read('spec/fixtures/successful_get_twenty_tracks.json'))
     end
