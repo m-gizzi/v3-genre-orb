@@ -338,7 +338,6 @@ GEM
       unf_ext
     unf_ext (0.0.8.2)
     unicode-display_width (2.2.0)
-    vcr (6.1.0)
     version_gem (1.1.0)
     web-console (4.2.0)
       actionview (>= 6.0.0)
@@ -393,7 +392,6 @@ DEPENDENCIES
   stimulus-rails
   turbo-rails
   tzinfo-data
-  vcr (~> 6.1.0)
   web-console
   webdrivers
   webmock (~> 3.18.1)

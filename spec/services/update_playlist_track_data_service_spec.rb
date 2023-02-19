@@ -52,8 +52,16 @@ describe UpdatePlaylistTrackDataService do
     end
   end
 
-  describe '#call with a Playlist passed as an argument', :vcr do
+  describe '#call with a Playlist passed as an argument' do
     let(:playlist) { create(:playlist) }
+
+    before do
+      stub_request(:get, "https://api.spotify.com/v1/playlists/#{playlist.spotify_id}")
+        .to_return(status: 200, body: File.read('spec/fixtures/successful_get_playlist.json'))
+
+      stub_request(:get, %r{https://api.spotify.com/v1/playlists/\S{22}/tracks})
+        .to_return(status: 200, body: File.read('spec/fixtures/successful_get_twenty_tracks.json'))
+    end
 
     include_examples 'updating track data'
 
@@ -63,8 +71,13 @@ describe UpdatePlaylistTrackDataService do
     end
   end
 
-  describe '#call with a LikedSongsPlaylist passed as an argument', :vcr do
+  describe '#call with a LikedSongsPlaylist passed as an argument' do
     let(:playlist) { create(:liked_songs_playlist) }
+
+    before do
+      stub_request(:get, 'https://api.spotify.com/v1/me/tracks?limit=50&offset=0')
+        .to_return(status: 200, body: File.read('spec/fixtures/successful_get_liked_tracks.json'))
+    end
 
     include_examples 'updating track data'
 
