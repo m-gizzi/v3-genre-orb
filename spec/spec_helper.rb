@@ -2,7 +2,6 @@
 
 require 'sidekiq/testing'
 require 'simplecov'
-require 'vcr'
 require 'webmock/rspec'
 SimpleCov.start 'rails' do
   enable_coverage :branch
@@ -26,22 +25,6 @@ RSpec.configure do |config|
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
-  VCR.configure do |c|
-    c.cassette_library_dir = 'vcr_cassettes'
-    c.hook_into :webmock
-    c.allow_http_connections_when_no_cassette = false
-    c.configure_rspec_metadata!
-    c.default_cassette_options = { decode_compressed_response: true }
-
-    c.ignore_request do |request|
-      request.uri == 'https://accounts.spotify.com/api/token'
-    end
-
-    c.filter_sensitive_data('<BEARER ACCESS TOKEN>') do |interaction|
-      interaction.request.headers['Authorization'].first
-    end
-  end
-
   RSpec::Matchers.define_negated_matcher :avoid_changing, :change
   RSpec::Matchers.define_negated_matcher :exclude, :include
 
@@ -56,61 +39,6 @@ RSpec.configure do |config|
     Sidekiq::Testing.inline! do
       test.run
     end
-  end
-
-  RSpec.shared_context 'with a stubbed retryable error' do
-    let(:exception) { Struct.new(:headers).new({ retry_after: '1' }) }
-    let(:error) { error_class.new(exception) }
-    let(:error_class) { raise 'Must set an error_class to use this shared context' }
-    let(:recipient) { raise 'Must set an recipient to use this shared context' }
-    let(:message) { raise 'Must set an message to use thisshared context' }
-
-    before do
-      call_count = 0
-      method = recipient.method(message)
-
-      allow(recipient).to receive(message) do |args|
-        call_count += 1
-        call_count == 1 ? raise(error) : call_original_method(method, args)
-      end
-    end
-
-    def call_original_method(method, args)
-      return method.call if args.blank?
-
-      if args.is_a?(Hash)
-        method.call(**args)
-      else
-        method.call(args)
-      end
-    end
-  end
-
-  RSpec.shared_context 'with Tracks with Artists and Genres' do
-    let(:track_with_genres) do
-      create(
-        :track,
-        name: 'Track with Genres',
-        spotify_id: generate_spotify_id,
-        artists: [
-          create(:artist, spotify_id: generate_spotify_id, genres: [genre_a, genre_b]),
-          create(:artist, spotify_id: generate_spotify_id, genres: [genre_a])
-        ]
-      )
-    end
-    let(:nil_genre_track) do
-      create(
-        :track,
-        name: 'Track with no Genres',
-        spotify_id: generate_spotify_id,
-        artists: [create(:artist, spotify_id: generate_spotify_id)]
-      )
-    end
-    let(:genre_a) { create(:genre, name: genre_name_matches_all_artists) }
-    let(:genre_b) { create(:genre, name: genre_name_matches_some_artists) }
-    let(:genre_name_matches_all_artists) { 'A' }
-    let(:genre_name_matches_some_artists) { 'B' }
-    let(:genre_name_matches_no_artists) { 'C' }
   end
 
   # The settings below are suggested to provide a good initial experience
