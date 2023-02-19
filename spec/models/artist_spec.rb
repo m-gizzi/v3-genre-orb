@@ -81,13 +81,9 @@ describe Artist, type: :model do
   describe '#to_rspotify_artist' do
     subject(:artist) { create(:artist) }
 
-    let(:get_artist_body) { File.open('./spec/fixtures/successful_get_single_artist.json') }
-
     before do
-      stub_request(:get, "https://api.spotify.com/v1/artists?ids=#{artist.spotify_id}").to_return(
-        status: 200,
-        body: get_artist_body
-      )
+      stub_request(:get, "https://api.spotify.com/v1/artists?ids=#{artist.spotify_id}")
+        .to_return(status: 200, body: File.open('./spec/fixtures/successful_get_single_artist.json'))
     end
 
     it 'returns a single RSpotify::Artist' do
@@ -96,7 +92,6 @@ describe Artist, type: :model do
   end
 
   describe '.to_rspotify_artists' do
-    let(:get_five_artists_body) { File.open('./spec/fixtures/successful_get_five_artists.json') }
     let(:number_of_artists) { 5 }
 
     before do
@@ -106,7 +101,7 @@ describe Artist, type: :model do
         request.uri.query_values['ids'].split(',').count == 5
       end.to_return(
         status: 200,
-        body: get_five_artists_body
+        body: File.open('./spec/fixtures/successful_get_five_artists.json')
       )
     end
 
@@ -119,8 +114,6 @@ describe Artist, type: :model do
     end
 
     context 'when the method is called on a large number of Artists' do
-      let(:get_ten_artists_body) { File.open('./spec/fixtures/successful_get_ten_artists.json') }
-      let(:get_fifty_artists_body) { File.open('./spec/fixtures/successful_get_fifty_artists.json') }
       let(:number_of_artists) { 60 }
 
       before do
@@ -128,13 +121,13 @@ describe Artist, type: :model do
           request.uri.query_values['ids'].split(',').count == 50
         end.to_return(
           status: 200,
-          body: get_fifty_artists_body
+          body: File.open('./spec/fixtures/successful_get_fifty_artists.json')
         )
         stub_request(:get, %r{/api.spotify.com/v1/artists}).with do |request|
           request.uri.query_values['ids'].split(',').count == 10
         end.to_return(
           status: 200,
-          body: get_ten_artists_body
+          body: File.open('./spec/fixtures/successful_get_ten_artists.json')
         )
       end
 

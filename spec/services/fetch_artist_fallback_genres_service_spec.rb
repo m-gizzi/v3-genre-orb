@@ -6,18 +6,13 @@ describe FetchArtistFallbackGenresService do
   subject(:service) { described_class.new(artist) }
 
   let(:artist) { create(:artist) }
-  let(:get_artist_body) { File.open('./spec/fixtures/successful_get_single_artist.json') }
-  let(:get_related_artists_body) { File.open('./spec/fixtures/successful_get_related_artists.json') }
 
   before do
-    stub_request(:get, "https://api.spotify.com/v1/artists?ids=#{artist.spotify_id}").to_return(
-      status: 200,
-      body: get_artist_body
-    )
-    stub_request(:get, 'https://api.spotify.com/v1/artists/0Wxy5Qka8BN9crcFkiAxSR/related-artists').to_return(
-      status: 200,
-      body: get_related_artists_body
-    )
+    stub_request(:get, "https://api.spotify.com/v1/artists?ids=#{artist.spotify_id}")
+      .to_return(status: 200, body: File.open('./spec/fixtures/successful_get_single_artist.json'))
+
+    stub_request(:get, 'https://api.spotify.com/v1/artists/0Wxy5Qka8BN9crcFkiAxSR/related-artists')
+      .to_return(status: 200, body: File.open('./spec/fixtures/successful_get_related_artists.json'))
   end
 
   describe '#call' do
