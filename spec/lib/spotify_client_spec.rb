@@ -179,18 +179,27 @@ describe SpotifyClient do
   end
 
   describe '#add_tracks_to_playlist!' do
-    let(:playlist) { create(:playlist, :with_authorized_user) }
+    let(:playlist) { create(:playlist, user:) }
+    let(:user) { create(:user, :with_spotify_tokens, spotify_id: '31upmxyqdkt5utuji6r5wsrkgn4e') }
     let(:rspotify_playlist) { playlist.to_rspotify_playlist }
-    let(:track_uris) { %w[spotify:track:1JcwHjETNNbUH0yfrc9w9n spotify:track:3iXq36mZaO2QpWO2vOUDYz] }
-
-    before do
-      # This needs to be called in order to authorize this API call
-      playlist.user.to_rspotify_user
+    let(:track_uris) { Track.all.map(&:spotify_uri) }
+    let!(:target_stub) do
+      stub_request(:post, 'https://api.spotify.com/v1/playlists/3nwz2mVTVbWSGMSFMzN7pu/tracks')
+        .to_return(status: 201, body: { snapshot_id: generate_spotify_id }.to_json)
     end
 
-    it 'adds the tracks to the playlist' do
-      expect { client.add_tracks_to_playlist!(rspotify_playlist, track_uris) }
-        .to change { playlist.to_rspotify_playlist.total }.by(track_uris.count)
+    before do
+      create_list(:track, 5)
+
+      playlist.user.to_rspotify_user # This needs to be called in order to authorize this API call
+
+      stub_request(:get, "https://api.spotify.com/v1/playlists/#{playlist.spotify_id}")
+        .to_return(status: 200, body: File.read('spec/fixtures/successful_get_playlist.json'))
+    end
+
+    it 'makes a call to Spotify to add the tracks to the playlist' do
+      client.add_tracks_to_playlist!(rspotify_playlist, track_uris)
+      expect(target_stub).to have_been_requested
     end
 
     context 'when a 429 error is raised' do
@@ -205,9 +214,9 @@ describe SpotifyClient do
         expect(rspotify_playlist).to have_received(:add_tracks!).twice
       end
 
-      it 'adds the tracks to the playlist' do
-        expect { client.add_tracks_to_playlist!(rspotify_playlist, track_uris) }
-          .to change { playlist.to_rspotify_playlist.total }.by(track_uris.count)
+      it 'makes a call to Spotify to add the tracks to the playlist' do
+        client.add_tracks_to_playlist!(rspotify_playlist, track_uris)
+        expect(target_stub).to have_been_requested
       end
     end
   end
