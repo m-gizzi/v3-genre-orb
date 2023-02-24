@@ -11,6 +11,7 @@ class AddTracksToPlaylistService < ApplicationService
   end
 
   def call
+    playlist.user.authorize
     rspotify_playlist = playlist.to_rspotify_playlist
     spotify_client.add_tracks_to_playlist!(rspotify_playlist, track_uris)
   end
