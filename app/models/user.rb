@@ -36,7 +36,7 @@ class User < ApplicationRecord
 
   def current_tracks
     current_playlist_track_ids = current_track_data.includes(:tracks).flat_map(&:track_ids)
-    liked_songs_track_ids = current_liked_songs_track_data&.track_ids
+    liked_songs_track_ids = current_liked_songs_track_data&.track_ids || []
 
     ids = (current_playlist_track_ids | liked_songs_track_ids).compact
 
