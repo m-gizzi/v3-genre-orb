@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'has_spotify_client'
+
 class RemoveTracksFromPlaylistService < ApplicationService
   include HasSpotifyClient
 
