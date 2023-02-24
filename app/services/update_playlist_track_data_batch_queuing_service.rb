@@ -7,14 +7,20 @@ class UpdatePlaylistTrackDataBatchQueuingService < ApplicationService
 
   attr_reader :playlist, :track_data_import
 
+  MAXIMUM_PLAYLIST_TRACKS_PER_JOB = {
+    'Playlist' => 100,
+    'LikedSongsPlaylist' => 50
+  }.freeze
+
   def initialize(playlist)
     @playlist = playlist
-    @track_data_import = playlist.track_data_imports.create!
+    @track_data_import = playlist.track_data_imports.new
   end
 
   def call
+    @track_data_import.save!
     playlist.sync_with_spotify!(rspotify_sync_object)
-    offsets = 0.step(playlist.song_count, maximum_playlist_tracks_per_job)
+    offsets = determine_offsets
 
     args = offsets.map { |offset| [playlist.id, playlist.class.to_s, track_data_import.id, offset] }
     UpdatePlaylistTrackDataJob.perform_bulk(args)
@@ -32,12 +38,7 @@ class UpdatePlaylistTrackDataBatchQueuingService < ApplicationService
     end
   end
 
-  def maximum_playlist_tracks_per_job
-    case playlist.class.to_s
-    when 'Playlist'
-      100
-    when 'LikedSongsPlaylist'
-      50
-    end
+  def determine_offsets
+    0.step(playlist.song_count, MAXIMUM_PLAYLIST_TRACKS_PER_JOB[playlist.class.to_s])
   end
 end
