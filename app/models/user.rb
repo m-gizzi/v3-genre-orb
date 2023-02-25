@@ -20,6 +20,9 @@ class User < ApplicationRecord
 
   class UnauthorizedError < StandardError; end
 
+  # In order to make API calls to Spotify that require a user authorization, RSpotify caches the user's
+  # credentials in a class variable Hash during initialization of an RSpotify::User object.  For this reason,
+  # this method both returns an RSpotify::User object and authorizes Spotify API calls for the user.
   def to_rspotify_user
     raise UnauthorizedError, 'User has not granted this app access to their Spotify account.' unless oauth_credential
 
@@ -33,10 +36,11 @@ class User < ApplicationRecord
       }.with_indifferent_access
     )
   end
+  alias authorize to_rspotify_user
 
   def current_tracks
     current_playlist_track_ids = current_track_data.includes(:tracks).flat_map(&:track_ids)
-    liked_songs_track_ids = current_liked_songs_track_data&.track_ids
+    liked_songs_track_ids = current_liked_songs_track_data&.track_ids || []
 
     ids = (current_playlist_track_ids | liked_songs_track_ids).compact
 

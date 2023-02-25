@@ -50,6 +50,28 @@ class SpotifyClient
     end
   end
 
+  MAXIMUM_TRACKS_ADDED_PER_CALL = 100 # RSpotify::Playlist#add_tracks! has a limit of 100 tracks
+  def add_tracks_to_playlist!(rspotify_playlist, track_uris)
+    if track_uris.count > MAXIMUM_TRACKS_ADDED_PER_CALL
+      raise ArgumentError, "#{__method__} cannot accept more than #{MAXIMUM_TRACKS_ADDED_PER_CALL} uris as arguments"
+    end
+
+    handle_too_many_requests_error do
+      rspotify_playlist.add_tracks!(track_uris, position: 0)
+    end
+  end
+
+  MAXIMUM_TRACKS_REMOVED_PER_CALL = 100 # RSpotify::Playlist#remove_tracks! has a limit of 100 tracks
+  def remove_tracks_from_playlist!(rspotify_playlist, track_uris)
+    if track_uris.count > MAXIMUM_TRACKS_REMOVED_PER_CALL
+      raise ArgumentError, "#{__method__} cannot accept more than #{MAXIMUM_TRACKS_REMOVED_PER_CALL} uris as arguments"
+    end
+
+    handle_too_many_requests_error do
+      rspotify_playlist.remove_tracks!(track_uris)
+    end
+  end
+
   private
 
   def handle_too_many_requests_error

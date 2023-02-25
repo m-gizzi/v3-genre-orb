@@ -6,9 +6,14 @@ describe UpdateArtistsGenresService do
   subject(:service) { described_class.new(artists) }
 
   let(:artists) { Artist.all }
-  let!(:artist) { create(:artist, spotify_id: '3fxdn6mfKvNFJ1Zx37On7W', name: 'Wrong Name') }
+  let!(:artist) { create(:artist, spotify_id: '0Wxy5Qka8BN9crcFkiAxSR', name: 'Wrong Name') }
 
-  describe '#call', :vcr do
+  describe '#call' do
+    before do
+      stub_request(:get, "https://api.spotify.com/v1/artists?ids=#{artist.spotify_id}")
+        .to_return(status: 200, body: File.read('spec/fixtures/successful_get_single_artist.json'))
+    end
+
     it 'updates the name of the Artist if it is different from what Spotify returns' do
       expect { service.call }.to(change { artist.reload.name })
     end

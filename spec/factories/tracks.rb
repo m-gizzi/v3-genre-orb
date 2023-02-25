@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :track do
-    name { 'Captain Marvel' }
+    sequence(:name) { |n| "Test Track #{n}" }
     spotify_id { generate_spotify_id }
   end
 end
