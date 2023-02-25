@@ -15,6 +15,8 @@ class RemoveTracksFromPlaylistService < ApplicationService
   def call
     playlist.user.authorize
     rspotify_playlist = playlist.to_rspotify_playlist
-    spotify_client.remove_tracks_from_playlist!(rspotify_playlist, track_uris)
+    track_uris.in_batches(batch_size: SpotifyClient::MAXIMUM_TRACKS_REMOVED_PER_CALL) do |uris|
+      spotify_client.remove_tracks_from_playlist!(rspotify_playlist, uris)
+    end
   end
 end
