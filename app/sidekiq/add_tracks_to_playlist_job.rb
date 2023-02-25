@@ -2,6 +2,7 @@
 
 class AddTracksToPlaylistJob
   include Sidekiq::Job
+  sidekiq_options queue: :spotify_api_calls
 
   def perform(playlist_id, track_uris)
     playlist = Playlist.find_by(id: playlist_id)
