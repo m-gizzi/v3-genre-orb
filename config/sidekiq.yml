@@ -13,7 +13,7 @@
 
   DeleteOldTrackDataImportsJob:
     # Every day at 3:00am CST
-    crom: '0 8 * * *'
+    cron: '0 8 * * *'
 
 :queues:
   - [default, 1]
