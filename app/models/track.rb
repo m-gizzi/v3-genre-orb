@@ -23,6 +23,6 @@ class Track < ApplicationRecord
   }
 
   def set_uri
-    self.uri = "spotify:track:#{spotify_id}"
+    self.uri ||= "spotify:track:#{spotify_id}"
   end
 end
