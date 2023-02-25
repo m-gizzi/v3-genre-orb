@@ -35,4 +35,12 @@ class Playlist < ApplicationRecord
     assign_attributes(song_count: rspotify_playlist.total, name: rspotify_playlist.name)
     save! if changed?
   end
+
+  def add_tracks!(new_tracks)
+    AddTracksToPlaylistService.call(self, new_tracks.pluck(&:spotify_uri))
+  end
+
+  def remove_tracks!(tracks_to_remove)
+    RemoveTracksFromPlaylistService.call(self, tracks_to_remove.pluck(&:spotify_uri))
+  end
 end
