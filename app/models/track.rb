@@ -8,6 +8,9 @@ class Track < ApplicationRecord
   validates :name, presence: true
   validates :spotify_id, presence: { message: I18n.t('active_record_validations.spotify_id.presence') },
                          uniqueness: { message: I18n.t('active_record_validations.spotify_id.uniqueness') }
+  validates :uri, presence: true, uniqueness: true
+
+  before_validation :set_uri
 
   scope :with_at_least_one_artist_in_any_genres, lambda { |genres|
     left_joins(:genres).where(genres: { name: genres }).distinct
@@ -18,4 +21,8 @@ class Track < ApplicationRecord
   scope :with_all_artists_in_any_genres, lambda { |genres|
     where.not(id: with_at_least_one_artist_not_in_any_genres(genres)).distinct
   }
+
+  def set_uri
+    self.uri = "spotify:track:#{spotify_id}"
+  end
 end
