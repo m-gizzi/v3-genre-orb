@@ -15,7 +15,7 @@ class AddTracksToPlaylistService < ApplicationService
   def call
     playlist.user.authorize
     rspotify_playlist = playlist.to_rspotify_playlist
-    track_uris.in_batches(batch_size: SpotifyClient::MAXIMUM_TRACKS_ADDED_PER_CALL) do |uris|
+    track_uris.in_groups_of(SpotifyClient::MAXIMUM_TRACKS_ADDED_PER_CALL, false) do |uris|
       spotify_client.add_tracks_to_playlist!(rspotify_playlist, uris)
     end
   end
