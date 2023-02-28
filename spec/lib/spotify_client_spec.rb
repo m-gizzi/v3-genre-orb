@@ -182,7 +182,7 @@ describe SpotifyClient do
     let(:playlist) { create(:playlist, user:) }
     let(:user) { create(:user, :with_spotify_tokens, spotify_id: '31upmxyqdkt5utuji6r5wsrkgn4e') } # fixture user
     let(:rspotify_playlist) { playlist.to_rspotify_playlist }
-    let(:track_uris) { Track.all.map(&:spotify_uri) }
+    let(:track_uris) { Track.all.map(&:uri) }
     let!(:target_stub) do
       stub_request(:post, 'https://api.spotify.com/v1/playlists/3nwz2mVTVbWSGMSFMzN7pu/tracks') # fixture playlist url
         .to_return(status: 201, body: { snapshot_id: generate_spotify_id }.to_json)
@@ -225,7 +225,7 @@ describe SpotifyClient do
     let(:playlist) { create(:playlist, user:) }
     let(:user) { create(:user, :with_spotify_tokens, spotify_id: '31upmxyqdkt5utuji6r5wsrkgn4e') } # fixture user
     let(:rspotify_playlist) { playlist.to_rspotify_playlist }
-    let(:track_uris) { Track.all.map(&:spotify_uri) }
+    let(:track_uris) { Track.all.map(&:uri) }
     let!(:target_stub) do
       # Url includes fixture playlist_id
       stub_request(:delete, "https://api.spotify.com/v1/users/#{user.spotify_id}/playlists/3nwz2mVTVbWSGMSFMzN7pu/tracks")

@@ -29,20 +29,20 @@ describe FilterTracksByRuleGroupService do
   end
 
   describe '#call' do
-    it 'returns any tracks that pass any any_artists_genre rules' do
-      expect(service.call).to include track_that_passes_any_artist_genre_rules
+    it 'returns any track ids that pass any any_artists_genre rules' do
+      expect(service.call).to include track_that_passes_any_artist_genre_rules.id
     end
 
-    it 'returns any tracks that pass any all_artists_genre rule' do
-      expect(service.call).to include track_that_passes_all_artist_genre_rules
+    it 'returns any track ids that pass any all_artists_genre rule' do
+      expect(service.call).to include track_that_passes_all_artist_genre_rules.id
     end
 
-    it 'returns any tracks that pass at least one rule, regardless of whether they fail any others' do
-      expect(service.call).to include track_that_only_passes_one_rule1, track_that_only_passes_one_rule2
+    it 'returns any track ids that pass at least one rule, regardless of whether they fail any others' do
+      expect(service.call).to include track_that_only_passes_one_rule1.id, track_that_only_passes_one_rule2.id
     end
 
     it 'returns an ActiveRecord::Collection' do
-      expect(service.call).to be_a ActiveRecord::Relation
+      expect(service.call).to all(be_a(Integer))
     end
   end
 end

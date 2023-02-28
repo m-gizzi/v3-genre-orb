@@ -6,7 +6,7 @@ describe RemoveTracksFromPlaylistJob, type: :job do
   describe '#perform' do
     let(:playlist) { create(:playlist, user:) }
     let(:user) { create(:user, :with_spotify_tokens, spotify_id: '31upmxyqdkt5utuji6r5wsrkgn4e') } # fixture user
-    let(:track_uris) { ['spotify:track:123', 'spotify:track:456'] }
+    let(:tracks) { create_list(:track, 2) }
     let!(:target_stub) do
       # Url includes fixture playlist_id
       stub_request(:delete, "https://api.spotify.com/v1/users/#{user.spotify_id}/playlists/3nwz2mVTVbWSGMSFMzN7pu/tracks")
@@ -19,7 +19,7 @@ describe RemoveTracksFromPlaylistJob, type: :job do
     end
 
     it 'makes a call to Spotify to remove the tracks from the playlist' do
-      described_class.perform_async(playlist.id, track_uris)
+      described_class.perform_async(playlist.id, tracks.pluck(:id))
       expect(target_stub).to have_been_requested
     end
   end
