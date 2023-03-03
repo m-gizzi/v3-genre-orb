@@ -21,5 +21,14 @@ describe AddTracksToPlaylistService do
       described_class.call(playlist, track_uris)
       expect(target_stub).to have_been_requested
     end
+
+    context 'when passes a lot of track_uris as arguments' do
+      let(:track_uris) { Array.new(101, "spotify:track:#{generate_spotify_id}") }
+
+      it 'makes multiple calls to Spotify' do
+        described_class.call(playlist, track_uris)
+        expect(target_stub).to have_been_requested.times(2)
+      end
+    end
   end
 end
