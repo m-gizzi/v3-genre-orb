@@ -9,6 +9,8 @@ class SyncSmartPlaylistService < ApplicationService
   end
 
   def call
+    return false unless playlist.has_scraped_track_data?
+
     AddTracksToPlaylistJob.perform_bulk(add_tracks_args) if tracks_to_add_to_playlist.present?
     RemoveTracksFromPlaylistJob.perform_bulk(remove_tracks_args) if tracks_to_remove_from_playlist.present?
   end

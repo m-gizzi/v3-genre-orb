@@ -43,4 +43,8 @@ class Playlist < ApplicationRecord
   def remove_tracks!(tracks_to_remove)
     RemoveTracksFromPlaylistService.call(self, tracks_to_remove.pluck(:uri))
   end
+
+  def has_scraped_track_data?
+    current_track_data.present?
+  end
 end
