@@ -37,11 +37,11 @@ class Playlist < ApplicationRecord
   end
 
   def add_tracks!(new_tracks)
-    AddTracksToPlaylistService.call(self, new_tracks.pluck(:uri))
+    AddTracksToPlaylistService.call(self, new_tracks)
   end
 
   def remove_tracks!(tracks_to_remove)
-    RemoveTracksFromPlaylistService.call(self, tracks_to_remove.pluck(:uri))
+    RemoveTracksFromPlaylistService.call(self, tracks_to_remove)
   end
 
   def has_scraped_track_data?
