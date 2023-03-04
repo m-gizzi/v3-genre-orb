@@ -19,7 +19,7 @@ describe SyncSmartPlaylistService do
       before do
         create_list(:track, 150)
         import.tracks << playlist_current_tracks
-    
+
         allow(FilterTracksByRuleGroupService).to receive(:call).and_return(goal_track_ids)
       end
 
