@@ -17,13 +17,13 @@ class SyncSmartPlaylistService < ApplicationService
 
   private
 
-  def track_list_to_filter
+  def tracks_to_sync_with
     playlist.user.current_tracks
   end
 
-  def goal_track_ids
-    @goal_track_ids ||=
-      FilterTracksByRuleGroupService.call(track_list_to_filter, smart_playlist.rule_group)
+  def target_track_ids
+    @target_track_ids ||=
+      FilterTracksByRuleGroupService.call(tracks_to_sync_with, smart_playlist.rule_group)
                                     .sample(smart_playlist.track_limit)
   end
 
@@ -32,11 +32,11 @@ class SyncSmartPlaylistService < ApplicationService
   end
 
   def tracks_to_add_to_playlist
-    goal_track_ids - current_track_ids
+    target_track_ids - current_track_ids
   end
 
   def tracks_to_remove_from_playlist
-    current_track_ids - goal_track_ids
+    current_track_ids - target_track_ids
   end
 
   def add_tracks_args
