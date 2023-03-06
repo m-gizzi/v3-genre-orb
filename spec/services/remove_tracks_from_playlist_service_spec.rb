@@ -6,7 +6,7 @@ describe RemoveTracksFromPlaylistService do
   describe '#call' do
     let(:playlist) { create(:playlist, user:) }
     let(:user) { create(:user, :with_spotify_tokens, spotify_id: '31upmxyqdkt5utuji6r5wsrkgn4e') } # fixture user
-    let(:track_uris) { ['spotify:track:123', 'spotify:track:456'] }
+    let(:tracks) { create_list(:track, 2) }
     let!(:target_stub) do
       # Url includes fixture playlist_id
       stub_request(:delete, "https://api.spotify.com/v1/users/#{user.spotify_id}/playlists/3nwz2mVTVbWSGMSFMzN7pu/tracks")
@@ -19,8 +19,17 @@ describe RemoveTracksFromPlaylistService do
     end
 
     it 'makes a call to Spotify to remove the tracks from the playlist' do
-      described_class.call(playlist, track_uris)
+      described_class.call(playlist, tracks)
       expect(target_stub).to have_been_requested
+    end
+
+    context 'when passes a lot of track_uris as arguments' do
+      let(:tracks) { create_list(:track, 101) }
+
+      it 'makes multiple calls to Spotify' do
+        described_class.call(playlist, tracks)
+        expect(target_stub).to have_been_requested.times(2)
+      end
     end
   end
 end

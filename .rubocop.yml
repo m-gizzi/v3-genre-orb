@@ -28,3 +28,6 @@ RSpec/MultipleMemoizedHelpers:
 RSpec/LetSetup:
   Exclude:
     - 'spec/models/artist_spec.rb'
+
+Naming/PredicateName:
+  ForbiddenPrefixes: []

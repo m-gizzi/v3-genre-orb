@@ -6,7 +6,7 @@ describe AddTracksToPlaylistJob, type: :job do
   describe '#perform' do
     let(:playlist) { create(:playlist, user:) }
     let(:user) { create(:user, :with_spotify_tokens, spotify_id: '31upmxyqdkt5utuji6r5wsrkgn4e') } # fixture user
-    let(:track_uris) { ['spotify:track:123', 'spotify:track:456'] }
+    let(:tracks) { create_list(:track, 2) }
     let!(:target_stub) do
       stub_request(:post, 'https://api.spotify.com/v1/playlists/3nwz2mVTVbWSGMSFMzN7pu/tracks') # fixture playlist url
         .to_return(status: 201, body: { snapshot_id: generate_spotify_id }.to_json)
@@ -18,7 +18,7 @@ describe AddTracksToPlaylistJob, type: :job do
     end
 
     it 'makes a call to Spotify to add the tracks to the playlist' do
-      described_class.perform_async(playlist.id, track_uris)
+      described_class.perform_async(playlist.id, tracks.pluck(:id))
       expect(target_stub).to have_been_requested
     end
   end

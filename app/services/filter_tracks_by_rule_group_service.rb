@@ -11,8 +11,7 @@ class FilterTracksByRuleGroupService < ApplicationService
   def call
     case rule_group.criterion
     when 'any_pass'
-      ids = track_ids_matching_any_artists_genre_rules | track_ids_matching_all_artists_genre_rules
-      tracks.where(id: ids)
+      track_ids_matching_any_artists_genre_rules | track_ids_matching_all_artists_genre_rules
     end
   end
 
@@ -25,6 +24,7 @@ class FilterTracksByRuleGroupService < ApplicationService
 
   def track_ids_matching_all_artists_genre_rules
     all_artists_genres = rule_group.rules.all_artists_genre.pluck(:value)
+    return [] if all_artists_genres.blank?
 
     first_query = tracks.with_all_artists_in_any_genres(all_artists_genres.shift).ids
 
