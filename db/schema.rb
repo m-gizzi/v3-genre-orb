@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_25_190732) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_06_041033) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -108,6 +108,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_25_190732) do
     t.datetime "updated_at", null: false
     t.enum "condition", default: "any_artists_genre", null: false, enum_type: "rule_condition"
     t.index ["rule_group_id"], name: "index_rules_on_rule_group_id"
+    t.index ["value", "rule_group_id"], name: "index_rules_on_value_and_rule_group_id", unique: true
   end
 
   create_table "smart_playlists", force: :cascade do |t|

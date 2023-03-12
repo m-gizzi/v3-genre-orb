@@ -10,4 +10,8 @@ class SmartPlaylist < ApplicationRecord
   validates :playlist_id, uniqueness: true
 
   before_validation :build_rule_group, if: proc { |smart_playlist| smart_playlist.rule_group.nil? }
+
+  def sync!
+    SyncSmartPlaylistService.call(self)
+  end
 end
