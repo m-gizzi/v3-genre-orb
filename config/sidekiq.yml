@@ -15,6 +15,10 @@
     # Every day at 3:00am CST
     cron: '0 8 * * *'
 
+  BatchSyncPlaylistJob:
+    # Everyday at 4:00am CST
+    cron: '0 9 * * *'
+
 :queues:
   - [default, 1]
   - [spotify_api_calls, 1]
